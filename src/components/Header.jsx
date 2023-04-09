@@ -5,6 +5,7 @@ import profile from '../assets/img/icon/profile_gold.png';
 import wishlist from '../assets/img/icon/wishlist_gold.png';
 import basket from '../assets/img/icon/basket_gold.png';
 import { BiMenuAltLeft } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -17,15 +18,15 @@ const Header = () => {
                 <BiMenuAltLeft />
               </div>
               <div className="page col-lg-8 col-md-10 ">
-                <a href="">NEW</a>
-                <a href="/shop.html">SHOP</a>
-                <a href="">ABOUT</a>
+                <Link to="/new">NEW</Link>
+                <Link to="/shop">SHOP</Link>
+                <Link to="/about">ABOUT</Link>
               </div>
             </div>
             <div className="logo col-lg-4 col-md-10">
-              <a href="#">
+              <Link to="/">
                 <img src={logo_gold} alt="logo" />
-              </a>
+              </Link>
             </div>
             <div className="menu col-lg-4 col-md-10">
               <a href="">

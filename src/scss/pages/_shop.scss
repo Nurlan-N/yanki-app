@@ -1,0 +1,30 @@
+.root {
+  margin-top: 100px;
+  .map{
+    align-items: center;
+    img {
+        padding: 12px 4px;
+      }
+      p{
+        margin-top: 17px;
+      }
+  }
+  
+  .category-list {
+    width: 160px;
+    a{
+        margin: 20px 0;
+        display: block;
+        color: #252525;
+        transition: ease-in-out 0.2s;
+        &:hover{
+            color: #e0bea2;
+        }
+      }
+      h4 {
+        margin-top: 15px;
+      }
+  }
+  
+
+}
