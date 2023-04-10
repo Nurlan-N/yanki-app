@@ -14,7 +14,6 @@ const Home = () => {
     setCount(count + 1);
     console.log(count);
   };
-  fetch('https://localhost:44389/api/product/2')
   return (
     <main>
       <section className="new-collection">

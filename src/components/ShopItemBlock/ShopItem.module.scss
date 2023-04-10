@@ -7,6 +7,12 @@
       width: 240px;
       height: 360px;
     }
+    @media (max-width: 600px) {
+      img {
+        width: 165px;
+        height: 230px;
+      }
+    }
     .wishlist {
       position: absolute;
       width: 40px;
@@ -19,6 +25,14 @@
         position: absolute;
         left: 31%;
         top: 26%;
+      }
+      @media (max-width: 600px) {
+        img {
+          width: 12px;
+          height: 12px;
+          left: 36%;
+          top: 28%;
+        }
       }
     }
   }

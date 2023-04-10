@@ -12,7 +12,7 @@ const index = () => {
           <img className="image" src={imageUrl} alt="Pizza" />
           <h4 className={styles.title}>Синее пальто</h4>
           <h5 className={styles.price}>2900$</h5>
-          <a className={styles.wishlist}><img src={wishlistIcon} alt="" /></a>
+          <button className={styles.wishlist}><img src={wishlistIcon} alt="" /></button>
         </a>
         <div className="shop-block__bottom">
           <div className={styles.size}>

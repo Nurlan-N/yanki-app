@@ -36,9 +36,9 @@ $font-size: 18px;
       line-height: 21px;
       margin-right: 25px;
       transition: ease-in-out 0.2s;
-        &:hover{
-            color: #e0bea2;
-        }
+      &:hover {
+        color: #e0bea2;
+      }
     }
   }
 
@@ -70,6 +70,11 @@ $font-size: 18px;
     }
   }
 }
+@media (min-width: 800px) {
+  .mini_menu{
+    display: none;
+  }
+}
 
 @media (max-width: 800px) {
   body {
@@ -82,7 +87,6 @@ $font-size: 18px;
   }
   .menu a {
     margin-left: 0px !important;
-    
   }
   .pages a {
     display: none;
