@@ -7,15 +7,15 @@ import basket from '../assets/img/icon/basket_gold.png';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
-const Header = ({onClickCart}) => {
+const Header = ({ onClickCart }) => {
   return (
     <header>
       <div className="container">
         <div className="row">
           <div className="nav_bar col-lg-12 col-md-12">
             <div className="pages col-lg-4">
-              <div className="mini_menu col-lg-4 col-md-2 col-1" >
-                <BiMenuAltLeft onClick={onClickCart}/>
+              <div className="mini_menu col-lg-4 col-md-2 col-1">
+                <BiMenuAltLeft onClick={onClickCart} />
               </div>
               <div className="page col-lg-8 col-md-10 ">
                 <Link to="/new">NEW</Link>
@@ -35,12 +35,12 @@ const Header = ({onClickCart}) => {
               <a href="">
                 <img src={profile} alt="profile" />
               </a>
-              <a href="">
+              <Link to="/wishlist">
                 <img src={wishlist} alt="wishlist" />
-              </a>
-              <a href="">
+              </Link>
+              <Link to="/cart">
                 <img src={basket} alt="basket" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -12,6 +12,8 @@ import About from './pages/About';
 import New from './pages/New';
 import Header from './components/Header';
 import DrawerBlock from './components/DrawerBolck/index';
+import Wishlist from './pages/Wishlist';
+import Cart from './pages/Cart';
 
 function App() {
   const [cartDisplay, setCartDisplay] = useState(false);
@@ -23,6 +25,8 @@ function App() {
         <Header onClickCart={() => setCartDisplay(!cartDisplay)} />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path='/wishlist' element={<Wishlist/>} />
+          <Route path='/cart' element={<Cart/>} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/about" element={<About />} />
           <Route path="/new" element={<New />} />
