@@ -1,0 +1,88 @@
+.wrapper {
+  text-align: center;
+  margin: 20px 0;
+  .shop_block {
+    position: relative;
+    .image {
+      width: 240px;
+      height: 360px;
+    }
+    .wishlist {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      right: 0;
+      top: 0;
+      background: #e0bea2;
+      border-radius: 0px 0px 0px 20px;
+      img {
+        position: absolute;
+        left: 31%;
+        top: 26%;
+      }
+    }
+  }
+
+  .title {
+    margin-top: 15px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    color: #252525;
+  }
+  .price {
+    margin-top: 5px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #252525;
+  }
+  .size {
+    display: flex;
+    justify-content: center;
+    p {
+      margin-right: 5px;
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 19px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: rgba(37, 37, 37, 0.5);
+    }
+  }
+  .color {
+    align-items: center;
+    .c1 {
+      background: #ffffff;
+      border: 0.3px solid #252525;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+    .c2 {
+      background: #6f83a4;
+      border-radius: 50%;
+      width: 14px;
+      height: 14px;
+      margin: 0 10px;
+    }
+    .c3 {
+      background: #f1ddaa;
+      border-radius: 50%;
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
