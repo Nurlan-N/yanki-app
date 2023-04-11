@@ -28,27 +28,30 @@ const index = ({ onClose, cartDisplay }) => {
             <img height={20} width={70} src={logo} alt="Logo" />
           </div>
           <div className={styles.wishlist}>
-            <Link><img width={20} height={20} src={wishlist} alt="Wishlist" /></Link>
+            <Link onClick={onClose}><img width={20} height={20} src={wishlist} alt="Wishlist" /></Link>
           </div>
           <div className={styles.basket}>
-            <Link><img width={20} height={20} src={basket} alt="Cart" /></Link>
+            <Link onClick={onClose}><img width={20} height={20} src={basket} alt="Cart" /></Link>
           </div>
 
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/my-account">My Acoount</Link>
+          <Link to="/" onClick={onClose}>Home</Link>
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/new">New</Link>
+          <Link to="/my-account" onClick={onClose}>My Acoount</Link>
+        </div>
+        <div className={styles.menu_Item} >
+          <Link to="/new" onClick={onClose}>New</Link>
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/shop">Shop</Link>
+          <Link to="/shop" onClick={onClose}>Shop</Link>
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/about">About</Link>
+          <Link to="/about" onClick={onClose}>About</Link>
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact" onClick={onClose}>Contact</Link>
         </div>
         <div className={styles.footer}>
           <p>+(994) 055 582 86 99</p>

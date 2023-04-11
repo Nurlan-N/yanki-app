@@ -1,8 +1,8 @@
 import React from 'react';
-import righRow from '../assets/img/icon/right.png';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import ShopItemBlock from '../components/ShopItemBlock';
+import PageMap from '../components/PageMap'
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -60,11 +60,7 @@ const Shop = () => {
       
       <div className="container">
         <div className="lg-version ">
-          <div className="map d-flex ">
-            <p>Home</p>
-            <img src={righRow} alt="" />
-            <p>Shop</p>
-          </div>
+          <PageMap title={"Shop"}/>
           <div className="row">
             <div className="content d-flex">
               <div className="category-list">
@@ -104,11 +100,7 @@ const Shop = () => {
           </div>
         </div>
         <div className="mobile-version">
-          <div className="map d-flex ">
-            <p>Home</p>
-            <img src={righRow} alt="" />
-            <p>Shop</p>
-          </div>
+          <PageMap title={"Shop"}/>
           <div className="mob-category">
             {CategorySelect()}
           </div>

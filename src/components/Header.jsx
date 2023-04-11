@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom';
 const Header = ({ onClickCart }) => {
   return (
     <header>
-      <div className="container">
-        <div className="row">
-          <div className="nav_bar col-lg-12 col-md-12">
+      <div className="nav_bar col-lg-12 col-md-12">
+        <div className="container">
+          <div className="row">
             <div className="pages col-lg-4">
               <div className="mini_menu col-lg-4 col-md-2 col-1">
                 <BiMenuAltLeft onClick={onClickCart} />

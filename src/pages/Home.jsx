@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ButtonSubmit from '../components/ButtonSubmit';
 import collection1 from '../assets/img/newcollection/1.png';
 import collection2 from '../assets/img/newcollection/2.png';
 import collection3 from '../assets/img/newcollection/3.png';
@@ -8,12 +9,6 @@ import category3 from '../assets/img/categoryimg/3.png';
 import category4 from '../assets/img/categoryimg/4.png';
 
 const Home = () => {
-  const [count, setCount] = useState(0);
-
-  const onClickHandler = () => {
-    setCount(count + 1);
-    console.log(count);
-  };
   return (
     <main>
       <section className="new-collection">
@@ -24,8 +19,8 @@ const Home = () => {
           <h3>New Collection</h3>
         </div>
       </section>
-      <section className="category">
-        <div className="container">
+      <div className="container">
+        <section className="category">
           <div className="row">
             <h3>Category</h3>
             <div className="slider mt-5">
@@ -71,19 +66,20 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
       <section className="subscribe  ">
         <h3>Be The First To Know About New Products</h3>
         <form action="">
-          <input className="col-8" type="text" placeholder="Email" />
-          <button  className="col-8">
-            Subscribe
-          </button>
-          <p>
-            By clicking on the "Subscribe" button, I agree to the processing of my personal data and
-            have read the terms of confidentiality.
-          </p>
+          <input className="col-8 mx-auto" type="text" placeholder="Email" />
+          <ButtonSubmit title={'Subscribe'} />
+          <div className="text">
+            <p>
+              By clicking on the "Subscribe" button, I agree to the processing of my personal data
+              and have read the terms of confidentiality.
+            </p>
+          </div>
         </form>
       </section>
     </main>
