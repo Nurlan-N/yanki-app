@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Children, cloneElement, useEffect, useState } from 'react';
 import ButtonSubmit from '../components/ButtonSubmit';
 import collection1 from '../assets/img/newcollection/1.png';
 import collection2 from '../assets/img/newcollection/2.png';
@@ -7,8 +7,45 @@ import category1 from '../assets/img/categoryimg/1.png';
 import category2 from '../assets/img/categoryimg/2.png';
 import category3 from '../assets/img/categoryimg/3.png';
 import category4 from '../assets/img/categoryimg/4.png';
+import arrow from '../assets/img/icon/arrow.png';
 
-const Home = () => {
+const page_width = 26;
+
+
+
+
+const Home = ({ children   }) => {
+
+  const[offset, setOffset] =useState(0)
+  const [pages, setPages] = useState([]);
+  const handleLeftArrowClick = () => {
+    setOffset((currentOffset) => {
+      const newOffset = currentOffset + page_width
+      console.log(newOffset);
+      return Math.min(newOffset,0)
+    })
+  };
+  const handleRightArrowClick = () => {
+    setOffset((currentOffset) => {
+      const newOffset = currentOffset - page_width
+      console.log(newOffset);
+      return Math.max(newOffset, -26)
+    })
+  };
+
+  useEffect(() => {
+    setPages(
+      Children.map(children, (child) => {
+        return cloneElement(child, {
+          style: {
+            height: '100%',
+            minWidth: `${page_width}%`,
+            maxWidth: `${page_width}%`,
+          },
+        });
+      }),
+    );
+  }, []);
   return (
     <main>
       <section className="new-collection">
@@ -23,47 +60,55 @@ const Home = () => {
         <section className="category">
           <div className="row">
             <h3>Category</h3>
-            <div className="slider mt-5">
-              <div className="slider-item ">
-                <a href="">
-                  <img src={category1} alt="" />
-                  <div className="item-body ">
-                    <button>Jackets</button>
-                  </div>
-                </a>
+            <div className="arrow right_arrow" onClick={handleRightArrowClick}>
+              <img src={arrow} alt="" />
+            </div>
+            <div className="window">
+              <div className="slider mt-5" style={{ transform: `translateX(${offset}%)` }}>
+                <div className="slider-item ">
+                  <a href="">
+                    <img src={category1} alt="" />
+                    <div className="item-body ">
+                      <button>Jackets</button>
+                    </div>
+                  </a>
+                </div>
+                <div className="slider-item ">
+                  <a href="">
+                    <img src={category2} alt="" />
+                    <div className="item-body">
+                      <button>Coat</button>
+                    </div>
+                  </a>
+                </div>
+                <div className="slider-item ">
+                  <a href="">
+                    <img src={category3} alt="" />
+                    <div className="item-body">
+                      <button>Coat</button>
+                    </div>
+                  </a>
+                </div>
+                <div className="slider-item ">
+                  <a href="">
+                    <img src={category4} alt="" />
+                    <div className="item-body">
+                      <button>Fur coats</button>
+                    </div>
+                  </a>
+                </div>
+                <div className="slider-item ">
+                  <a href="">
+                    <img src={category4} alt="" />
+                    <div className="item-body">
+                      <button>Fur coats</button>
+                    </div>
+                  </a>
+                </div>
               </div>
-              <div className="slider-item ">
-                <a href="">
-                  <img src={category2} alt="" />
-                  <div className="item-body">
-                    <button>Coat</button>
-                  </div>
-                </a>
-              </div>
-              <div className="slider-item ">
-                <a href="">
-                  <img src={category3} alt="" />
-                  <div className="item-body">
-                    <button>Coat</button>
-                  </div>
-                </a>
-              </div>
-              <div className="slider-item ">
-                <a href="">
-                  <img src={category4} alt="" />
-                  <div className="item-body">
-                    <button>Fur coats</button>
-                  </div>
-                </a>
-              </div>
-              <div className="slider-item ">
-                <a href="">
-                  <img src={category4} alt="" />
-                  <div className="item-body">
-                    <button>Fur coats</button>
-                  </div>
-                </a>
-              </div>
+            </div>
+            <div className="arrow left_arrow" onClick={handleLeftArrowClick}>
+              <img className="r_arrow_img" src={arrow} alt="" />
             </div>
           </div>
         </section>

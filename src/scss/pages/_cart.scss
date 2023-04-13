@@ -1,0 +1,157 @@
+.cart-wrapper {
+  margin-top: 100px;
+  .item {
+    width: 100%;
+    padding: 10px 10px;
+    border-bottom: 0.3px solid #252525;
+    .item_img {
+      width: 120px;
+      img {
+        width: 100%;
+      }
+    }
+    .item_count {
+      width: 100px;
+      height: 50px;
+      border: 0.5px solid #252525;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      input {
+        border: none;
+        width: 50%;
+        text-align: center;
+      }
+      button {
+        color: #e0bea2;
+        font-size: 25px;
+      }
+    }
+  }
+
+  h4 {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 23px;
+    color: #252525;
+  }
+  .total_price {
+    span {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 19px;
+      /* identical to box height */
+
+      text-align: center;
+      font-feature-settings: 'pnum' on, 'lnum' on;
+
+      color: #252525;
+    }
+    p {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #252525;
+    }
+  }
+  .checkout {
+    width: 100%;
+
+    .content {
+      
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      h5 {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 23px;
+
+        color: #252525;
+      }
+      p {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 19px;
+        /* identical to box height */
+
+        color: #252525;
+      }
+      form {
+        width: 80%;
+        .info {
+          width: 100%;
+          input {
+            width: 45%;
+            border: 0.5px solid #252525;
+            margin: 10px 10px 10px 0;
+            padding: 10px;
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 200;
+            font-size: 16px;
+            color: rgba(37, 37, 37, 0.5);
+          }
+        }
+        .adress {
+          width: 100% !important;
+          margin-top: 15px;
+          input {
+            width: 45%;
+            border: 0.5px solid #252525;
+            margin: 10px 10px 10px 0;
+            padding: 10px;
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 200;
+            font-size: 16px;
+            color: rgba(37, 37, 37, 0.5);
+          }
+        }
+      }
+      .checkout_submite {
+        margin-top: auto;
+        width: 18%;
+        padding: 10px;
+        .sub_adres,
+        .sub_price {
+          display: flex;
+          justify-content: space-between;
+        }
+        P {
+          display: inline;
+        }
+        span {
+        }
+      }
+      .message {
+        text-align: center;
+        padding: 5px;
+        p {
+          font-family: 'Raleway';
+          font-style: normal;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 16px;
+
+          color: #252525;
+        }
+      }
+    }
+  }
+}
