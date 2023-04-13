@@ -92,7 +92,7 @@
 
   .slider {
     display: flex;
-
+    transition: 0.5s;
     .slider-item {
       position: relative;
       margin-right: 5%;

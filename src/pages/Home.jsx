@@ -11,26 +11,21 @@ import arrow from '../assets/img/icon/arrow.png';
 
 const page_width = 26;
 
-
-
-
-const Home = ({ children   }) => {
-
-  const[offset, setOffset] =useState(0)
+const Home = ({ children, category }) => {
+  const [offset, setOffset] = useState(0);
   const [pages, setPages] = useState([]);
   const handleLeftArrowClick = () => {
     setOffset((currentOffset) => {
-      const newOffset = currentOffset + page_width
-      console.log(newOffset);
-      return Math.min(newOffset,0)
-    })
+      const newOffset = currentOffset + page_width;
+      return Math.min(newOffset, 0);
+    });
   };
   const handleRightArrowClick = () => {
     setOffset((currentOffset) => {
-      const newOffset = currentOffset - page_width
-      console.log(newOffset);
-      return Math.max(newOffset, -26)
-    })
+      const newOffset = currentOffset - page_width;
+      const maxOffset = -(26 * (category.length - 4));
+      return Math.max(newOffset, maxOffset);
+    });
   };
 
   useEffect(() => {
@@ -65,46 +60,17 @@ const Home = ({ children   }) => {
             </div>
             <div className="window">
               <div className="slider mt-5" style={{ transform: `translateX(${offset}%)` }}>
-                <div className="slider-item ">
-                  <a href="">
-                    <img src={category1} alt="" />
-                    <div className="item-body ">
-                      <button>Jackets</button>
+                {category &&
+                  category.map((obj) => (
+                    <div key={obj.id} className="slider-item ">
+                      <a href="">
+                        <img src={category1} alt="" />
+                        <div className="item-body ">
+                          <button>{obj.name}</button>
+                        </div>
+                      </a>
                     </div>
-                  </a>
-                </div>
-                <div className="slider-item ">
-                  <a href="">
-                    <img src={category2} alt="" />
-                    <div className="item-body">
-                      <button>Coat</button>
-                    </div>
-                  </a>
-                </div>
-                <div className="slider-item ">
-                  <a href="">
-                    <img src={category3} alt="" />
-                    <div className="item-body">
-                      <button>Coat</button>
-                    </div>
-                  </a>
-                </div>
-                <div className="slider-item ">
-                  <a href="">
-                    <img src={category4} alt="" />
-                    <div className="item-body">
-                      <button>Fur coats</button>
-                    </div>
-                  </a>
-                </div>
-                <div className="slider-item ">
-                  <a href="">
-                    <img src={category4} alt="" />
-                    <div className="item-body">
-                      <button>Fur coats</button>
-                    </div>
-                  </a>
-                </div>
+                  ))}
               </div>
             </div>
             <div className="arrow left_arrow" onClick={handleLeftArrowClick}>

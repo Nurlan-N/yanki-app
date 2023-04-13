@@ -4,6 +4,7 @@ import search from '../assets/img/icon/search_black.png';
 import profile from '../assets/img/icon/profile_gold.png';
 import wishlist from '../assets/img/icon/wishlist_gold.png';
 import basket from '../assets/img/icon/basket_gold.png';
+import SearchBlock from '../components/SearchBlock';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
@@ -29,9 +30,7 @@ const Header = ({ onClickCart }) => {
               </Link>
             </div>
             <div className="menu col-lg-4 col-md-10">
-              <a href="">
-                <img src={search} alt="vector" />
-              </a>
+              <SearchBlock />
               <a href="">
                 <img src={profile} alt="profile" />
               </a>

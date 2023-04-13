@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import ShopItemBlock from '../components/ShopItemBlock';
-import PageMap from '../components/PageMap'
+import PageMap from '../components/PageMap';
+import axios from 'axios';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -53,14 +54,25 @@ const CategorySelect = () => (
   <Select className="category-select" options={categoryOptions} placeholder="Category.." />
 );
 
-
 const Shop = () => {
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios.get('https://localhost:44389/api/product');
+        setProduct(data);
+      } catch (error) {
+        alert('Datada sehv');
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <div className="show-wrapper">
-      
       <div className="container">
         <div className="lg-version ">
-          <PageMap title={"Shop"}/>
+          <PageMap title={'Shop'} />
           <div className="row">
             <div className="content d-flex">
               <div className="category-list">
@@ -84,15 +96,7 @@ const Shop = () => {
                 </div>
                 <div className="shop-block">
                   <div className="items d-flex justify-content-between">
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
-                    <ShopItemBlock />
+                    <ShopItemBlock product={product} />
                   </div>
                 </div>
               </div>
@@ -100,10 +104,8 @@ const Shop = () => {
           </div>
         </div>
         <div className="mobile-version">
-          <PageMap title={"Shop"}/>
-          <div className="mob-category">
-            {CategorySelect()}
-          </div>
+          <PageMap title={'Shop'} />
+          <div className="mob-category">{CategorySelect()}</div>
           <div className="mob-filter mt-5 d-flex">
             {SizeSelect()}
             {ColorSelect()}
@@ -111,15 +113,15 @@ const Shop = () => {
             {SortSelect()}
           </div>
           <div className="mob-content d-flex flex-wrap justify-content-between">
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
-            <ShopItemBlock/>
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
+            <ShopItemBlock />
           </div>
         </div>
       </div>
