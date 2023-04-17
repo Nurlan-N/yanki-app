@@ -14,10 +14,23 @@ import Header from './components/Header';
 import DrawerBlock from './components/DrawerBolck/index';
 import Wishlist from './pages/Wishlist';
 import Cart from './pages/Cart';
+import Authorization from './components/AuthorizationBlock';
+import ProfilePopUp from './components/ProfilePop-Up';
+
+import { store } from './redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment } from './redux/slices/filterSlice';
+
 import axios from 'axios';
 
 function App() {
+  const filter = useSelector((state) => state.filter.value);
+  const dispatch = useDispatch();
+
   const [cartDisplay, setCartDisplay] = useState(false);
+  const [authorizationDisplay, setAuthorizationDisplay] = useState(false);
+  const [popUpDisplay, setPopUpDisplay] = useState(false);
+
   const [category, setCategory] = useState([]);
 
   useEffect(() => {
@@ -36,7 +49,10 @@ function App() {
     <div className="wrapper">
       <DrawerBlock cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />
       <div className={cartDisplay ? 'd-none' : ''}>
-        <Header onClickCart={() => setCartDisplay(!cartDisplay)} />
+        <Header
+          onClickCart={() => setCartDisplay(!cartDisplay)}
+          onClickProfile={() => setPopUpDisplay(!popUpDisplay)}
+        />
         <Routes>
           <Route path="/" element={<Home category={category} />} />
           <Route path="/wishlist" element={<Wishlist />} />
@@ -46,6 +62,14 @@ function App() {
           <Route path="/new" element={<New />} />
           <Route path="*" element={<NoteFound />} />
         </Routes>
+        <ProfilePopUp
+          display={popUpDisplay}
+          onCliclkSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
+        />
+        <Authorization
+          display={authorizationDisplay}
+          onClose={() => setAuthorizationDisplay(false)}
+        />
         <Footer />
       </div>
     </div>

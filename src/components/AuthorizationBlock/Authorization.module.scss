@@ -1,0 +1,95 @@
+.root {
+  position: absolute;
+  padding: 3%;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  text-align: center;
+  background-color: #ffffff;
+  
+  input {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    border: 0.5px solid #252525;
+    padding-left: 15px;
+    border: 0.5px solid #252525;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: rgba(37, 37, 37, 0.5);
+    transition: ease-in-out 0.3s;
+
+    &:focus {
+      border-color: #e0bea2;
+    }
+  }
+  
+  .eye {
+    cursor: pointer;
+    position: absolute;
+    top: 51%;
+    right: 14%;
+  }
+  span{
+    display: flex;
+    justify-content: start;
+  }
+
+  .close {
+    width: 100%;
+    position: absolute;
+    top: 7%;
+    right: -40%;
+    img {
+      cursor: pointer;
+      &:hover {
+        animation: shake 0.5s;
+        @keyframes shake {
+          10% {
+            transform: rotate(15deg);
+          }
+          20% {
+            transform: rotate(-15deg);
+          }
+          30% {
+            transform: rotate(15deg);
+          }
+          40% {
+            transform: rotate(-15deg);
+          }
+        }
+      }
+    }
+  }
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    a {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 19px;
+      transition: ease-in-out 0.3s;
+      /* identical to box height */
+
+      text-decoration-line: underline;
+
+      color: #252525;
+      &:hover {
+        color: #e0bea2;
+      }
+    }
+  }
+}
+.toaster{
+  position: absolute;
+  top: 80%;
+  right: 5%;
+}

@@ -3,10 +3,6 @@ import ButtonSubmit from '../components/ButtonSubmit';
 import collection1 from '../assets/img/newcollection/1.png';
 import collection2 from '../assets/img/newcollection/2.png';
 import collection3 from '../assets/img/newcollection/3.png';
-import category1 from '../assets/img/categoryimg/1.png';
-import category2 from '../assets/img/categoryimg/2.png';
-import category3 from '../assets/img/categoryimg/3.png';
-import category4 from '../assets/img/categoryimg/4.png';
 import arrow from '../assets/img/icon/arrow.png';
 
 const page_width = 26;
@@ -64,7 +60,7 @@ const Home = ({ children, category }) => {
                   category.map((obj) => (
                     <div key={obj.id} className="slider-item ">
                       <a href="">
-                        <img src={category1} alt="" />
+                        <img src={obj.image} alt="" />
                         <div className="item-body ">
                           <button>{obj.name}</button>
                         </div>

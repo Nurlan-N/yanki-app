@@ -8,7 +8,7 @@ import SearchBlock from '../components/SearchBlock';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
-const Header = ({ onClickCart }) => {
+const Header = ({ onClickCart, onClickProfile }) => {
   return (
     <header>
       <div className="nav_bar col-lg-12 col-md-12">
@@ -31,9 +31,9 @@ const Header = ({ onClickCart }) => {
             </div>
             <div className="menu col-lg-4 col-md-10">
               <SearchBlock />
-              <a href="">
-                <img src={profile} alt="profile" />
-              </a>
+              <Link to="#">
+                <img onClick={onClickProfile} src={profile} alt="profile" />
+              </Link>
               <Link to="/wishlist">
                 <img src={wishlist} alt="wishlist" />
               </Link>

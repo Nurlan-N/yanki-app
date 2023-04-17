@@ -1,0 +1,39 @@
+.root {
+  position: absolute;
+  top: 9%;
+  right: 24%;
+  background-color: #ffffff;
+  width: 100px;
+  text-align: start !important;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 70%;
+    margin-left: -5px;
+    border-width: 5px;
+    transform: rotate(180deg);
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+  }
+  ul {
+    padding: 10px 10px;
+    text-align: start;
+    li {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 21px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: ease-in-out 0.3s;
+
+      color: #252525;
+      
+    }
+    li:hover{
+        color: #E0BEA2;
+    }
+  }
+}

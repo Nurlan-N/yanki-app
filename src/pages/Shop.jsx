@@ -4,6 +4,8 @@ import Select from 'react-select';
 import ShopItemBlock from '../components/ShopItemBlock';
 import PageMap from '../components/PageMap';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -55,19 +57,35 @@ const CategorySelect = () => (
 );
 
 const Shop = () => {
+  const dispatch = useDispatch();
+  const categoryId = useSelector((state) => state.filter.categoryId);
+
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id));
+  };
+
   const [product, setProduct] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get('https://localhost:44389/api/product');
+        const { data } = await axios.get(
+          `https://localhost:44389/api/product?categoryId=${categoryId}`,
+        );
         setProduct(data);
       } catch (error) {
-        alert('Datada sehv');
+        alert('Product data sehv');
+      }
+      try {
+        const { data } = await axios.get('https://localhost:44389/api/category');
+        setCategoryData(data);
+      } catch (error) {
+        alert('Category Datada sehv');
       }
     }
     fetchData();
-  }, []);
+  }, [categoryId]);
   return (
     <div className="show-wrapper">
       <div className="container">
@@ -77,13 +95,12 @@ const Shop = () => {
             <div className="content d-flex">
               <div className="category-list">
                 <h4>Category</h4>
-                <Link to="/">Parks</Link>
-                <Link to="/">Fur coats</Link>
-                <Link to="/">Coat</Link>
-                <Link to="/">Jackets</Link>
-                <Link to="/">Fur coats</Link>
-                <Link to="/">Parks</Link>
-                <Link to="/">Coat</Link>
+                {categoryData &&
+                  categoryData.map((obj) => (
+                    <Link key={obj.id} onClick={() => onChangeCategory(obj.id)} to="#">
+                      {obj.name}
+                    </Link>
+                  ))}
               </div>
               <div className="gallary">
                 <div className="filter ">
