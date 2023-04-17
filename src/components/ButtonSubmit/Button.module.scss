@@ -1,6 +1,5 @@
 .button{
     margin: auto;
-    margin-top: 20px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -11,8 +10,12 @@
     border: 0.5px solid #e0bea2;
     height: 50px;
     background: #e0bea2;
+    transition: ease-in-out 0.5s;
     &:disabled{
         background: #CCA88A;
+    }
+    &:hover{
+        color: #ffffff;
     }
 
     @media (max-width: 600px) {

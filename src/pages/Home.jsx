@@ -4,6 +4,7 @@ import collection1 from '../assets/img/newcollection/1.png';
 import collection2 from '../assets/img/newcollection/2.png';
 import collection3 from '../assets/img/newcollection/3.png';
 import arrow from '../assets/img/icon/arrow.png';
+import { Link } from 'react-router-dom';
 
 const page_width = 26;
 
@@ -59,12 +60,12 @@ const Home = ({ children, category }) => {
                 {category &&
                   category.map((obj) => (
                     <div key={obj.id} className="slider-item ">
-                      <a href="">
+                      <Link to={`/shop?category=${obj.id}`} >
                         <img src={obj.image} alt="" />
                         <div className="item-body ">
                           <button>{obj.name}</button>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                   ))}
               </div>

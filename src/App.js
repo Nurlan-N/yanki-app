@@ -22,6 +22,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from './redux/slices/filterSlice';
 
 import axios from 'axios';
+import Detail from './pages/Detail';
 
 function App() {
   const filter = useSelector((state) => state.filter.value);
@@ -59,8 +60,9 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/about" element={<About />} />
-          <Route path="/new" element={<New />} />
+          <Route path="/new" element={<Home category={category}  />} />
           <Route path="*" element={<NoteFound />} />
+          <Route path='/detail' element={<Detail/>}/>
         </Routes>
         <ProfilePopUp
           display={popUpDisplay}

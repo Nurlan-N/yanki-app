@@ -1,0 +1,36 @@
+.detail_wrapper {
+    margin-top: 100px;
+    .detail_content{
+        display: flex;
+    }
+    .pr_image_block{
+        margin-right: 50px;
+        .pr_images{
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 10px;
+        }
+    }
+    .cart_and_wishlist{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .wishlist{
+            width: 270px;
+            height: 50px;
+            text-align: center;
+            border: 0.5px solid #252525;
+            margin-left: 20px;
+            button{
+                margin-top: 15px;
+                transition: ease-in-out 0.5s;
+
+                &:hover{
+                    color: #E0BEA2;
+                }
+            }
+        }
+    }
+  }
+  

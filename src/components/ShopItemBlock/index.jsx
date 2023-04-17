@@ -11,8 +11,8 @@ const ShopItem = ({ product = [] }) => {
         product.map((item) => (
           <div className={styles.wrapper} key={item.id}>
             <div className={styles.shop_block}>
-              <Link onClick={() => console.log(item.id)} to={`/shop/${item.id}`}>
-                <img className="image" src={imageUrl} alt="Item" />
+              <Link onClick={() => console.log(item.id)} to={`/detail`}>
+                <img className="image" src={item.image} alt="Item" />
                 <h4 className={styles.title}>{item.title}</h4>
                 <h5 className={styles.price}>{item.price}$</h5>
               </Link>

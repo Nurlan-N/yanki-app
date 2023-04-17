@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import ShopItemBlock from '../components/ShopItemBlock';
+import Pagination from '../components/Pogination';
 import PageMap from '../components/PageMap';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -58,22 +59,33 @@ const CategorySelect = () => (
 
 const Shop = () => {
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const { categoryId, currentPage } = useSelector((state) => state.filter);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
+    dispatch(setCurrentPage(1));
   };
 
   const [product, setProduct] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
+  const [itemCount, setItemCount] = useState(0);
+
+
+
+  const onChangePage = (e) => {
+    dispatch(setCurrentPage(e.selected + 1));
+  };
+
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(
-          `https://localhost:44389/api/product?categoryId=${categoryId}`,
+        const {data} = await axios.get(
+          `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}`,
         );
-        setProduct(data);
+        setProduct(data.product);
+        setItemCount(Math.ceil(data.count / 8));
+        
       } catch (error) {
         alert('Product data sehv');
       }
@@ -85,7 +97,7 @@ const Shop = () => {
       }
     }
     fetchData();
-  }, [categoryId]);
+  }, [categoryId, currentPage]);
   return (
     <div className="show-wrapper">
       <div className="container">
@@ -113,23 +125,24 @@ const Shop = () => {
                 </div>
                 <div className="shop-block">
                   <div className="items d-flex justify-content-between">
-                    <ShopItemBlock product={product} />
+                    <ShopItemBlock  product={product} />
+                    <div className="mob-content d-flex flex-wrap justify-content-between"></div>
                   </div>
                 </div>
+                <Pagination count={itemCount} onChangePage={onChangePage} />
               </div>
             </div>
           </div>
-        </div>
-        <div className="mobile-version">
-          <PageMap title={'Shop'} />
-          <div className="mob-category">{CategorySelect()}</div>
-          <div className="mob-filter mt-5 d-flex">
-            {SizeSelect()}
-            {ColorSelect()}
-            {PriceSelect()}
-            {SortSelect()}
-          </div>
-          <div className="mob-content d-flex flex-wrap justify-content-between">
+          <div className="mobile-version">
+            <PageMap title={'Shop'} />
+            <div className="mob-category">{CategorySelect()}</div>
+            <div className="mob-filter mt-5 d-flex">
+              {SizeSelect()}
+              {ColorSelect()}
+              {PriceSelect()}
+              {SortSelect()}
+            </div>
+
             <ShopItemBlock />
             <ShopItemBlock />
             <ShopItemBlock />
