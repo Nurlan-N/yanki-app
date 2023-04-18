@@ -1,36 +1,105 @@
 .detail_wrapper {
-    margin-top: 100px;
-    .detail_content{
-        display: flex;
+  margin-top: 100px;
+  .detail_content {
+    display: flex;
+    justify-content: space-between;
+  }
+  .pr_image_block {
+    .pr_images {
+      flex-direction: column;
+      justify-content: space-between;
+      margin-right: 10px;
     }
-    .pr_image_block{
-        margin-right: 50px;
-        .pr_images{
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
-        }
-    }
-    .cart_and_wishlist{
+    .main_image {
+        width: 450px;
+      img {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .wishlist{
-            width: 270px;
-            height: 50px;
-            text-align: center;
-            border: 0.5px solid #252525;
-            margin-left: 20px;
-            button{
-                margin-top: 15px;
-                transition: ease-in-out 0.5s;
-
-                &:hover{
-                    color: #E0BEA2;
-                }
-            }
-        }
+      }
     }
   }
-  
+  .cart_and_wishlist {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .wishlist {
+      width: 270px;
+      height: 50px;
+      text-align: center;
+      border: 0.5px solid #252525;
+      margin-left: 20px;
+      button {
+        margin-top: 15px;
+        transition: ease-in-out 0.5s;
+
+        &:hover {
+          color: #e0bea2;
+        }
+      }
+    }
+  }
+  .select_size {
+    border: 0.5px solid #252525;
+    padding: 5px;
+    margin: 20px 0;
+    .css-13cymwt-control {
+      border: none !important;
+    }
+    .css-tj5bde-Svg {
+      color: #e0bea2;
+    }
+    .css-1u9des2-indicatorSeparator {
+      display: none;
+    }
+    .css-t3ipsp-control {
+      border: none !important;
+      box-shadow: none;
+    }
+    .css-1nmdiq5-menu {
+      * {
+        background-color: #e0bea2;
+      }
+    }
+  }
+  .pr_detail_info {
+    padding-top: 30px;
+    h5 {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 19px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #252525;
+    }
+    p {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 200;
+      font-size: 14px;
+      line-height: 16px;
+
+      color: #252525;
+    }
+  }
+  .similar_products {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .similar_text {
+    margin-top: 50px;
+    h5 {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 23px;
+
+      color: #252525;
+    }
+  }
+}

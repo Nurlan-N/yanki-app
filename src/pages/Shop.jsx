@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import ShopItemBlock from '../components/ShopItemBlock';
 import Pagination from '../components/Pogination';
 import PageMap from '../components/PageMap';
 import axios from 'axios';
+import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { useRef } from 'react';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -58,7 +60,11 @@ const CategorySelect = () => (
 );
 
 const Shop = () => {
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { categoryId, currentPage } = useSelector((state) => state.filter);
 
   const onChangeCategory = (id) => {
@@ -70,33 +76,61 @@ const Shop = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [itemCount, setItemCount] = useState(0);
 
-
-
   const onChangePage = (e) => {
     dispatch(setCurrentPage(e.selected + 1));
   };
-
+  const fechProducts = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}`,
+      );
+      setProduct(data.product);
+      setItemCount(Math.ceil(data.count / 8));
+    } catch (error) {
+      alert('Product data sehv');
+    }
+  };
+  const fechCategories = async () => {
+    try {
+      const { data } = await axios.get('https://localhost:44389/api/category');
+      console.log(data);
+      setCategoryData(data);
+    } catch (error) {
+      alert('Category Datada sehv');
+    }
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const {data} = await axios.get(
-          `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}`,
-        );
-        setProduct(data.product);
-        setItemCount(Math.ceil(data.count / 8));
-        
-      } catch (error) {
-        alert('Product data sehv');
-      }
-      try {
-        const { data } = await axios.get('https://localhost:44389/api/category');
-        setCategoryData(data);
-      } catch (error) {
-        alert('Category Datada sehv');
-      }
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      console.log(params.currentPage);
+      dispatch(
+        setFilters({
+          ...params,
+        }),
+      );
+      isSearch.current = true;
     }
-    fetchData();
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      fechProducts();
+      fechCategories();
+    }
+    isSearch.current = false;
+  }, [categoryId, currentPage]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        categoryId,
+        currentPage,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
   }, [categoryId, currentPage]);
   return (
     <div className="show-wrapper">
@@ -125,7 +159,7 @@ const Shop = () => {
                 </div>
                 <div className="shop-block">
                   <div className="items d-flex justify-content-between">
-                    <ShopItemBlock  product={product} />
+                    <ShopItemBlock product={product} />
                     <div className="mob-content d-flex flex-wrap justify-content-between"></div>
                   </div>
                 </div>
