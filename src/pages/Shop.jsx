@@ -9,6 +9,7 @@ import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { useRef } from 'react';
+import { fetchProduct, setPageCount } from '../redux/slices/productSlice';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -66,34 +67,24 @@ const Shop = () => {
   const dispatch = useDispatch();
 
   const { categoryId, currentPage } = useSelector((state) => state.filter);
+  const { products, status, pageCount } = useSelector((state) => state.product);
 
+  console.log(pageCount);
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
     dispatch(setCurrentPage(1));
   };
 
-  const [product, setProduct] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-  const [itemCount, setItemCount] = useState(0);
 
   const onChangePage = (e) => {
     dispatch(setCurrentPage(e.selected + 1));
   };
-  const fechProducts = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}`,
-      );
-      setProduct(data.product);
-      setItemCount(Math.ceil(data.count / 8));
-    } catch (error) {
-      alert('Product data sehv');
-    }
-  };
+
   const fechCategories = async () => {
     try {
       const { data } = await axios.get('https://localhost:44389/api/category');
-      console.log(data);
+      //console.log(data);
       setCategoryData(data);
     } catch (error) {
       alert('Category Datada sehv');
@@ -103,11 +94,11 @@ const Shop = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      console.log(params.currentPage);
       dispatch(
         setFilters({
           ...params,
         }),
+        fetchProduct(params),
       );
       isSearch.current = true;
     }
@@ -116,8 +107,9 @@ const Shop = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      fechProducts();
+      //fechProducts();
       fechCategories();
+      getProducts();
     }
     isSearch.current = false;
   }, [categoryId, currentPage]);
@@ -132,6 +124,16 @@ const Shop = () => {
     }
     isMounted.current = true;
   }, [categoryId, currentPage]);
+
+  const getProducts = () => {
+    dispatch(
+      fetchProduct({
+        currentPage,
+        categoryId,
+      }),
+    );
+  };
+
   return (
     <div className="show-wrapper">
       <div className="container">
@@ -141,6 +143,7 @@ const Shop = () => {
             <div className="content d-flex">
               <div className="category-list">
                 <h4>Category</h4>
+                <Link onClick={() => onChangeCategory(0)} to="#">All Product</Link>
                 {categoryData &&
                   categoryData.map((obj) => (
                     <Link key={obj.id} onClick={() => onChangeCategory(obj.id)} to="#">
@@ -159,11 +162,11 @@ const Shop = () => {
                 </div>
                 <div className="shop-block">
                   <div className="items d-flex justify-content-between">
-                    <ShopItemBlock product={product} />
+                    <ShopItemBlock product={products.product} />
                     <div className="mob-content d-flex flex-wrap justify-content-between"></div>
                   </div>
                 </div>
-                <Pagination count={itemCount} onChangePage={onChangePage} />
+                <Pagination count={Math.ceil(pageCount / 8)} onChangePage={onChangePage} />
               </div>
             </div>
           </div>
