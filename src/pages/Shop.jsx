@@ -143,10 +143,19 @@ const Shop = () => {
             <div className="content d-flex">
               <div className="category-list">
                 <h4>Category</h4>
-                <Link onClick={() => onChangeCategory(0)} to="#">All Product</Link>
+                <Link
+                  onClick={() => onChangeCategory(0)}
+                  style={{ color: 0 === categoryId ? '#E0BEA2' : '#252525' }}
+                  to="#">
+                  All Product
+                </Link>
                 {categoryData &&
                   categoryData.map((obj) => (
-                    <Link key={obj.id} onClick={() => onChangeCategory(obj.id)} to="#">
+                    <Link
+                      key={obj.id}
+                      onClick={() => onChangeCategory(obj.id)}
+                      style={{ color: categoryId === obj.id ? '#E0BEA2' : '#252525' }}
+                      to="#">
                       {obj.name}
                     </Link>
                   ))}

@@ -31,28 +31,30 @@ const Authorization = ({ display, onClose }) => {
       .then((response) => {
         setToken(response.data);
         console.log(token);
-        setShow(true)
+        setShow(true);
       })
       .catch((error) => {
         setFechError('Email or password does not match!!!');
         console.log(error);
       });
   };
+  useEffect(() => {
+    if (show) {
+      axios
+        .get('https://localhost:44389/api/auth/email', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUser(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [show]);
 
-  if (show) {
-    axios
-      .get('https://localhost:44389/api/auth/email', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
   // ///User Name & Email
   // useEffect(() => {
   //   axios
@@ -73,13 +75,18 @@ const Authorization = ({ display, onClose }) => {
 
   return (
     <>
-      <Toast className={styles.toaster} onClose={() => setShow(false)} show={show} delay={3000} autohide>
+      <Toast
+        className={styles.toaster}
+        onClose={() => setShow(false)}
+        show={show}
+        delay={3000}
+        autohide>
         <Toast.Header>
           <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
           <strong className="me-auto">YANKI</strong>
           <small>11 mins ago</small>
         </Toast.Header>
-        <Toast.Body>Hello, {user !== null ? user.name : ""}</Toast.Body>
+        <Toast.Body>Hello, {user !== null ? user.name : ''}</Toast.Body>
       </Toast>
       <div
         className={styles.root}
