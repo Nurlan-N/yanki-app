@@ -6,124 +6,64 @@ import Toast from 'react-bootstrap/Toast';
 import close from '../../assets/img/icon/x.png';
 import eye from '../../assets/img/icon/eye.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../redux/function/authAction';
+import { useForm } from 'react-hook-form';
 
-const Authorization = ({ display, onClose }) => {
+const Authorization = ({ display, onClose, onClickRegister }) => {
   const [showPasswod, setShowPassword] = useState(false);
-  const [formValue, setForumValue] = useState({ email: '', password: '' });
-  const [token, setToken] = useState(null);
-  const [fechError, setFechError] = useState('');
-  const [user, setUser] = useState(null);
+  const { loading, error, login } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  ///Input Value
-  const handleInput = (e) => {
-    const { name, value } = e.target;
-    setForumValue({ ...formValue, [name]: value });
+  const { register, handleSubmit } = useForm();
+
+  const submitForm = (data) => {
+    dispatch(userLogin(data));
   };
-
-  ///Submit Form
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log(formValue);
-    axios
-      .post('https://localhost:44389/api/auth/login', formValue)
-      .then((response) => {
-        setToken(response.data);
-        console.log(token);
-        setShow(true);
-      })
-      .catch((error) => {
-        setFechError('Email or password does not match!!!');
-        console.log(error);
-      });
-  };
-  useEffect(() => {
-    if (show) {
-      axios
-        .get('https://localhost:44389/api/auth/email', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [show]);
-
-  // ///User Name & Email
-  // useEffect(() => {
-  //   axios
-  //     .get('https://localhost:44389/api/auth/email', {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setUser(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [token]);
-
-  //console.log('Kullanıcı adı: ' + user.name + 'Email: ' + user.email);
-
   return (
     <>
-      <Toast
-        className={styles.toaster}
-        onClose={() => setShow(false)}
-        show={show}
-        delay={3000}
-        autohide>
-        <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-          <strong className="me-auto">YANKI</strong>
-          <small>11 mins ago</small>
-        </Toast.Header>
-        <Toast.Body>Hello, {user !== null ? user.name : ''}</Toast.Body>
-      </Toast>
       <div
         className={styles.root}
-        style={display && token === null ? { display: 'inline' } : { display: 'none' }}>
+        style={display === true && login === false ? { display: 'inline' } : { display: 'none' }}>
         <div className={styles.close}>
           <img onClick={onClose} src={close} alt="Close" />
         </div>
         <h3>Authorization</h3>
-        <form action="" onSubmit={handleFormSubmit}>
-          <span style={{ color: 'red' }}>{fechError}</span>
+        <form onSubmit={handleSubmit(submitForm)}>
+          <span style={{ color: 'red' }}></span>
 
-          <input
-            name="email"
-            value={formValue.email}
-            onChange={handleInput}
-            type="email"
-            placeholder="Email..."
-          />
-          <input
-            name="password"
-            value={formValue.password}
-            onChange={handleInput}
-            className={styles.password}
-            type={showPasswod ? 'text' : 'password'}
-            placeholder="Password"
-          />
-          <img
-            className={styles.eye}
-            onClick={() => setShowPassword(!showPasswod)}
-            src={eye}
-            alt="Show"
-          />
+          <div className="form-group">
+            <label htmlFor="email"></label>
+            <input
+              type="email"
+              className="form-input"
+              {...register('email')}
+              placeholder="Email..."
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password"></label>
+            <input
+              type="password"
+              className="form-input"
+              {...register('password')}
+              placeholder="Email..."
+              required
+            />
+            <img
+              className={styles.eye}
+              onClick={() => setShowPassword(!showPasswod)}
+              src={eye}
+              alt="Show"
+            />
+          </div>
           <div className={styles.menu}>
             <Link>Forgot password?</Link>
-            <Link>Don't have an account?</Link>
+            <Link onClick={onClickRegister}>Don't have an account?</Link>
           </div>
-          <ButtonSubmit title={'LOGIN'} />
+          <ButtonSubmit title={loading ? 'loading' : 'LOGIN'} />
         </form>
       </div>
     </>

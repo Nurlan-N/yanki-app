@@ -14,18 +14,29 @@ import DrawerBlock from './components/DrawerBolck/index';
 import Wishlist from './pages/Wishlist';
 import Cart from './pages/Cart';
 import Authorization from './components/AuthorizationBlock';
+import ForgotBlock from './components/ForgotBlock';
 import RegisterBlock from './components/RegisterBlock';
 import ProfilePopUp from './components/ProfilePop-Up';
 
 import axios from 'axios';
 import Detail from './pages/Detail';
+import MyAccount from './pages/MyAccount';
 
 function App() {
   const [cartDisplay, setCartDisplay] = useState(false);
   const [authorizationDisplay, setAuthorizationDisplay] = useState(false);
   const [registerDisplay, setRegisterDisplay] = useState(false);
-  const [popUpDisplay, setPopUpDisplay] = useState(false);
+  const [forgotDisplay, setForgotDisplay] = useState(false);
   const [category, setCategory] = useState([]);
+
+  const registerHandler = () => {
+    setRegisterDisplay(!registerDisplay);
+    setAuthorizationDisplay(false);
+  };
+  const forgotHandler = () => {
+    setForgotDisplay(!registerDisplay);
+    setAuthorizationDisplay(false);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -45,7 +56,7 @@ function App() {
       <div className={cartDisplay ? 'd-none' : ''}>
         <Header
           onClickCart={() => setCartDisplay(!cartDisplay)}
-          onClickProfile={() => setPopUpDisplay(!popUpDisplay)}
+          onCliclkSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
         />
         <Routes>
           <Route path="/" element={<Home category={category} />} />
@@ -56,21 +67,16 @@ function App() {
           <Route path="/new" element={<Home category={category} />} />
           <Route path="*" element={<NoteFound />} />
           <Route path="/detail" element={<Detail />} />
+          <Route path="/myaccount" element={<MyAccount />} />
         </Routes>
-        <ProfilePopUp
-          display={popUpDisplay}
-          onCliclkSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
-          onClickRegiter={() => setRegisterDisplay(!registerDisplay)}
-
-        />
         <Authorization
           display={authorizationDisplay}
           onClose={() => setAuthorizationDisplay(false)}
+          onClickForgot = {() => forgotHandler()}
+          onClickRegister={() => registerHandler()}
         />
-        <RegisterBlock
-          display={registerDisplay}
-          onClose={() => setRegisterDisplay(false)}
-        />
+        <ForgotBlock display={forgotDisplay} onClose={() => setForgotDisplay(false)}/>
+        <RegisterBlock display={registerDisplay} onClose={() => setRegisterDisplay(false)} />
         <Footer />
       </div>
     </div>

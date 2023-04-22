@@ -1,0 +1,176 @@
+.account_wrapper {
+  margin-top: 100px;
+  .accont_menu {
+    border-top: 0.3px solid #252525;
+    border-bottom: 0.3px solid #252525;
+    display: flex;
+    justify-content: center;
+    .center_btn {
+      margin: 0 30px;
+    }
+    .menu_item {
+      padding: 15px 50px;
+      transition: ease-in-out 0.3s;
+      button, a {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 19px;
+        /* identical to box height */
+
+        color: #252525;
+      }
+      &:hover {
+        background-color: #e0bea2;
+      }
+    }
+  }
+  .orders {
+    .order {
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 0.3px solid #252525;
+        h5 {
+          font-family: 'Raleway';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          /* identical to box height */
+
+          font-feature-settings: 'pnum' on, 'lnum' on;
+
+          color: #252525;
+        }
+        h6 {
+          font-family: 'Raleway';
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 19px;
+          /* identical to box height */
+
+          font-feature-settings: 'pnum' on, 'lnum' on;
+
+          color: #252525;
+        }
+        .show_order {
+          padding: 0 30px;
+          cursor: pointer;
+          img {
+            transition: 0.5s;
+          }
+        }
+      }
+      .bottom {
+        overflow: hidden;
+        transition: 0.5s;
+        border-bottom: 0.3px solid #252525;
+
+        .product {
+          display: flex;
+          justify-content: space-between;
+          padding: 20px 0;
+          align-items: center;
+          .box_img {
+            p {
+              padding: 10px;
+            }
+          }
+          .box_img,
+          .box_size,
+          .box_count,
+          .box_price {
+            align-items: center;
+            display: flex;
+            img {
+              width: 130px;
+              height: 150px;
+            }
+            p {
+              font-family: 'Raleway';
+              font-style: normal;
+              font-weight: 300;
+              font-size: 16px;
+              line-height: 19px;
+              /* identical to box height */
+              margin-left: 5px;
+
+              color: #252525;
+            }
+          }
+          .box_color {
+            border: 0.3px solid #252525;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            .color {
+              color: #6f83a4;
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              margin-top: 2px;
+
+              background: #6f83a4;
+            }
+          }
+          .box_price {
+            align-items: center;
+            p {
+              margin-top: 5px;
+            }
+            h5 {
+              font-family: 'Raleway' !important;
+              font-style: normal !important;
+              font-weight: 700;
+              font-size: 16px;
+              line-height: 19px;
+              /* identical to box height */
+              margin-left: 10px;
+              margin-bottom: 10px;
+
+              text-align: center;
+
+              color: #252525;
+            }
+          }
+        }
+      }
+    }
+  }
+  .account_settings {
+    margin: 40px 0;
+    h5 {
+      font-family: 'Raleway';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 19px;
+      color: #252525;
+      margin-top: 30px;
+    }
+    .personal_data_input {
+      input {
+        width: 270px;
+        height: 50px;
+        border: 0.5px solid #252525;
+        padding: 0 10px;
+
+      }
+    }
+    .addres_data {
+      input {
+        width: 560px;
+        padding: 0 10px;
+        height: 50px;
+        border: 0.5px solid #252525;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}

@@ -26,7 +26,7 @@ const RegisterBlock = ({ display, onClose }) => {
       <div className={styles.close}>
         <img onClick={onClose} src={close} alt="Close" />
       </div>
-      <h3>Authorization</h3>
+      <h3>Registration</h3>
       <form onSubmit={handleSubmit(submitForm)}>
         <div className="form-group">
           <label htmlFor="Name"></label>

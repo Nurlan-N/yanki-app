@@ -1,16 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo_gold from '../assets/img/icon/logo_gold.png';
-import search from '../assets/img/icon/search_black.png';
+import Toast from 'react-bootstrap/Toast';
 import profile from '../assets/img/icon/profile_gold.png';
 import wishlist from '../assets/img/icon/wishlist_gold.png';
 import basket from '../assets/img/icon/basket_gold.png';
 import SearchBlock from '../components/SearchBlock';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, getUserDetails } from '../redux/slices/authSlice ';
+import { useGetUserDetailsQuery } from '../redux/function/authService';
 
-const Header = ({ onClickCart, onClickProfile }) => {
+const Header = ({ onClickCart, onCliclkSignIn }) => {
+  const { userInfo, userToken } = useSelector((state) => state.auth);
+  const [show, setShow] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userToken) {
+      setShow(true);
+    }
+  }, [userToken, dispatch]);
+
+  const { data } = useGetUserDetailsQuery('userDetails', {
+    pollingInterval: 900000,
+  });
+
   return (
     <header>
+      <div className="test">
+        <Toast className="toaster" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+          <Toast.Header>
+            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+            <strong className="me-auto">YANKI</strong>
+            <small>11 mins ago</small>
+          </Toast.Header>
+          <Toast.Body>Hello, {data !== undefined ? data.name : ''}</Toast.Body>
+        </Toast>
+      </div>
       <div className="nav_bar col-lg-12 col-md-12">
         <div className="container">
           <div className="row">
@@ -31,14 +59,23 @@ const Header = ({ onClickCart, onClickProfile }) => {
             </div>
             <div className="menu col-lg-4 col-md-10">
               <SearchBlock />
-              <Link to="#">
-                <img onClick={onClickProfile} src={profile} alt="profile" />
-              </Link>
+              {userToken !== null ? (
+                <Link to="/myaccount">
+                  <img src={profile} alt="profile" />
+                </Link>
+              ) : (
+                <Link to="#">
+                  <img onClick={onCliclkSignIn} src={profile} alt="profile" />
+                </Link>
+              )}
               <Link to="/wishlist">
                 <img src={wishlist} alt="wishlist" />
               </Link>
               <Link to="/cart">
                 <img src={basket} alt="basket" />
+              </Link>
+              <Link to="#" onClick={() => dispatch(logout())}>
+                Exit
               </Link>
             </div>
           </div>
