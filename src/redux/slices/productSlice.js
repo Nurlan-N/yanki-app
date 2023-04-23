@@ -13,6 +13,7 @@ const initialState = {
   pageCount: 0,
   productId: 0,
   products: [],
+  favorites: false,
   status: 'loading',
 };
 const productSlice = createSlice({
@@ -29,6 +30,9 @@ const productSlice = createSlice({
     setPageCount(state, action) {
       state.pageCount = action.payload;
     },
+    setFavorites(state,action){
+      state.favorites = action.payload
+    }
   },
   extraReducers: {
     [fetchProduct.pending]: (state, action) => {
@@ -36,7 +40,7 @@ const productSlice = createSlice({
       state.products = [];
     },
     [fetchProduct.fulfilled]: (state, action) => {
-      state.products = action.payload;
+      state.products = action.payload.product;
       state.pageCount = action.payload.count
       state.status = 'success';
     },
@@ -47,7 +51,7 @@ const productSlice = createSlice({
   },
 });
 
-export const { setItems,setProductId,setPageCount } = productSlice.actions;
+export const { setItems,setProductId,setPageCount,setFavorites } = productSlice.actions;
 
 export default productSlice.reducer;
 

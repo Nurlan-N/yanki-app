@@ -60,17 +60,25 @@ const Header = ({ onClickCart, onCliclkSignIn }) => {
             <div className="menu col-lg-4 col-md-10">
               <SearchBlock />
               {userToken !== null ? (
-                <Link to="/myaccount">
-                  <img src={profile} alt="profile" />
-                </Link>
+                <>
+                  <Link to="/myaccount">
+                    <img src={profile} alt="profile" />
+                  </Link>
+                  <Link to="/wishlist">
+                    <img src={wishlist} alt="wishlist" />
+                  </Link>
+                </>
               ) : (
-                <Link to="#">
-                  <img onClick={onCliclkSignIn} src={profile} alt="profile" />
-                </Link>
+                <>
+                  <Link to="#">
+                    <img onClick={onCliclkSignIn} src={profile} alt="profile" />
+                  </Link>
+                  <Link to="/#">
+                    <img onClick={onCliclkSignIn} src={wishlist} alt="wishlist" />
+                  </Link>
+                </>
               )}
-              <Link to="/wishlist">
-                <img src={wishlist} alt="wishlist" />
-              </Link>
+
               <Link to="/cart">
                 <img src={basket} alt="basket" />
               </Link>

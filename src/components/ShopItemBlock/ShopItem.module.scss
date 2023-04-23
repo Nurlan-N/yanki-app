@@ -1,6 +1,6 @@
 .wrapper {
   text-align: center;
-  margin: 20px 0;
+  margin: 20px 7px;
   .shop_block {
     position: relative;
     .image {
@@ -21,9 +21,11 @@
       right: 0;
       top: 0;
       background: #e0bea2;
+      transition: 0.3s;
       border-radius: 0px 0px 0px 20px;
-      img {
+      .heart {
         position: absolute;
+        color: #ffffff;
         left: 31%;
         top: 26%;
       }

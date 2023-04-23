@@ -9,7 +9,8 @@ import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { useRef } from 'react';
-import { fetchProduct, setPageCount } from '../redux/slices/productSlice';
+import { fetchProduct, setPageCount, setFavorites } from '../redux/slices/productSlice';
+import { useGetUserWishlistQuery } from '../redux/function/authService';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -61,6 +62,7 @@ const CategorySelect = () => (
 );
 
 const Shop = () => {
+  const [favorites, setFavorites] = useState([]);
   const isSearch = useRef(false);
   const isMounted = useRef(false);
   const navigate = useNavigate();
@@ -69,7 +71,6 @@ const Shop = () => {
   const { categoryId, currentPage } = useSelector((state) => state.filter);
   const { products, status, pageCount } = useSelector((state) => state.product);
 
-  console.log(pageCount);
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
     dispatch(setCurrentPage(1));
@@ -133,6 +134,38 @@ const Shop = () => {
       }),
     );
   };
+  // const { data } = useGetUserWishlistQuery('userWishlist', {
+  //   pollingInterval: 900000,
+  // });
+  //setFavorites(data)
+  const AddToFavorite = async (item) => {
+    try {
+      const token = localStorage.getItem('userToken');
+      if (favorites.find((pr) => Number(pr.id) === Number(item.id))) {
+        await axios.delete(`https://localhost:44389/api/wishlist/delete?id=${item.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(item.id)));
+      } else {
+        const { data } = await axios.post(
+          `https://localhost:44389/api/wishlist/add?id=${item.id}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert('Favoritler yuklenmedi');
+    }
+  };
 
   return (
     <div className="show-wrapper">
@@ -170,9 +203,16 @@ const Shop = () => {
                   </div>
                 </div>
                 <div className="shop-block">
-                  <div className="items d-flex justify-content-between">
-                    <ShopItemBlock product={products.product} />
-                    <div className="mob-content d-flex flex-wrap justify-content-between"></div>
+                  <div className="items d-flex ">
+                    {(status == 'loading' ? [...Array(12)] : products).map((item, index) => (
+                      <ShopItemBlock
+                        key={item ? item.id : index}
+                        onFavorite={(item) => AddToFavorite(item)}
+                        loading={status}
+                        {...item}
+                      />
+                    ))}
+                    ;<div className="mob-content d-flex flex-wrap justify-content-between"></div>
                   </div>
                 </div>
                 <Pagination count={Math.ceil(pageCount / 8)} onChangePage={onChangePage} />

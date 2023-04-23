@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { registerUser, userLogin} from '../function/authAction';
-import { redirect } from 'react-router-dom';
 
 const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
 
 const initialState = {
   loading: false,
   userInfo: null,
+  userWishlist: [],
   userToken,
   error: null,
   login: false,
@@ -18,7 +18,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('userToken'); // deletes token from storage
+      localStorage.removeItem('userToken');
       state.loading = false;
       state.userInfo = null;
       state.login = false;
@@ -53,7 +53,7 @@ const authSlice = createSlice({
     },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.success = true; // registration successful
+      state.success = true; 
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
