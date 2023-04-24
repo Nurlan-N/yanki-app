@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PageMap from '../components/PageMap';
 import ButtonSubmit from '../components/ButtonSubmit';
 import m1 from '../assets/img/detail/1.png';
@@ -7,8 +7,12 @@ import Select from 'react-select';
 import ShopItem from '../components/ShopItemBlock';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
+import { setProductId, setProduct } from '../redux/slices/productSlice';
+import { useNavigate } from 'react-router-dom';
+import { setFilters } from '../redux/slices/filterSlice';
+import qs from 'qs';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -19,42 +23,50 @@ const SizeSelect = () => (
   <Select className="size-select" options={sizeOptions} placeholder="Size.." />
 );
 const Detail = () => {
-  const { productId } = useSelector((state) => state.product);
-  const [product, setProduct] = useState([]);
+  //const { productId } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+
+  const [product, setProduct] = useState({});
   const [similarProducts, setSimilarProducts] = useState([]);
+  const [productId, setProductId] = useState(() => {
+    const storedProductId = localStorage.getItem('productId');
+    return storedProductId ? parseInt(storedProductId) : 0;
+  });
+
+  const [categoryId, setCategoryId] = useState(() => {
+    const storedProductId = localStorage.getItem('categoryId');
+    return storedProductId ? parseInt(storedProductId) : 0;
+  });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    fechProduct();
+    fechSimilarProducts();
     window.scrollTo(0, 0);
-    if (productId > 0) {
-      fechProducts();
-    }
+    const queryString = qs.stringify({
+      productId,
+    });
+    navigate(`?${queryString}`);
   }, [productId]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (product.categoryId > 0) {
-      fechSimilarProducts();
-    }
-  }, [product]);
-
-  async function fechProducts() {
+  const fechProduct = async () => {
     try {
-      const { data } = await axios.get(`https://localhost:44389/api/product/${productId}`);
+      const { data } = await axios.get(`https://localhost:44389/api/Product/${productId}`);
       setProduct(data);
     } catch (error) {
-      alert('Product data sehv+');
+      alert('Datada Sehv');
     }
-  }
-  async function fechSimilarProducts() {
+  };
+  const fechSimilarProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://localhost:44389/api/product?page=1&limit=8&categoryId=${product.categoryId}`,
+        `https://localhost:44389/api/product?page=1&limit=8&categoryId=${categoryId}`,
       );
       setSimilarProducts(data.product);
     } catch (error) {
       alert('Product data sehv+');
     }
-  }
-  //console.log(similarProducts);
+  };
   return (
     <div className="detail_wrapper">
       <div className="container">
@@ -114,7 +126,7 @@ const Detail = () => {
             <h5>Similar Products</h5>
           </div>
           <div className="similar_products">
-            <ShopItem product={similarProducts} />
+            <ShopItem product={similarProducts.length >0 ? similarProducts : ''}/>
           </div>
         </div>
       </div>

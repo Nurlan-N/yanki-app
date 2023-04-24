@@ -6,32 +6,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useEffect } from 'react';
 
-
-const ShopItem = ({
-  id,
-  title,
-  price,
-  image,
-  onFavorite,
-  favorited = false,
-  orderCheck = false,
-}) => {
+const ShopItem = ({ id, title, price, image, onFavorite,categoryId }) => {
   const dispatch = useDispatch();
-  const [addToFavorite, setAddFavorite] = useState(favorited);
+  const [addToFavorite, setAddFavorite] = useState(false);
   const { wishlist } = useSelector((state) => state.product);
   const addFavoriteHandler = () => {
     setAddFavorite(!addToFavorite);
     onFavorite({ id, title, price, image });
   };
-  const productIdHandler = async (e) => {
-    dispatch(setProductId(e));
+  const productIdHandler = async (id,categoryId) => {
+    localStorage.setItem('productId', id);
+    dispatch({
+      type: 'SET_PRODUCT_ID',
+      payload: id,
+    });
+    localStorage.setItem("categoryId", categoryId);
+    dispatch({
+      type: "SET_CATRGORY_ID",
+      payload: id,
+    });
   };
-
+ 
+  console.log(title);
   return (
     <>
       <div className={styles.wrapper} key={id}>
         <div className={styles.shop_block}>
-          <Link onClick={() => productIdHandler(id)} to={`/detail`}>
+          <Link onClick={() => productIdHandler(id,categoryId)} to={`/detail`}>
             <img className="image" src={image} alt="Item" />
             <h4 className={styles.title}>{title}</h4>
             <h5 className={styles.price}>{price}$</h5>

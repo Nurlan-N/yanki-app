@@ -9,7 +9,7 @@ import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { useRef } from 'react';
-import { fechWishlist, fetchProduct } from '../redux/slices/productSlice';
+import { fechWishlist, fetchProducts } from '../redux/slices/productSlice';
 import Cookies from 'js-cookie';
 
 const sizeOptions = [
@@ -70,7 +70,7 @@ const Shop = () => {
 
   const { categoryId, currentPage } = useSelector((state) => state.filter);
   const { products, status, pageCount, wishlist } = useSelector((state) => state.product);
-
+  
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
     dispatch(setCurrentPage(1));
@@ -99,7 +99,7 @@ const Shop = () => {
         setFilters({
           ...params,
         }),
-        fetchProduct(params),
+        fetchProducts(params),
       );
       isSearch.current = true;
     }
@@ -129,7 +129,7 @@ const Shop = () => {
 
   const getProducts = () => {
     dispatch(
-      fetchProduct({
+      fetchProducts({
         currentPage,
         categoryId,
       }),
@@ -160,14 +160,11 @@ const Shop = () => {
         );
         //Cookies.set('wishlist', JSON.stringify(favorites))
         setFavorites((prev) => [...prev, data]);
-        console.log(data);
       }
     } catch (error) {
       alert('Favoritler yuklenmedi');
     }
   };
-    //console.log(JSON.parse(Cookies.get('products')));
-
   return (
     <div className="show-wrapper">
       <div className="container">
