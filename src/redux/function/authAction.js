@@ -30,7 +30,6 @@ export const userLogin = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      // configure header's Content-Type as JSON
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -41,15 +40,23 @@ export const userLogin = createAsyncThunk(
         { email, password },
         config
       )
-      // store user's token in local storage
+      const response = await axios.get(
+        `${backendURL}/api/auth/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${data}`,
+          },
+        }
+        
+      ) 
       localStorage.setItem('userToken', data)
+      localStorage.setItem('userData', response.data)
       return data
     } catch (error) {
-      // return custom error message from API if any
       if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message)
+        return rejectWithValue(error.response.data.message('test'))
       } else {
-        return rejectWithValue(error.message)
+        return rejectWithValue(error.message('test2'))
       }
     }
   }

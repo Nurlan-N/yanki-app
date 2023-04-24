@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageMap from '../components/PageMap';
 import Submit from '../components/ButtonSubmit';
 import row from '../assets/img/icon/down.png';
 import prImage from '../assets/img/product/min-1.svg';
-import { logout } from '../redux/slices/authSlice ';
+import { logout , setCredentials} from '../redux/slices/authSlice ';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -13,9 +13,14 @@ const MyAccount = () => {
   const [selectButton, setSellectButton] = useState(1);
   const [showItems, setShowItems] = useState(false);
   const dispatch = useDispatch();
-  const { userToken } = useSelector((state) => state.auth);
+  const { userToken,userInfo } = useSelector((state) => state.auth);
+  console.log(userInfo);
 
-
+  useEffect(()=>{
+    dispatch(
+      setCredentials()
+    )
+  },[])
   const showOrderItems = () => {
     setShowItems(!showItems);
   };

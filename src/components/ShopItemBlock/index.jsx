@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import imageUrl from '../../assets/img/categoryimg/1.png';
 import styles from './ShopItem.module.scss';
-import wishlistIcon from '../../assets/img/icon/productWishlist.png';
 import { Link } from 'react-router-dom';
 import { setProductId } from '../../redux/slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiOutlineHeart } from 'react-icons/ai';
-import axios from 'axios';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { useEffect } from 'react';
+
 
 const ShopItem = ({
   id,
@@ -17,19 +16,25 @@ const ShopItem = ({
   onPlus,
   favorited = false,
   loading = false,
-  orderCheck = false
+  orderCheck = false,
 }) => {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const [addToFavorite, setAddFavorite] = useState(favorited);
-
+  const { wishlist } = useSelector((state) => state.product);
   const addFavoriteHandler = () => {
     setAddFavorite(!addToFavorite);
     onFavorite({ id, title, price, image });
   };
   const productIdHandler = async (e) => {
-    dispach(setProductId(e));
+    dispatch(setProductId(e));
   };
 
+  // const [myData, setMyData] = useState(null);
+  // useEffect(() => {
+  //   const data = Cookies.get("wishlist");
+  //   setMyData(data.substring());
+  // }, []);
+  // console.log(myData);
   return (
     <>
       <div className={styles.wrapper} key={id}>
@@ -43,9 +48,15 @@ const ShopItem = ({
             onClick={addFavoriteHandler}
             className={styles.wishlist}
             style={
-              addToFavorite ? { background: '#CCA88A' } : { background: '#e0bea2' }
+              addToFavorite || wishlist.some((item) => item.id === id)
+                ? { background: '#CCA88A' }
+                : { background: '#e0bea2' }
             }>
-            <AiOutlineHeart className={styles.heart} />
+            {addToFavorite || wishlist.some((item) => item.id === id) ? (
+              <AiFillHeart className={styles.heart} />
+            ) : (
+              <AiOutlineHeart className={styles.heart} />
+            )}
           </button>
           <div className="shop-block__bottom">
             <div className={styles.size}>
