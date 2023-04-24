@@ -6,6 +6,8 @@ import prImage from '../assets/img/product/min-1.svg';
 import { logout , setCredentials} from '../redux/slices/authSlice ';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useGetUserDetailsQuery } from '../redux/function/authService';
+
 
 
 const MyAccount = () => {
@@ -29,6 +31,10 @@ const MyAccount = () => {
     setSellectButton(e);
     setButtonColor('#CCA88A');
   };
+  const { data } = useGetUserDetailsQuery('userDetails', {
+    pollingInterval: 900000,
+  });
+  console.log(data);
   return (
     <div className="account_wrapper" style={userToken ? {} : {display: 'none'}}>
       <div className="container">
@@ -194,16 +200,16 @@ const MyAccount = () => {
             <div className="personal_data">
               <h5>Personal Information:</h5>
               <div className="personal_data_input d-flex justify-content-between">
-                <input type="text" defaultValue={"Nurlan"} />
-                <input type="text" defaultValue={"Nazarov"}/>
-                <input type="text" defaultValue={"Nazarov.Nurlan@gmail.com"}/>
-                <input type="text" defaultValue={"+99455-582-86-99"}/>
+                <input type="text" defaultValue={data ? data.name : '' } />
+                <input type="text" defaultValue={data ? data.surname : '' }/>
+                <input type="text" defaultValue={data ? data.email : '' }/>
+                <input type="text" defaultValue={data ? data.phone : '' }/>
               </div>
             </div>
             <h5>Delivery Address:</h5>
             <div className="addres_data d-flex justify-content-between">
-              <input type="text"  defaultValue={"Sumqayit"}/>
-              <input type="text" defaultValue={"5000"}/>
+              <input type="text"  defaultValue={data ? data.country : '' }/>
+              <input type="text" defaultValue={data ? data.postalcode : '' }/>
             </div>
             <Submit title={'UPDATE INFO'} />
           </form>

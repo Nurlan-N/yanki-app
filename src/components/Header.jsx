@@ -8,7 +8,6 @@ import SearchBlock from '../components/SearchBlock';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, getUserDetails } from '../redux/slices/authSlice ';
 import { useGetUserDetailsQuery } from '../redux/function/authService';
 
 const Header = ({ onClickCart, onCliclkSignIn }) => {
@@ -36,7 +35,7 @@ const Header = ({ onClickCart, onCliclkSignIn }) => {
             <strong className="me-auto">YANKI</strong>
             <small>11 mins ago</small>
           </Toast.Header>
-          <Toast.Body>Hello, {data !== undefined ? data.name : ''}</Toast.Body>
+          <Toast.Body>Hello, {data !== undefined ? data.name + "  " + data.surname : ''}</Toast.Body>
         </Toast>
       </div>
       <div className="nav_bar col-lg-12 col-md-12">
@@ -82,9 +81,7 @@ const Header = ({ onClickCart, onCliclkSignIn }) => {
               <Link to="/cart">
                 <img src={basket} alt="basket" />
               </Link>
-              <Link to="#" onClick={() => dispatch(logout())}>
-                Exit
-              </Link>
+              
             </div>
           </div>
         </div>

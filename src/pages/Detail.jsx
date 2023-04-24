@@ -54,6 +54,7 @@ const Detail = () => {
       alert('Product data sehv+');
     }
   }
+  //console.log(similarProducts);
   return (
     <div className="detail_wrapper">
       <div className="container">

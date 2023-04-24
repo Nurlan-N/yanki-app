@@ -140,7 +140,7 @@ const Shop = () => {
     try {
       const token = localStorage.getItem('userToken');
       if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
-        await axios.delete(`https://localhost:44389/api/wishlist/delete?id=${item.id}`, {
+        await axios.delete(`https://localhost:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -160,6 +160,7 @@ const Shop = () => {
         );
         //Cookies.set('wishlist', JSON.stringify(favorites))
         setFavorites((prev) => [...prev, data]);
+        console.log(data);
       }
     } catch (error) {
       alert('Favoritler yuklenmedi');

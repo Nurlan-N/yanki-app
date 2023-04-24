@@ -13,9 +13,7 @@ const ShopItem = ({
   price,
   image,
   onFavorite,
-  onPlus,
   favorited = false,
-  loading = false,
   orderCheck = false,
 }) => {
   const dispatch = useDispatch();
@@ -29,12 +27,6 @@ const ShopItem = ({
     dispatch(setProductId(e));
   };
 
-  // const [myData, setMyData] = useState(null);
-  // useEffect(() => {
-  //   const data = Cookies.get("wishlist");
-  //   setMyData(data.substring());
-  // }, []);
-  // console.log(myData);
   return (
     <>
       <div className={styles.wrapper} key={id}>
