@@ -57,9 +57,6 @@ const categoryOptions = [
   { value: '7', label: 'Jackets' },
   { value: '8', label: 'Parks' },
 ];
-const CategorySelect = () => (
-  <Select className="category-select" options={categoryOptions} placeholder="Category.." />
-);
 
 const Shop = () => {
   const [favorites, setFavorites] = useState([]);
@@ -70,7 +67,7 @@ const Shop = () => {
 
   const { categoryId, currentPage } = useSelector((state) => state.filter);
   const { products, status, pageCount, wishlist } = useSelector((state) => state.product);
-  
+
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
     dispatch(setCurrentPage(1));
@@ -135,7 +132,14 @@ const Shop = () => {
       }),
     );
   };
- 
+  const CategorySelect = () => (
+    <Select
+      className="category-select"
+      onChange={console.log(Select)}
+      options={categoryOptions}
+      placeholder="Category.."
+    />
+  );
   const AddToFavorite = async (item) => {
     try {
       const token = localStorage.getItem('userToken');
@@ -218,26 +222,26 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="mobile-version">
-            <PageMap title={'Shop'} />
-            <div className="mob-category">{CategorySelect()}</div>
-            <div className="mob-filter mt-5 d-flex">
-              {SizeSelect()}
-              {ColorSelect()}
-              {PriceSelect()}
-              {SortSelect()}
-            </div>
-
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
-            <ShopItemBlock />
+        </div>
+        <div className="mobile-version">
+          <PageMap title={'Shop'} />
+          <div className="mob-category">{CategorySelect()}</div>
+          <div className="mob-filter mt-5 d-flex">
+            {SizeSelect()}
+            {ColorSelect()}
+            {PriceSelect()}
+            {SortSelect()}
           </div>
+
+          {(status == 'loading' ? [...Array(12)] : products).map((item, index) => (
+            <ShopItemBlock
+              key={item ? item.id : index}
+              onFavorite={(item) => AddToFavorite(item)}
+              wishlist={wishlist}
+              loading={status}
+              {...item}
+            />
+          ))}
         </div>
       </div>
     </div>

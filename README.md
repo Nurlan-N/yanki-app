@@ -5,3 +5,4 @@ npm install axios
 npm install @reduxjs/toolkit react-redux
 npm install qs
 npm install react-paginate --save
+npm install react-toastify

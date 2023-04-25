@@ -61,5 +61,32 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
+export const userData = createAsyncThunk(
+  'auth/updateuser',
+  async (data, { rejectWithValue }) => {
+    const token = localStorage.getItem('userToken');
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${token}`
+        },
+      };
+      await axios.post(
+        `${backendURL}/api/auth/updateuser`,
+        data,
+        config,
+      );
+      localStorage.removeItem('userToken');
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
+
 
 

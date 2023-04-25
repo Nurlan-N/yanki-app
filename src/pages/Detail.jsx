@@ -23,7 +23,7 @@ const SizeSelect = () => (
   <Select className="size-select" options={sizeOptions} placeholder="Size.." />
 );
 const Detail = () => {
-  //const { productId } = useSelector((state) => state.product);
+  const {wishlist } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState({});
@@ -65,6 +65,30 @@ const Detail = () => {
       setSimilarProducts(data.product);
     } catch (error) {
       alert('Product data sehv+');
+    }
+  };
+  const AddToFavorite = async (item) => {
+    try {
+      const token = localStorage.getItem('userToken');
+      if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
+        await axios.delete(`https://localhost:44389/api/wishlist/delete/${item.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } else {
+        const { data } = await axios.post(
+          `https://localhost:44389/api/wishlist/add?id=${item.id}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+      }
+    } catch (error) {
+      alert(error);
     }
   };
   return (
@@ -126,7 +150,10 @@ const Detail = () => {
             <h5>Similar Products</h5>
           </div>
           <div className="similar_products">
-            <ShopItem product={similarProducts.length >0 ? similarProducts : ''}/>
+            {similarProducts &&
+              similarProducts.map((item) => (
+                <ShopItem key={item.id} {...item} onFavorite={(item) => AddToFavorite(item)} />
+              ))}
           </div>
         </div>
       </div>

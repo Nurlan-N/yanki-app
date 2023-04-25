@@ -26,8 +26,6 @@ const ShopItem = ({ id, title, price, image, onFavorite,categoryId }) => {
       payload: id,
     });
   };
- 
-  console.log(title);
   return (
     <>
       <div className={styles.wrapper} key={id}>
@@ -41,7 +39,7 @@ const ShopItem = ({ id, title, price, image, onFavorite,categoryId }) => {
             onClick={addFavoriteHandler}
             className={styles.wishlist}
             style={
-              addToFavorite || wishlist.some((item) => item.id === id)
+              addToFavorite && wishlist.some((item) => item.id === id)
                 ? { background: '#CCA88A' }
                 : { background: '#e0bea2' }
             }>

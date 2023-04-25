@@ -3,40 +3,45 @@ import PageMap from '../components/PageMap';
 import Submit from '../components/ButtonSubmit';
 import row from '../assets/img/icon/down.png';
 import prImage from '../assets/img/product/min-1.svg';
-import { logout , setCredentials} from '../redux/slices/authSlice ';
+import { logout, setCredentials } from '../redux/slices/authSlice ';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { useGetUserDetailsQuery } from '../redux/function/authService';
+import { userData } from '../redux/function/authAction';
 
-
+import axios from 'axios';
 
 const MyAccount = () => {
-  const [buttonColor, setButtonColor] = useState('');
-  const [selectButton, setSellectButton] = useState(1);
-  const [showItems, setShowItems] = useState(false);
   const dispatch = useDispatch();
-  const { userToken,userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
+  const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
+  const { userToken, userInfo } = useSelector((state) => state.auth);
+  const { register, handleSubmit } = useForm();
 
-  useEffect(()=>{
-    dispatch(
-      setCredentials()
-    )
-  },[])
-  const showOrderItems = () => {
-    setShowItems(!showItems);
+  const [buttonColor, setButtonColor] = useState('');
+  const [selectButton, setSelectButton] = useState(2);
+  const [showItems, setShowItems] = useState(false);
+  const submitForm = (data) => {
+    if (data.Password !== data.confirmPassword) {
+      alert('Password mismatch');
+    }
+    console.log(data);
+    //dispatch(userData(data));
   };
+
+  useEffect(() => {
+    dispatch(setCredentials());
+  }, []);
+
+  const showOrderItems = () => setShowItems(!showItems);
 
   const handleButtonClick = (e) => {
-    setSellectButton(e);
+    setSelectButton(e);
     setButtonColor('#CCA88A');
   };
-  const { data } = useGetUserDetailsQuery('userDetails', {
-    pollingInterval: 900000,
-  });
-  console.log(data);
+
   return (
-    <div className="account_wrapper" style={userToken ? {} : {display: 'none'}}>
+    <div className="account_wrapper" style={userToken ? {} : { display: 'none' }}>
       <div className="container">
         <div className="lg-version">
           <PageMap title={'My Account'} />
@@ -49,7 +54,11 @@ const MyAccount = () => {
             </div>
             <div
               className="menu_item center_btn"
-              style={selectButton === 2 ? { backgroundColor: buttonColor } : null}
+              style={
+                selectButton === 2
+                  ? { backgroundColor: buttonColor }
+                  : { backgroundColor: '#ffffff' }
+              }
               onClick={() => handleButtonClick(2)}>
               <button>Personal Data</button>
             </div>
@@ -57,7 +66,9 @@ const MyAccount = () => {
               className="menu_item"
               style={selectButton === 3 ? { backgroundColor: buttonColor } : null}
               onClick={() => handleButtonClick(3)}>
-              <Link to='/' onClick={() => dispatch(logout())}>Exit</Link>
+              <Link to="/" onClick={() => dispatch(logout())}>
+                Exit
+              </Link>
             </div>
           </div>
         </div>
@@ -196,20 +207,102 @@ const MyAccount = () => {
           </div>
         </div>
         <div className="account_settings" style={selectButton === 2 ? {} : { display: 'none' }}>
-          <form action="">
+          <form onSubmit={handleSubmit(submitForm)}>
             <div className="personal_data">
               <h5>Personal Information:</h5>
               <div className="personal_data_input d-flex justify-content-between">
-                <input type="text" defaultValue={data ? data.name : '' } />
-                <input type="text" defaultValue={data ? data.surname : '' }/>
-                <input type="text" defaultValue={data ? data.email : '' }/>
-                <input type="text" defaultValue={data ? data.phone : '' }/>
+                <input
+                  type="text"
+                  id="name"
+                  {...register('Name')}
+                  defaultValue={data?.name}
+                  placeholder={'Name'}
+                  //onChange={(e) => setName(e.target.value)}
+                />
+
+                <input
+                  type="text"
+                  id="surname"
+                  defaultValue={data?.surname}
+                  {...register('Surname')}
+                  placeholder={'Surname'}
+                  //onChange={(e) => setSurname(e.target.value)}
+                />
+
+                <input
+                  type="email"
+                  id="email"
+                  defaultValue={data?.email}
+                  {...register('Email')}
+                  placeholder={'Email'}
+                  //onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
-            <h5>Delivery Address:</h5>
+            <div className="username personal_data_input mt-5 d-flex justify-content-between">
+              <input
+                type="text"
+                id="username"
+                defaultValue={data?.name}
+                {...register('Username')}
+                placeholder={'Username'}
+                //onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                type="tel"
+                id="phone"
+                defaultValue={data?.phone}
+                {...register('Phone')}
+                placeholder={'Phone'}
+                //onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <h5>Password:</h5>
             <div className="addres_data d-flex justify-content-between">
-              <input type="text"  defaultValue={data ? data.country : '' }/>
-              <input type="text" defaultValue={data ? data.postalcode : '' }/>
+              <input
+                style={{ width: '20%' }}
+                type="password"
+                id="password"
+                {...register('OldPassword')}
+                placeholder={'Old Password'}
+                //onChange={(e) => setOldPassword(e.target.value)}
+              />
+
+              <input
+                type="password"
+                style={{ width: '30%' }}
+                id="newPassword"
+                {...register('password')}
+                placeholder={'New Password'}
+                //onChange={(e) => setPassword(e.target.value)}
+              />
+              <input
+                type="password"
+                style={{ width: '30%' }}
+                id="currentPassword"
+                {...register('confirimPassword')}
+                placeholder={'Confirim Password'}
+                //onChange={(e) => checkNewPassword(e.target.value)}
+              />
+            </div>
+            <h5>Delivery Address:</h5>
+            <div className="addres_data d-flex justify-content-between mb-3">
+              <input
+                type="text"
+                id="address"
+                defaultValue={data?.country}
+                {...register('country')}
+                placeholder={'Country'}
+                //onChange={(e) => setAddress(e.target.value)}
+              />
+              <input
+                type="text"
+                id="postalcode"
+                defaultValue={data?.postalcode}
+                {...register('postalCode')}
+                placeholder={'Postal Code'}
+                //onChange={(e) => setPostalCode(e.target.value)}
+              />
             </div>
             <Submit title={'UPDATE INFO'} />
           </form>
