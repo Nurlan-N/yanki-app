@@ -18,6 +18,15 @@ export const fechWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', asy
   });
   return data;
 });
+export const fechBasket = createAsyncThunk('basket/fetchBasketStatus', async () => {
+  const token = localStorage.getItem('userToken');
+  const { data } = await axios.get(`https://localhost:44389/api/Basket`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+});
 
 
 
@@ -27,8 +36,10 @@ const initialState = {
   products: [],
   product: {},
   wishlist: [],
+  basket:[],
   favorites: false,
   wishlistStatus: 'loading',
+  basketStatus: 'loading',
   status: 'loading',
 };
 const productSlice = createSlice({
@@ -71,13 +82,24 @@ const productSlice = createSlice({
       state.wishlist = [];
     },
     [fechWishlist.fulfilled]: (state, action) => {
-      //console.log(action.payload);
       state.wishlist = action.payload;
       state.wishlistStatus = 'success';
     },
     [fechWishlist.rejected]: (state, action) => {
       state.wishlistStatus = 'error';
       state.wishlist = [];
+    },
+    [fechBasket.pending]: (state, action) => {
+      state.basketStatus = 'loading';
+      state.basket = [];
+    },
+    [fechBasket.fulfilled]: (state, action) => {
+      state.basket = action.payload;
+      state.basketStatus = 'success';
+    },
+    [fechBasket.rejected]: (state, action) => {
+      state.basketStatus = 'error';
+      state.basket = [];
     },
   },
 });

@@ -23,11 +23,12 @@ const SizeSelect = () => (
   <Select className="size-select" options={sizeOptions} placeholder="Size.." />
 );
 const Detail = () => {
-  const {wishlist } = useSelector((state) => state.product);
+  const { wishlist } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState({});
   const [similarProducts, setSimilarProducts] = useState([]);
+  const token = localStorage.getItem('userToken');
   const [productId, setProductId] = useState(() => {
     const storedProductId = localStorage.getItem('productId');
     return storedProductId ? parseInt(storedProductId) : 0;
@@ -69,7 +70,6 @@ const Detail = () => {
   };
   const AddToFavorite = async (item) => {
     try {
-      const token = localStorage.getItem('userToken');
       if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
         await axios.delete(`https://localhost:44389/api/wishlist/delete/${item.id}`, {
           headers: {
@@ -87,6 +87,17 @@ const Detail = () => {
           },
         );
       }
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const AddToBasket = async (id) => {
+    try {
+      await axios.post(`https://localhost:44389/api/basket/add?id=${id}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     } catch (error) {
       alert(error);
     }
@@ -117,7 +128,12 @@ const Detail = () => {
               <form action="">
                 <div className="select_size">{SizeSelect()}</div>
                 <div className="cart_and_wishlist">
-                  <div className="cart">
+                  <div
+                    className="cart"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      AddToBasket(product.id);
+                    }}>
                     <ButtonSubmit title={'ADD TO CART'} />
                   </div>
                   <div className="wishlist">

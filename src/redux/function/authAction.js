@@ -72,12 +72,13 @@ export const userData = createAsyncThunk(
           'authorization': `Bearer ${token}`
         },
       };
-      await axios.post(
+      const response = await axios.post(
         `${backendURL}/api/auth/updateuser`,
         data,
         config,
       );
-      localStorage.removeItem('userToken');
+      localStorage.setItem('userToken',response.data.token)
+      console.log("🚀 ~ file: authAction.js:81 ~ response.data.token:", response.data.token)
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);

@@ -135,7 +135,6 @@ const Shop = () => {
   const CategorySelect = () => (
     <Select
       className="category-select"
-      onChange={console.log(Select)}
       options={categoryOptions}
       placeholder="Category.."
     />

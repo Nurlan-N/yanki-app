@@ -16,18 +16,34 @@ const MyAccount = () => {
   const dispatch = useDispatch();
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
   const { userToken, userInfo } = useSelector((state) => state.auth);
-  const { register, handleSubmit } = useForm();
-
+  console.log("🚀 ~ file: MyAccount.jsx:19 ~ MyAccount ~ userInfo:", userInfo)
+  const { register, handleSubmit,setValue } = useForm();
   const [buttonColor, setButtonColor] = useState('');
+  const [name, setName] = useState('');
   const [selectButton, setSelectButton] = useState(2);
   const [showItems, setShowItems] = useState(false);
+
+
   const submitForm = (data) => {
-    if (data.Password !== data.confirmPassword) {
+    if (data.NewPassword.lenght >0 && data.NewPassword !== data.confirmPassword) {
       alert('Password mismatch');
     }
     console.log(data);
-    //dispatch(userData(data));
+    dispatch(userData(data));
   };
+
+  useEffect(()=>{
+    if (data) {
+      setValue('Name',data.name)
+      setValue('Surname',data.surname)
+      setValue('Email',data.email)
+      setValue('Phone',data.phone)
+      setValue('country',data.country)
+      setValue('postalCode',data.postalcode)
+      setValue('Username',data.username)
+      setName(data.name)
+    }
+  },[data])
 
   useEffect(() => {
     dispatch(setCredentials());
@@ -215,7 +231,7 @@ const MyAccount = () => {
                   type="text"
                   id="name"
                   {...register('Name')}
-                  defaultValue={data?.name}
+                  defaultValue={name}
                   placeholder={'Name'}
                   //onChange={(e) => setName(e.target.value)}
                 />
@@ -243,7 +259,7 @@ const MyAccount = () => {
               <input
                 type="text"
                 id="username"
-                defaultValue={data?.name}
+                defaultValue={data?.username}
                 {...register('Username')}
                 placeholder={'Username'}
                 //onChange={(e) => setUsername(e.target.value)}
@@ -263,8 +279,9 @@ const MyAccount = () => {
                 style={{ width: '20%' }}
                 type="password"
                 id="password"
-                {...register('OldPassword')}
-                placeholder={'Old Password'}
+                required={true} 
+                {...register('Password')}
+                placeholder={'Password'}
                 //onChange={(e) => setOldPassword(e.target.value)}
               />
 
@@ -272,7 +289,8 @@ const MyAccount = () => {
                 type="password"
                 style={{ width: '30%' }}
                 id="newPassword"
-                {...register('password')}
+                required={false}
+                {...register('NewPassword')}
                 placeholder={'New Password'}
                 //onChange={(e) => setPassword(e.target.value)}
               />
@@ -280,7 +298,8 @@ const MyAccount = () => {
                 type="password"
                 style={{ width: '30%' }}
                 id="currentPassword"
-                {...register('confirimPassword')}
+                required={false} 
+                {...register('ConfirimPassword')}
                 placeholder={'Confirim Password'}
                 //onChange={(e) => checkNewPassword(e.target.value)}
               />
@@ -289,6 +308,7 @@ const MyAccount = () => {
             <div className="addres_data d-flex justify-content-between mb-3">
               <input
                 type="text"
+                required={false} 
                 id="address"
                 defaultValue={data?.country}
                 {...register('country')}
@@ -298,6 +318,7 @@ const MyAccount = () => {
               <input
                 type="text"
                 id="postalcode"
+                required={false} 
                 defaultValue={data?.postalcode}
                 {...register('postalCode')}
                 placeholder={'Postal Code'}

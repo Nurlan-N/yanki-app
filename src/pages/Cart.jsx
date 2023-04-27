@@ -3,8 +3,14 @@ import PageMap from '../components/PageMap/index';
 import image from '../assets/img/categoryimg/1.png';
 import dltIcon from '../assets/img/icon/delete.png';
 import ButtonSubmit from '../components/ButtonSubmit';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Select from 'react-select';
+import { useDispatch, useSelector } from 'react-redux';
+import { fechBasket } from '../redux/slices/productSlice';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -15,56 +21,77 @@ const SizeSelect = () => (
   <Select className="size-select" options={sizeOptions} placeholder="Size.." />
 );
 const Cart = () => {
+  const { basket } = useSelector((state) => state.product);
+  const [basketState, setBasketState] = useState(false);
+  const [count, setCount] = useState(1);
+  const token = localStorage.getItem('userToken');
+
+  const handleDecrease = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const handleIncrease = () => {
+    setCount(count + 1);
+  };
+  const dispach = useDispatch();
+  useEffect(() => {
+    dispach(fechBasket());
+    setBasketState(false);
+  }, [basketState]);
+
+  const DeleteToBasket = async (id) => {
+    try {
+      await axios.delete(`https://localhost:44389/api/basket/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setBasketState(true);
+    } catch (error) {
+      alert(error);
+    }
+  };
   return (
     <div className="cart-wrapper">
       <div className="container">
         <PageMap title={'Cart'} />
         <h4>Your order</h4>
         <div className="order_items mt-3 ">
-          <div className="item d-flex align-items-center justify-content-between">
-            <div className="item_img">
-              <img src="Users\MSI\Desktop\yanki-app\src\assets\img\categoryimg\1.png" alt="" />
-            </div>
-            <div className="item_info mx-3">
-              <p>Кремовое пальто</p>
-            </div>
-            <div className="item_size">{SizeSelect()}</div>
-            <div className="item_count">
-              <button>-</button>
-              <input type="text" defaultValue={1} />
-              <button>+</button>
-            </div>
-            <div className="price">
-              <p>9450 $</p>
-            </div>
-            <div className="item_delete">
-              <button>
-                <img width={25} height={25} src={dltIcon} alt="" />
-              </button>
-            </div>
-          </div>
-          <div className="item d-flex align-items-center justify-content-between">
-            <div className="item_img">
-              <img src={image} alt="" />
-            </div>
-            <div className="item_info mx-3">
-              <p>Кремовое пальто</p>
-            </div>
-            <div className="item_size">{SizeSelect()}</div>
-            <div className="item_count">
-              <button>-</button>
-              <input type="text" defaultValue={1} />
-              <button>+</button>
-            </div>
-            <div className="price">
-              <p>9450 $</p>
-            </div>
-            <div className="item_delete">
-              <button>
-                <img width={25} height={25} src={dltIcon} alt="" />
-              </button>
-            </div>
-          </div>
+          <TransitionGroup className="items">
+            {basket &&
+              basket.map((item, index) => (
+                <CSSTransition key={item ? item.id : index} timeout={300} classNames="">
+                  <div className="item d-flex align-items-center justify-content-between">
+                    <div className="item_img">
+                      <img src={item.image} alt="" />
+                    </div>
+                    <div className="item_info mx-3">
+                      <p>{item.title}</p>
+                    </div>
+                    <div className="item_size">{SizeSelect()}</div>
+                    <div className="item_count">
+                      <div className="minus">
+                        <button onClick={handleDecrease}>-</button>
+                      </div>
+                      <input type="text" value={count} readOnly />
+                      <div className="plus">
+                        <button onClick={handleIncrease}>+</button>
+                      </div>
+                    </div>
+                    <div className="price">
+                      <p>{item.price} $</p>
+                    </div>
+                    <div className="item_delete">
+                      <button onClick={() => DeleteToBasket(item.id)}>
+                        <img width={25} height={25} src={dltIcon} alt="" />
+                      </button>
+                    </div>
+                  </div>
+                </CSSTransition>
+              ))}
+          </TransitionGroup>
         </div>
         <div className="total_price d-flex justify-content-end mt-3">
           <span>Total Price : </span>
