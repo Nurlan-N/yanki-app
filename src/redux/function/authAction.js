@@ -78,7 +78,6 @@ export const userData = createAsyncThunk(
         config,
       );
       localStorage.setItem('userToken',response.data.token)
-      console.log("🚀 ~ file: authAction.js:81 ~ response.data.token:", response.data.token)
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);

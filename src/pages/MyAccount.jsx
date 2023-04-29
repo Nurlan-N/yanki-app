@@ -16,10 +16,8 @@ const MyAccount = () => {
   const dispatch = useDispatch();
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
   const { userToken, userInfo } = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: MyAccount.jsx:19 ~ MyAccount ~ userInfo:", userInfo)
   const { register, handleSubmit,setValue } = useForm();
   const [buttonColor, setButtonColor] = useState('');
-  const [name, setName] = useState('');
   const [selectButton, setSelectButton] = useState(2);
   const [showItems, setShowItems] = useState(false);
 
@@ -41,7 +39,6 @@ const MyAccount = () => {
       setValue('country',data.country)
       setValue('postalCode',data.postalcode)
       setValue('Username',data.username)
-      setName(data.name)
     }
   },[data])
 
@@ -231,27 +228,21 @@ const MyAccount = () => {
                   type="text"
                   id="name"
                   {...register('Name')}
-                  defaultValue={name}
                   placeholder={'Name'}
-                  //onChange={(e) => setName(e.target.value)}
                 />
 
                 <input
                   type="text"
                   id="surname"
-                  defaultValue={data?.surname}
                   {...register('Surname')}
                   placeholder={'Surname'}
-                  //onChange={(e) => setSurname(e.target.value)}
                 />
 
                 <input
                   type="email"
                   id="email"
-                  defaultValue={data?.email}
                   {...register('Email')}
                   placeholder={'Email'}
-                  //onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -259,18 +250,14 @@ const MyAccount = () => {
               <input
                 type="text"
                 id="username"
-                defaultValue={data?.username}
                 {...register('Username')}
                 placeholder={'Username'}
-                //onChange={(e) => setUsername(e.target.value)}
               />
               <input
                 type="tel"
                 id="phone"
-                defaultValue={data?.phone}
                 {...register('Phone')}
                 placeholder={'Phone'}
-                //onChange={(e) => setPhone(e.target.value)}
               />
             </div>
             <h5>Password:</h5>
@@ -282,7 +269,6 @@ const MyAccount = () => {
                 required={true} 
                 {...register('Password')}
                 placeholder={'Password'}
-                //onChange={(e) => setOldPassword(e.target.value)}
               />
 
               <input
@@ -292,7 +278,6 @@ const MyAccount = () => {
                 required={false}
                 {...register('NewPassword')}
                 placeholder={'New Password'}
-                //onChange={(e) => setPassword(e.target.value)}
               />
               <input
                 type="password"
@@ -301,7 +286,6 @@ const MyAccount = () => {
                 required={false} 
                 {...register('ConfirimPassword')}
                 placeholder={'Confirim Password'}
-                //onChange={(e) => checkNewPassword(e.target.value)}
               />
             </div>
             <h5>Delivery Address:</h5>
@@ -310,19 +294,15 @@ const MyAccount = () => {
                 type="text"
                 required={false} 
                 id="address"
-                defaultValue={data?.country}
                 {...register('country')}
                 placeholder={'Country'}
-                //onChange={(e) => setAddress(e.target.value)}
               />
               <input
                 type="text"
                 id="postalcode"
                 required={false} 
-                defaultValue={data?.postalcode}
                 {...register('postalCode')}
                 placeholder={'Postal Code'}
-                //onChange={(e) => setPostalCode(e.target.value)}
               />
             </div>
             <Submit title={'UPDATE INFO'} />

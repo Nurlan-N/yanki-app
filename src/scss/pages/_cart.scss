@@ -10,6 +10,10 @@
         width: 100%;
       }
     }
+    .item_size{
+      width: 100px;
+      height: 40px;
+    }
     .item_info {
       width: 150px;
     }
@@ -108,7 +112,10 @@
         color: #252525;
       }
       form {
-        width: 80%;
+        margin-top: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
         .info {
           width: 100%;
           input {
@@ -118,9 +125,9 @@
             padding: 10px;
             font-family: 'Raleway';
             font-style: normal;
-            font-weight: 200;
+            font-weight: 500;
             font-size: 16px;
-            color: rgba(37, 37, 37, 0.5);
+            color: #252525;
           }
         }
         .adress {
@@ -133,9 +140,9 @@
             padding: 10px;
             font-family: 'Raleway';
             font-style: normal;
-            font-weight: 200;
+            font-weight: 500;
             font-size: 16px;
-            color: rgba(37, 37, 37, 0.5);
+            color: #252525;
           }
         }
       }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PageMap from '../components/PageMap/index';
-import image from '../assets/img/categoryimg/1.png';
+import { useForm } from 'react-hook-form';
 import dltIcon from '../assets/img/icon/delete.png';
 import ButtonSubmit from '../components/ButtonSubmit';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -11,6 +11,7 @@ import { fechBasket } from '../redux/slices/productSlice';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useGetUserDetailsQuery } from '../redux/function/authService';
 
 const sizeOptions = [
   { value: 'xl', label: 'XL' },
@@ -21,10 +22,25 @@ const SizeSelect = () => (
   <Select className="size-select" options={sizeOptions} placeholder="Size.." />
 );
 const Cart = () => {
+  const { register, handleSubmit, setValue } = useForm();
+
+  const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
   const { basket } = useSelector((state) => state.product);
   const [basketState, setBasketState] = useState(false);
   const [count, setCount] = useState(1);
   const token = localStorage.getItem('userToken');
+
+  const submitForm = async (data) => {
+    try {
+      await axios.post(`https://localhost:44389/api/Order/checkout`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log('🚀', error);
+    }
+  };
 
   const handleDecrease = () => {
     if (count > 1) {
@@ -40,6 +56,17 @@ const Cart = () => {
     dispach(fechBasket());
     setBasketState(false);
   }, [basketState]);
+
+  useEffect(() => {
+    if (data) {
+      setValue('Name', data.name);
+      setValue('Surname', data.surname);
+      setValue('Email', data.email);
+      setValue('Phone', data.phone);
+      setValue('Country', data.country);
+      setValue('PostalCode', data.postalcode);
+    }
+  }, [data,basket]);
 
   const DeleteToBasket = async (id) => {
     try {
@@ -95,41 +122,44 @@ const Cart = () => {
         </div>
         <div className="total_price d-flex justify-content-end mt-3">
           <span>Total Price : </span>
-          <p className="mx-3">3000 $</p>
+          <p className="mx-3">{basket.reduce((acc, item) => acc + item.price, 0)} $</p>
         </div>
         <div className="checkout">
           <div className="content">
-            <form action="">
-              <h5>Checkout</h5>
-              <p>Personal Information:</p>
-              <div className="info">
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Surname" />
-                <input type="email" placeholder="Email" />
-                <input type="phone" placeholder="Phone" />
+            <form id="checkoutForm" onSubmit={handleSubmit(submitForm)}>
+              <div className="user_info">
+                <h5>Checkout</h5>
+                <p>Personal Information:</p>
+                <div className="info">
+                  <input type="text" {...register('Name')} placeholder="Name" />
+                  <input type="text" {...register('Surname')} placeholder="Surname" />
+                  <input type="email" {...register('Email')} disabled placeholder="Email" />
+                  <input type="phone" {...register('Phone')} placeholder="Phone" />
+                </div>
+                <div className="adress">
+                  <p>Delivery address:</p>
+                  <input type="text" {...register('Country')} placeholder="City" />
+                  <input type="text" {...register('PostalCode')} placeholder="Zip Code" />
+                </div>
               </div>
-              <div className="adress">
-                <p>Delivery address:</p>
-                <input type="text" placeholder="City" />
-                <input type="text" placeholder="Zip Code" />
+              <div className="checkout_submite">
+                <div className="sub_adres">
+                  <p>Address:</p> <span>Baku</span>
+                </div>
+                <br />
+                <div className="sub_price">
+                  <p>Total Price:</p>{' '}
+                  <span>{basket.reduce((acc, item) => acc + item.price, 0)}$</span>
+                </div>
+                <ButtonSubmit title={'CHECKOUT'} />
+                <div className="message">
+                  <p>
+                    By clicking on the "pay for the order" button, I accept the terms of the public
+                    offer and privacy policy
+                  </p>
+                </div>
               </div>
             </form>
-            <div className="checkout_submite">
-              <div className="sub_adres">
-                <p>Address:</p> <span>Baku</span>
-              </div>
-              <br />
-              <div className="sub_price">
-                <p>Total Price:</p> <span>15000$</span>
-              </div>
-              <ButtonSubmit title={'CHECKOUT'} />
-              <div className="message">
-                <p>
-                  By clicking on the "pay for the order" button, I accept the terms of the public
-                  offer and privacy policy
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

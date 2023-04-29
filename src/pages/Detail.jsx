@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { setProductId, setProduct } from '../redux/slices/productSlice';
 import { useNavigate } from 'react-router-dom';
-import { setFilters } from '../redux/slices/filterSlice';
 import qs from 'qs';
 
 const sizeOptions = [
@@ -91,9 +90,9 @@ const Detail = () => {
       alert(error);
     }
   };
-  const AddToBasket = async (id) => {
+  const AddToBasket = async (product) => {
     try {
-      await axios.post(`https://localhost:44389/api/basket/add?id=${id}`, null, {
+      await axios.post(`https://localhost:44389/api/basket/add?id=${product.id}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,6 +101,7 @@ const Detail = () => {
       alert(error);
     }
   };
+
   return (
     <div className="detail_wrapper">
       <div className="container">
@@ -132,7 +132,7 @@ const Detail = () => {
                     className="cart"
                     onClick={(event) => {
                       event.preventDefault();
-                      AddToBasket(product.id);
+                      AddToBasket(product);
                     }}>
                     <ButtonSubmit title={'ADD TO CART'} />
                   </div>

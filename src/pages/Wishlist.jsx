@@ -9,6 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Wishlist = () => {
   const { wishlist } = useSelector((state) => state.product);
+  console.log("🚀 ~ file: Wishlist.jsx:12 ~ Wishlist ~ wishlist:", wishlist)
   const [wishlistState, setWishlistState] = useState(false);
   const dispach = useDispatch();
   useEffect(() => {
