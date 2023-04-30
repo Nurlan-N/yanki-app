@@ -1,4 +1,21 @@
 .about_wrapper {
   margin-top: 100px;
-  
+  .content {
+    width: 100%;
+    border-bottom: 0.5px solid #252525;
+    padding: 0 0 30px;
+    .main_img {
+      width: 50%;
+      img {
+        width: 100%;
+      }
+    }
+    .text {
+      width: 40%;
+    }
+  }
+  .subscribe {
+    border-bottom: 0.5px solid #252525;
+    padding: 0 0 30px;
+  }
 }

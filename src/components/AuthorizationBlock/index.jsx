@@ -49,7 +49,7 @@ const Authorization = ({ display, onClose, onClickRegister }) => {
               type="password"
               className="form-input"
               {...register('password')}
-              placeholder="Email..."
+              placeholder="Password..."
               required
             />
             <img

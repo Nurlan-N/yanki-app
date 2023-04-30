@@ -1,26 +1,24 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Switch } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../src/scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages and Components
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import NoteFound from './pages/NotFound';
-import Shop from './pages/Shop';
-import About from './pages/About';
+import Home from './layout/client/pages/Home';
+import NoteFound from './layout/client/pages/NotFound';
+import Shop from './layout/client/pages/Shop';
+import About from './layout/client/pages/About';
 import Header from './components/Header';
 import DrawerBlock from './components/DrawerBolck/index';
-import Wishlist from './pages/Wishlist';
-import Cart from './pages/Cart';
+import Wishlist from './layout/client/pages/Wishlist';
+import Cart from './layout/client/pages/Cart';
 import Authorization from './components/AuthorizationBlock';
 import ForgotBlock from './components/ForgotBlock';
 import RegisterBlock from './components/RegisterBlock';
-import ProfilePopUp from './components/ProfilePop-Up';
-
 import axios from 'axios';
-import Detail from './pages/Detail';
-import MyAccount from './pages/MyAccount';
+import Detail from './layout/client/pages/Detail';
+import MyAccount from './layout/client/pages/MyAccount';
 
 function App() {
   const [cartDisplay, setCartDisplay] = useState(false);
@@ -72,10 +70,10 @@ function App() {
         <Authorization
           display={authorizationDisplay}
           onClose={() => setAuthorizationDisplay(false)}
-          onClickForgot = {() => forgotHandler()}
+          onClickForgot={() => forgotHandler()}
           onClickRegister={() => registerHandler()}
         />
-        <ForgotBlock display={forgotDisplay} onClose={() => setForgotDisplay(false)}/>
+        <ForgotBlock display={forgotDisplay} onClose={() => setForgotDisplay(false)} />
         <RegisterBlock display={registerDisplay} onClose={() => setRegisterDisplay(false)} />
         <Footer />
       </div>
