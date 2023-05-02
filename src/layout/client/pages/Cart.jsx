@@ -1,8 +1,8 @@
 import React from 'react';
-import PageMap from '../../../components/PageMap/index';
+import PageMap from '../../../components/client/PageMap/index';
 import { useForm } from 'react-hook-form';
 import dltIcon from '../../../assets/img/icon/delete.png';
-import ButtonSubmit from '../../../components/ButtonSubmit';
+import ButtonSubmit from '../../../components/client/ButtonSubmit';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Select from 'react-select';

@@ -1,5 +1,5 @@
 import React from 'react';
-import NoteFoundBlock from '../../../components/NoteFoundBlock';
+import NoteFoundBlock from '../../../components/client/NoteFoundBlock';
 
 const NotFound = () => {
   return <NoteFoundBlock />;

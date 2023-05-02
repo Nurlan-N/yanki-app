@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-import PageMap from '../../../components/PageMap';
-import ButtonSubmit from '../../../components/ButtonSubmit';
+import PageMap from '../../../components/client/PageMap';
+import ButtonSubmit from '../../../components/client/ButtonSubmit';
 import m1 from '../../../assets/img/detail/1.png';
 import heart from '../../../assets/img/icon/wishlist_gold.png';
 import Select from 'react-select';
-import ShopItem from '../../../components/ShopItemBlock';
+import ShopItem from '../../../components/client/ShopItemBlock';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';

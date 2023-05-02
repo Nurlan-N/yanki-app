@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import ShopItemBlock from '../../../components/ShopItemBlock';
-import Pagination from '../../../components/Pogination';
-import PageMap from '../../../components/PageMap';
+import ShopItemBlock from '../../../components/client/ShopItemBlock';
+import Pagination from '../../../components/client/Pogination';
+import PageMap from '../../../components/client/PageMap';
 import axios from 'axios';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';

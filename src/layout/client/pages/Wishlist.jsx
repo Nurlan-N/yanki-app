@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PageMap from '../../../components/PageMap';
-import ShopItemBlock from '../../../components/ShopItemBlock';
+import PageMap from '../../../components/client/PageMap';
+import ShopItemBlock from '../../../components/client/ShopItemBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fechWishlist } from '../../../redux/slices/productSlice';

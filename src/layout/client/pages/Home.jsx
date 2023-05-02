@@ -1,5 +1,5 @@
 import React, { Children, cloneElement, useEffect, useState } from 'react';
-import ButtonSubmit from '../../../components/ButtonSubmit';
+import ButtonSubmit from '../../../components/client/ButtonSubmit';
 import collection1 from '../../../assets/img/newcollection/1.png';
 import collection2 from '../../../assets/img/newcollection/2.png';
 import collection3 from '../../../assets/img/newcollection/3.png';

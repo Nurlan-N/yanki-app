@@ -1,7 +1,7 @@
 import React from 'react';
-import PageMap from '../../../components/PageMap';
+import PageMap from '../../../components/client/PageMap';
 import img from '../../../assets/img/about.jpg';
-import ButtonSubmit from '../../../components/ButtonSubmit';
+import ButtonSubmit from '../../../components/client/ButtonSubmit';
 
 const About = () => {
   return (

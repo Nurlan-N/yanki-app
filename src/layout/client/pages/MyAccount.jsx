@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PageMap from '../../../components/PageMap';
-import Submit from '../../../components/ButtonSubmit';
+import PageMap from '../../../components/client/PageMap';
+import Submit from '../../../components/client/ButtonSubmit';
 import row from '../../../assets/img/icon/down.png';
 import { logout, setCredentials } from '../../../redux/slices/authSlice ';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,9 +13,7 @@ import { fechOrders } from '../../../redux/slices/orderSlice';
 const MyAccount = () => {
   const dispatch = useDispatch();
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
-  const { userToken } = useSelector((state) => state.auth);
   const { orders } = useSelector((state) => state.orders);
-  console.log('🚀 ~ file: MyAccount.jsx:19 ~ MyAccount ~ orders:', orders);
   const { register, handleSubmit, setValue } = useForm();
   const [buttonColor, setButtonColor] = useState('');
   const [selectButton, setSelectButton] = useState(2);
