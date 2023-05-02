@@ -21,31 +21,19 @@ import '../../assets/admin/assets/vendor/simple-datatables/style.css';
 import Dashboard from '../../components/admin/Dashboard';
 
 import routes from '../../routes/routes';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import Test from '../../components/admin/Test';
 const MasterLayout = () => {
-  
+  console.log(routes);
   return (
     <div>
-      <Header />
-      <Sidebar />
+      <header>
+        <Header />
+        <Sidebar/>
+      </header>
+
       <main>
-        {/* <Switch>
-          {routes &&
-            routes.map((route, idx) => {
-              return (
-                route.component && (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    name={route.name}
-                    render={(props) => <route.element {...props} />}
-                  />
-                )
-              );
-            })}
-        </Switch> */}
+        <Outlet />
       </main>
       <Footer />
     </div>

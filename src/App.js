@@ -23,9 +23,12 @@ import { useGetUserDetailsQuery } from './redux/function/authService';
 import MasterLayout from './layout/admin/MasterLayout';
 import Test from './components/admin/Test';
 import Home2 from './layout/client/Home2';
+import Dashboard from './components/admin/Dashboard';
+import ClientLayout from './layout/client/ClientLayout';
 //import AdminApp from './layout/admin/app/App'
 function App() {
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
+  console.log("🚀 ~ file: App.js:31 ~ App ~ data:", data)
   const [cartDisplay, setCartDisplay] = useState(false);
   const [authorizationDisplay, setAuthorizationDisplay] = useState(false);
   const [registerDisplay, setRegisterDisplay] = useState(false);
@@ -61,22 +64,29 @@ function App() {
 
   return (
     <div className="wrapper">
-      {/* <DrawerBlock cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />
+      <DrawerBlock cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />
       <div className={cartDisplay ? 'd-none' : ''}>
-        <Header
-          onClickCart={() => setCartDisplay(!cartDisplay)}
-          onClickSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
-        />
         <Routes>
-          <Route path="/" element={<Home category={category} />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/new" element={<Home category={category} />} />
-          <Route path="*" element={<NoteFound />} />
-          <Route path="/detail" element={<Detail />} />
-          <Route path="/myaccount" element={<MyAccount />} />
+          <Route
+            path="/"
+            onClickCart={() => setCartDisplay(!cartDisplay)}
+            onClickSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
+            element={<ClientLayout />}>
+            <Route index element={<Home category={category} />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="about" element={<About />} />
+            <Route path="new" element={<Home category={category} />} />
+            <Route path="*" element={<NoteFound />} />
+            <Route path="detail" element={<Detail />} />
+            <Route path="myaccount" element={<MyAccount />} />
+          </Route>
+
+          <Route path="/admin" element={<MasterLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="test" element={<Home2 />} />
+          </Route>
         </Routes>
         <Authorization
           display={authorizationDisplay}
@@ -86,13 +96,7 @@ function App() {
         />
         <ForgotBlock display={forgotDisplay} onClose={() => setForgotDisplay(false)} />
         <RegisterBlock display={registerDisplay} onClose={() => setRegisterDisplay(false)} />
-        <Footer />
-      </div> */}
-        <Routes>
-          <Route path='/' element={<Home2/>}/>
-          <Route path="/admin" name="Admin"  element={(props)=> <MasterLayout {...props}/>} />
-          
-        </Routes>
+      </div>
     </div>
   );
 }
