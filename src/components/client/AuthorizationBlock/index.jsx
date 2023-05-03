@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../../redux/function/authAction';
 import { useForm } from 'react-hook-form';
 
-const Authorization = ({ display, onClose, onClickRegister }) => {
+const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => {
   const [showPasswod, setShowPassword] = useState(false);
   const { loading, error, login } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -60,7 +60,7 @@ const Authorization = ({ display, onClose, onClickRegister }) => {
             />
           </div>
           <div className={styles.menu}>
-            <Link>Forgot password?</Link>
+            <Link onClick={onClickForgot} >Forgot password?</Link>
             <Link onClick={onClickRegister}>Don't have an account?</Link>
           </div>
           <ButtonSubmit title={loading ? 'loading' : 'LOGIN'} />

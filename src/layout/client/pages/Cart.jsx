@@ -7,7 +7,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-import { fechBasket } from '../../../redux/slices/productSlice';
+import { fetchBasket } from '../../../redux/slices/productSlice';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
@@ -52,9 +52,9 @@ const Cart = () => {
   const handleIncrease = () => {
     setCount(count + 1);
   };
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispach(fechBasket());
+    dispatch(fetchBasket());
     setBasketState(false);
   }, [basketState]);
 

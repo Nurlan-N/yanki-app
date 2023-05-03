@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header';
-import Sidebar from './Sidebar';
-import Footer from './Footer';
+import Header from '../../components/admin/Header';
+import Sidebar from '../../components/admin/Sidebar';
+import Footer from '../../components/admin/Footer';
 import '../../assets/admin/assets/css/style.css';
 import '../../assets/admin/assets/vendor/apexcharts/apexcharts.min.js';
 import '../../assets/admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
@@ -18,21 +18,19 @@ import '../../assets/admin/assets/vendor/quill/quill.snow.css';
 import '../../assets/admin/assets/vendor/quill/quill.bubble.css';
 import '../../assets/admin/assets/vendor/remixicon/remixicon.css';
 import '../../assets/admin/assets/vendor/simple-datatables/style.css';
-import Dashboard from '../../components/admin/Dashboard';
 
 import routes from '../../routes/routes';
-import { BrowserRouter, Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
-import Test from '../../components/admin/Test';
+import { Outlet } from 'react-router-dom';
 const MasterLayout = () => {
   console.log(routes);
   return (
     <div>
       <header>
         <Header />
-        <Sidebar/>
+        <Sidebar />
       </header>
 
-      <main>
+      <main id='main' className='main'>
         <Outlet />
       </main>
       <Footer />

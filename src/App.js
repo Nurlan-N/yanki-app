@@ -1,49 +1,29 @@
-import { Route, Router, Routes, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../src/scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages and Components
-import Footer from './components/client/Footer';
 import Home from './layout/client/pages/Home';
-import NoteFound from './layout/client/pages/NotFound';
-import Shop from './layout/client/pages/Shop';
-import About from './layout/client/pages/About';
-import Header from './components/client/Header';
-import DrawerBlock from './components/client/DrawerBlock/index';
-import Wishlist from './layout/client/pages/Wishlist';
-import Cart from './layout/client/pages/Cart';
-import Authorization from './components/client/AuthorizationBlock';
-import ForgotBlock from './components/client/ForgotBlock';
-import RegisterBlock from './components/client/RegisterBlock';
 import axios from 'axios';
-import Detail from './layout/client/pages/Detail';
-import MyAccount from './layout/client/pages/MyAccount';
 import { useGetUserDetailsQuery } from './redux/function/authService';
 import MasterLayout from './layout/admin/MasterLayout';
-import Test from './components/admin/Test';
 import Home2 from './layout/client/Home2';
 import Dashboard from './components/admin/Dashboard';
 import ClientLayout from './layout/client/ClientLayout';
-//import AdminApp from './layout/admin/app/App'
+import ProductsBlock from './components/admin/ProductsBlock'
+import CategoriesBlock from './components/admin/CategoriesBlock'
+import OrdersBlock from './components/admin/OrdersBlock'
+import UsersBlock from './components/admin/UsersBlock'
+import SettingsBlock from './components/admin/SettingsBlock'
+import routes from './routes/routes';
+
 function App() {
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
-  console.log("🚀 ~ file: App.js:31 ~ App ~ data:", data)
-  const [cartDisplay, setCartDisplay] = useState(false);
-  const [authorizationDisplay, setAuthorizationDisplay] = useState(false);
-  const [registerDisplay, setRegisterDisplay] = useState(false);
-  const [forgotDisplay, setForgotDisplay] = useState(false);
   const [category, setCategory] = useState([]);
+  console.log('🚀 ~ file: App.js:27 ~ App ~ category:', category);
   const [role, setRole] = useState('Member');
-
-  const registerHandler = () => {
-    setRegisterDisplay(!registerDisplay);
-    setAuthorizationDisplay(false);
-  };
-  const forgotHandler = () => {
-    setForgotDisplay(!registerDisplay);
-    setAuthorizationDisplay(false);
-  };
+  console.log('🚀 ~ file: App.js:21 ~ App ~ role:', role);
 
   useEffect(() => {
     if (data != undefined) {
@@ -64,39 +44,27 @@ function App() {
 
   return (
     <div className="wrapper">
-      <DrawerBlock cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />
-      <div className={cartDisplay ? 'd-none' : ''}>
-        <Routes>
-          <Route
-            path="/"
-            onClickCart={() => setCartDisplay(!cartDisplay)}
-            onClickSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
-            element={<ClientLayout />}>
-            <Route index element={<Home category={category} />} />
-            <Route path="wishlist" element={<Wishlist />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="shop" element={<Shop />} />
-            <Route path="about" element={<About />} />
-            <Route path="new" element={<Home category={category} />} />
-            <Route path="*" element={<NoteFound />} />
-            <Route path="detail" element={<Detail />} />
-            <Route path="myaccount" element={<MyAccount />} />
-          </Route>
-
+      <Routes>
+        <Route path="/" element={<ClientLayout />}>
+          {routes.map((route, idx) => {
+            return route.element && <Route key={idx} path={route.path} element={route.element} />;
+          })}
+          <Route index element={<Home category={category} />} />
+        </Route>
+        {role != 'Member' ? (
           <Route path="/admin" element={<MasterLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="test" element={<Home2 />} />
+            <Route path="products" element={<ProductsBlock />} /> 
+            <Route path="categories" element={<CategoriesBlock />} /> 
+            <Route path="orders" element={<OrdersBlock />} /> 
+            <Route path="users" element={<UsersBlock />} /> 
+            <Route path="settings" element={<SettingsBlock />} /> 
+            <Route path="online" element={<Home2 />} /> 
           </Route>
-        </Routes>
-        <Authorization
-          display={authorizationDisplay}
-          onClose={() => setAuthorizationDisplay(false)}
-          onClickForgot={() => forgotHandler()}
-          onClickRegister={() => registerHandler()}
-        />
-        <ForgotBlock display={forgotDisplay} onClose={() => setForgotDisplay(false)} />
-        <RegisterBlock display={registerDisplay} onClose={() => setRegisterDisplay(false)} />
-      </div>
+        ) : (
+          ''
+        )}
+      </Routes>
     </div>
   );
 }

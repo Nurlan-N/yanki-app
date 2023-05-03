@@ -46,7 +46,7 @@ const Header = ({ onClickCart, onClickSignIn }) => {
                 <BiMenuAltLeft onClick={onClickCart} />
               </div>
               <div className="page col-lg-8 col-md-10 ">
-                <Link to="/new">NEW</Link>
+                <Link to="/">NEW</Link>
                 <Link to="/shop">SHOP</Link>
                 <Link to="/about">ABOUT</Link>
               </div>

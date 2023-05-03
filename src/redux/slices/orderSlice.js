@@ -4,7 +4,7 @@ import axios from 'axios';
 /// User JWT Token
 const token = localStorage.getItem('userToken');
 
-export const fechOrders = createAsyncThunk('order/fechOrders', async () => {
+export const fetchOrders = createAsyncThunk('order/fetchOrders', async () => {
   const { data } = await axios.get(`https://localhost:44389/api/order`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -24,15 +24,15 @@ const orderSlice = createSlice({
 
   reducers: {},
   extraReducers: {
-    [fechOrders.pending]: (state, action) => {
+    [fetchOrders.pending]: (state, action) => {
       state.status = 'loading';
       state.orders = [];
     },
-    [fechOrders.fulfilled]: (state, action) => {
+    [fetchOrders.fulfilled]: (state, action) => {
       state.orders = action.payload;
       state.status = 'success';
     },
-    [fechOrders.rejected]: (state, action) => {
+    [fetchOrders.rejected]: (state, action) => {
       state.status = 'error';
       state.orders = [];
     },

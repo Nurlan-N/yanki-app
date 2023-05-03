@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import ShopItemBlock from '../../../components/client/ShopItemBlock';
-import Pagination from '../../../components/client/Pogination';
+import Pagination from '../../../components/client/Pagination';
 import PageMap from '../../../components/client/PageMap';
 import axios from 'axios';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../../../redux/slices/filterSlice';
 import { useRef } from 'react';
-import { fechWishlist, fetchProducts } from '../../../redux/slices/productSlice';
+import { fetchWishlist, fetchProducts } from '../../../redux/slices/productSlice';
 import Cookies from 'js-cookie';
 
 const sizeOptions = [
@@ -79,7 +79,7 @@ const Shop = () => {
     dispatch(setCurrentPage(e.selected + 1));
   };
 
-  const fechCategories = async () => {
+  const fetchCategories = async () => {
     try {
       const { data } = await axios.get('https://localhost:44389/api/category');
       //console.log(data);
@@ -106,11 +106,11 @@ const Shop = () => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
       //fechProducts();
-      fechCategories();
+      fetchCategories();
       getProducts();
     }
     isSearch.current = false;
-    dispatch(fechWishlist());
+    dispatch(fetchWishlist());
   }, [categoryId, currentPage]);
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { Link, redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useGetUserDetailsQuery } from '../../../redux/function/authService';
 import { userData } from '../../../redux/function/authAction';
-import { fechOrders } from '../../../redux/slices/orderSlice';
+import { fetchOrders } from '../../../redux/slices/orderSlice';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const MyAccount = () => {
   const [showItems, setShowItems] = useState();
 
   const submitForm = (data) => {
-    if (data.NewPassword.lenght > 0 && data.NewPassword !== data.confirmPassword) {
+    if (data.NewPassword.length > 0 && data.NewPassword !== data.confirmPassword) {
       alert('Password mismatch');
     }
     console.log(data);
@@ -37,7 +37,7 @@ const MyAccount = () => {
       setValue('postalCode', data.postalcode);
       setValue('Username', data.username);
 
-      dispatch(fechOrders());
+      dispatch(fetchOrders());
     }
   }, [data]);
 

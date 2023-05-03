@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProductStatus', asy
   );
   return data;
 });
-export const fechWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', async () => {
+export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', async () => {
   const { data } = await axios.get(`https://localhost:44389/api/wishlist`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -19,7 +19,7 @@ export const fechWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', asy
   });
   return data;
 });
-export const fechBasket = createAsyncThunk('basket/fetchBasketStatus', async () => {
+export const fetchBasket = createAsyncThunk('basket/fetchBasketStatus', async () => {
   const { data } = await axios.get(`https://localhost:44389/api/Basket`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -77,27 +77,27 @@ const productSlice = createSlice({
       state.status = 'error';
       state.products = [];
     },
-    [fechWishlist.pending]: (state, action) => {
+    [fetchWishlist.pending]: (state, action) => {
       state.wishlistStatus = 'loading';
       state.wishlist = [];
     },
-    [fechWishlist.fulfilled]: (state, action) => {
+    [fetchWishlist.fulfilled]: (state, action) => {
       state.wishlist = action.payload;
       state.wishlistStatus = 'success';
     },
-    [fechWishlist.rejected]: (state, action) => {
+    [fetchWishlist.rejected]: (state, action) => {
       state.wishlistStatus = 'error';
       state.wishlist = [];
     },
-    [fechBasket.pending]: (state, action) => {
+    [fetchBasket.pending]: (state, action) => {
       state.basketStatus = 'loading';
       state.basket = [];
     },
-    [fechBasket.fulfilled]: (state, action) => {
+    [fetchBasket.fulfilled]: (state, action) => {
       state.basket = action.payload;
       state.basketStatus = 'success';
     },
-    [fechBasket.rejected]: (state, action) => {
+    [fetchBasket.rejected]: (state, action) => {
       state.basketStatus = 'error';
       state.basket = [];
     },

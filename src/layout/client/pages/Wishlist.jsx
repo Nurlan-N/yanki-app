@@ -3,16 +3,16 @@ import PageMap from '../../../components/client/PageMap';
 import ShopItemBlock from '../../../components/client/ShopItemBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fechWishlist } from '../../../redux/slices/productSlice';
+import { fetchWishlist } from '../../../redux/slices/productSlice';
 import axios from 'axios';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Wishlist = () => {
   const { wishlist } = useSelector((state) => state.product);
   const [wishlistState, setWishlistState] = useState(false);
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispach(fechWishlist());
+    dispatch(fetchWishlist());
     setWishlistState(false);
   }, [wishlistState]);
   const AddToFavorite = async (item) => {
