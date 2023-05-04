@@ -22,7 +22,6 @@ import '../../assets/admin/assets/vendor/simple-datatables/style.css';
 import routes from '../../routes/routes';
 import { Outlet } from 'react-router-dom';
 const MasterLayout = () => {
-  console.log(routes);
   return (
     <div>
       <header>

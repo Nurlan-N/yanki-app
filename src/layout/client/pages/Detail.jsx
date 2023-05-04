@@ -40,15 +40,15 @@ const Detail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fechProduct();
-    fechSimilarProducts();
+    fetchProduct();
+    fetchSimilarProducts();
     window.scrollTo(0, 0);
     const queryString = qs.stringify({
       productId,
     });
     navigate(`?${queryString}`);
   }, [productId]);
-  const fechProduct = async () => {
+  const fetchProduct = async () => {
     try {
       const { data } = await axios.get(`https://localhost:44389/api/Product/${productId}`);
       setProduct(data);
@@ -56,7 +56,7 @@ const Detail = () => {
       alert('Datada Sehv');
     }
   };
-  const fechSimilarProducts = async () => {
+  const fetchSimilarProducts = async () => {
     try {
       const { data } = await axios.get(
         `https://localhost:44389/api/product?page=1&limit=8&categoryId=${categoryId}`,

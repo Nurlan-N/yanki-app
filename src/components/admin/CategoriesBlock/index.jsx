@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Pagination from '../../client/Pagination';
+import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-const index = () => {
+const Categories = () => {
+
+  const [category, setCategory] = useState(JSON.parse(Cookies.get('category') || '[]'));
+  const categoryIdHandler = (e) => {
+    console.log("🚀 ~ file: index.jsx:10 ~ categoryIdHandler ~ e:", e)
+    window.localStorage.setItem('categoryId' , e)
+  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -22,92 +31,46 @@ const index = () => {
                 <th>Name</th>
                 <th>Created At</th>
                 <th>Created By</th>
-                <th>Product Count</th>
+                <th>Updated At</th>
                 <th>Settings</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mens</td>
-                <td>03-Dec-2023</td>
-                <td>System</td>
-                <td>2</td>
-                <td className='d-flex justify-content-around' >
-                  <a className="btn btn-primary" href="/manage/category/detail/1">
-                    Detail
-                  </a>
-                  <a className="btn btn-warning" href="/manage/category/update/1">
-                    Update
-                  </a>
-                  <a className="btn btn-danger " href="/manage/category/delete/1">
-                    Delete
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Womens</td>
-                <td>03-Dec-2023</td>
-                <td>System</td>
-                <td>3</td>
-                <td>
-                  <a className="btn btn-primary" href="/manage/category/detail/2">
-                    Detail
-                  </a>
-                  <a className="btn btn-warning" href="/manage/category/update/2">
-                    Update
-                  </a>
-                  <a className="btn btn-danger " href="/manage/category/delete/2">
-                    Delete
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Sports</td>
-                <td>03-Dec-2023</td>
-                <td>System</td>
-                <td>3</td>
-                <td>
-                  <a className="btn btn-primary" href="/manage/category/detail/3">
-                    Detail
-                  </a>
-                  <a className="btn btn-warning" href="/manage/category/update/3">
-                    Update
-                  </a>
-                  <a className="btn btn-danger " href="/manage/category/delete/3">
-                    Delete
-                  </a>
-                </td>
-              </tr>
+              {category &&
+                category.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.id}</td>
+                      <td>{item.name}</td>
+                      <td>{new Date(item.createdAt).toLocaleDateString('en-US')}</td>
+                      <td>{item.createdBy}</td>
+                      <td>{item.updatedAt}</td>
+                      <td className="d-flex justify-content-around">
+                        <Link className="btn btn-primary" to="update">
+                          Detail
+                        </Link>
+                        <Link
+                          className="btn btn-warning"
+                          to="update"
+                          onClick={() => categoryIdHandler(item.id)}>
+                          Update
+                        </Link>
+                        <Link className="btn btn-danger " to="update">
+                          Delete
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
         <div className="col-lg-12">
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
-              <li className="page-item active">
-                <a className="page-link" href="/manage/category?pageIndex=1">
-                  1
-                </a>
-              </li>
-              <li className="page-item ">
-                <a className="page-link" href="/manage/category?pageIndex=2">
-                  2
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link" href="/manage/category?pageIndex=2">
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <Pagination count={Math.ceil(category.length / 8)}  />
         </div>
       </div>
     </div>
   );
 };
 
-export default index;
+export default Categories;

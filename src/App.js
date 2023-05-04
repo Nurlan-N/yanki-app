@@ -12,18 +12,19 @@ import Home2 from './layout/client/Home2';
 import Dashboard from './components/admin/Dashboard';
 import ClientLayout from './layout/client/ClientLayout';
 import ProductsBlock from './components/admin/ProductsBlock'
+import ProductUpdate from './components/admin/ProductsBlock/Update'
+import CategoriesUpdate from './components/admin/CategoriesBlock/Update'
 import CategoriesBlock from './components/admin/CategoriesBlock'
 import OrdersBlock from './components/admin/OrdersBlock'
 import UsersBlock from './components/admin/UsersBlock'
 import SettingsBlock from './components/admin/SettingsBlock'
 import routes from './routes/routes';
+import Cookies from 'js-cookie';
 
 function App() {
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
   const [category, setCategory] = useState([]);
-  console.log('🚀 ~ file: App.js:27 ~ App ~ category:', category);
   const [role, setRole] = useState('Member');
-  console.log('🚀 ~ file: App.js:21 ~ App ~ role:', role);
 
   useEffect(() => {
     if (data != undefined) {
@@ -35,6 +36,7 @@ function App() {
       try {
         const { data } = await axios.get('https://localhost:44389/api/category');
         setCategory(data);
+        Cookies.set('category', JSON.stringify(data))
       } catch (error) {
         alert('Datada sehv');
       }
@@ -55,6 +57,8 @@ function App() {
           <Route path="/admin" element={<MasterLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="products" element={<ProductsBlock />} /> 
+            <Route path="products/update" element={<ProductUpdate />} /> 
+            <Route path="categories/update" element={<CategoriesUpdate />} /> 
             <Route path="categories" element={<CategoriesBlock />} /> 
             <Route path="orders" element={<OrdersBlock />} /> 
             <Route path="users" element={<UsersBlock />} /> 
