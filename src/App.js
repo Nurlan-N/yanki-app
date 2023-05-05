@@ -11,13 +11,17 @@ import MasterLayout from './layout/admin/MasterLayout';
 import Home2 from './layout/client/Home2';
 import Dashboard from './components/admin/Dashboard';
 import ClientLayout from './layout/client/ClientLayout';
-import ProductsBlock from './components/admin/ProductsBlock'
-import ProductUpdate from './components/admin/ProductsBlock/Update'
-import CategoriesUpdate from './components/admin/CategoriesBlock/Update'
-import CategoriesBlock from './components/admin/CategoriesBlock'
-import OrdersBlock from './components/admin/OrdersBlock'
-import UsersBlock from './components/admin/UsersBlock'
-import SettingsBlock from './components/admin/SettingsBlock'
+import ProductsBlock from './components/admin/ProductsBlock';
+import ProductUpdate from './components/admin/ProductsBlock/Update';
+import ProductDetail from './components/admin/ProductsBlock/Detail';
+import ProductCreate from './components/admin/ProductsBlock/Create';
+import CategoriesCreate from './components/admin/CategoriesBlock/Create';
+import CategoriesUpdate from './components/admin/CategoriesBlock/Update';
+import CategoriesDetail from './components/admin/CategoriesBlock/Detail';
+import CategoriesBlock from './components/admin/CategoriesBlock';
+import OrdersBlock from './components/admin/OrdersBlock';
+import UsersBlock from './components/admin/UsersBlock';
+import SettingsBlock from './components/admin/SettingsBlock';
 import routes from './routes/routes';
 import Cookies from 'js-cookie';
 
@@ -36,7 +40,7 @@ function App() {
       try {
         const { data } = await axios.get('https://localhost:44389/api/category');
         setCategory(data);
-        Cookies.set('category', JSON.stringify(data))
+        Cookies.set('category', JSON.stringify(data));
       } catch (error) {
         alert('Datada sehv');
       }
@@ -56,14 +60,18 @@ function App() {
         {role != 'Member' ? (
           <Route path="/admin" element={<MasterLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="products" element={<ProductsBlock />} /> 
-            <Route path="products/update" element={<ProductUpdate />} /> 
-            <Route path="categories/update" element={<CategoriesUpdate />} /> 
-            <Route path="categories" element={<CategoriesBlock />} /> 
-            <Route path="orders" element={<OrdersBlock />} /> 
-            <Route path="users" element={<UsersBlock />} /> 
-            <Route path="settings" element={<SettingsBlock />} /> 
-            <Route path="online" element={<Home2 />} /> 
+            <Route path="products" element={<ProductsBlock />} />
+            <Route path="products/update" element={<ProductUpdate />} />
+            <Route path="products/detail" element={<ProductDetail />} />
+            <Route path="products/create" element={<ProductCreate />} />
+            <Route path="categories/create" element={<CategoriesCreate />} />
+            <Route path="categories/update" element={<CategoriesUpdate />} />
+            <Route path="categories/detail" element={<CategoriesDetail />} />
+            <Route path="categories" element={<CategoriesBlock />} />
+            <Route path="orders" element={<OrdersBlock />} />
+            <Route path="users" element={<UsersBlock />} />
+            <Route path="settings" element={<SettingsBlock />} />
+            <Route path="online" element={<Home2 />} />
           </Route>
         ) : (
           ''

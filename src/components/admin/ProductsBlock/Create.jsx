@@ -3,10 +3,8 @@ import Cookies from 'js-cookie';
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 
-const Update = () => {
-  const [product, setProduct] = useState({});
+const Create = () => {
   const categories = JSON.parse(Cookies.get('category') || '[]');
-  const id = localStorage.getItem('productId');
   const token = window.localStorage.getItem('userToken');
   const filePick = useRef(null);
   const filesPick = useRef(null);
@@ -17,15 +15,16 @@ const Update = () => {
   const [exTax, setExTax] = useState(null);
   const [count, setCount] = useState(null);
   const [category, setCategory] = useState(null);
+  console.log("🚀 ~ file: Create.jsx:18 ~ Create ~ category:", category)
   const [description, setDescription] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [mainImage, setMainImage] = useState(null);
-  const [productImages, setProductImages] = useState(null);
+
+
+
   const handleChange = (e) => {
     if (e.target.files.length > 0) {
       setSelectedFile(e.target.files[0]);
-      setMainImage(URL.createObjectURL(e.target.files[0]));
     }
   };
   const handleImages = (e) => {
@@ -39,36 +38,10 @@ const Update = () => {
   const handleFilesPick = () => {
     filesPick.current.click();
   };
-  useEffect(() => {
-    setTitle(product.title);
-    setPrice(product.price);
-    setDiscountPrice(product.discountedPrice);
-    setExTax(product.exTax);
-    setCount(product.count);
-    setCategory(product.categoryId);
-    setDescription(product.description);
-    setSelectedFile(product.image);
-    setMainImage(product.image);
-    setProductImages(product.productImages);
-  }, [product]);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data } = await axios.get(`https://localhost:44389/api/Product/${id}`);
-        setProduct(data);
-      } catch (error) {
-        alert('There was an error fetching the data');
-      }
-    }
-    fetchData();
-  }, [id]);
-
   const handleUpload = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('Id', id);
     formData.append('Title', title);
     formData.append('Price', price);
     formData.append('DiscountPrice', discountPrice);
@@ -82,7 +55,7 @@ const Update = () => {
     }
 
     try {
-      const res = await axios.put(`https://localhost:44389/api/Product/update-product`, formData, {
+      const res = await axios.post(`https://localhost:44389/api/Product/create`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -90,10 +63,11 @@ const Update = () => {
       Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: `Product has been updated`,
+        title: `Product created successfully`,
         showConfirmButton: false,
-        timer: 2000
-      })    } catch (error) {
+        timer: 2000,
+      });
+    } catch (error) {
       const errorMessage = error.errors.Files[0];
       console.log(errorMessage);
     }
@@ -102,7 +76,7 @@ const Update = () => {
   return (
     <div className="container-fluid ">
       <div className="col-lg-2">
-        <h1 className="h3 mb-4 text-gray-800">Product Update</h1>
+        <h1 className="h3 mb-4 text-gray-800">Product Create</h1>
       </div>
       <div className="row">
         <div className="col-lg-6  d-flex flex-wrap justify-content-between">
@@ -167,14 +141,10 @@ const Update = () => {
               className="form-control"
               id="CategoryId"
               name="CategoryId"
-              onSelect={(event) => setCategory(event.target.value)}>
+              onChange={(event) => setCategory(event.target.value)}>
               {categories &&
                 categories.map((c) => {
-                  return c.id == product.categoryId ? (
-                    <option key={c.id} selected={true} value={c.id}>
-                      {c.name}
-                    </option>
-                  ) : (
+                  return (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
@@ -198,7 +168,7 @@ const Update = () => {
 
             {selectedFile && (
               <div className="mt-5">
-                <img src={mainImage} alt="Main Image" />
+                <img src={URL.createObjectURL(selectedFile)} alt="Main Image" />
               </div>
             )}
             <span className="text text-danger field-validation-valid"></span>
@@ -217,14 +187,7 @@ const Update = () => {
               accept="image/*,.png,.jpg,.web"
             />
             <div className="images col-lg-12 d-flex flex-wrap justify-content-between">
-              {productImages &&
-                productImages.map((item, index) => {
-                  return (
-                    <div key={index} className="mt-5">
-                      <img width={100} src={item.image} alt="Main Image" />
-                    </div>
-                  );
-                })}
+            
             </div>
             <span className="text text-danger field-validation-valid"></span>
           </div>
@@ -252,4 +215,4 @@ const Update = () => {
   );
 };
 
-export default Update;
+export default Create;
