@@ -92,10 +92,29 @@ const Update = () => {
         icon: 'success',
         title: `Product has been updated`,
         showConfirmButton: false,
-        timer: 2000
-      })    } catch (error) {
+        timer: 2000,
+      });
+    } catch (error) {
       const errorMessage = error.errors.Files[0];
       console.log(errorMessage);
+    }
+  };
+  const deleteImageHandler = async (e) => {
+    try {
+      const res = await axios.put(`https://localhost:44389/api/product?id=${product.id}&imageId=${e}`,{}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: `Image has been deleted`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      alert("Error")
     }
   };
 
@@ -105,7 +124,7 @@ const Update = () => {
         <h1 className="h3 mb-4 text-gray-800">Product Update</h1>
       </div>
       <div className="row">
-        <div className="col-lg-6  d-flex flex-wrap justify-content-between">
+        <div className="col-lg-10  d-flex flex-wrap justify-content-between">
           <div className="col-lg-6 my-3">
             <label className="form-label">Title</label>
             <input
@@ -220,8 +239,14 @@ const Update = () => {
               {productImages &&
                 productImages.map((item, index) => {
                   return (
-                    <div key={index} className="mt-5">
-                      <img width={100} src={item.image} alt="Main Image" />
+                    <div key={index} className="mt-5 position-relative">
+                      <button
+                        onClick={() => deleteImageHandler(item.id)}
+                        className="position-absolute "
+                        style={{ right: '10px', top: '10px' }}>
+                        <i className="bi bi-x-circle btn btn-danger"></i>
+                      </button>
+                      <img width={180} src={item.image} alt="Main Image" />
                     </div>
                   );
                 })}
