@@ -1,6 +1,111 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Pagination from '../../client/Pagination';
+import styles from './UsersBlock.module.scss';
+import { Await, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
-const index = () => {
+const Users = () => {
+  const [users, setUsers] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(null);
+  const token = window.localStorage.getItem('userToken');
+  const [changeRoleDisplay, setChangeRoleDisplay] = useState(false);
+  const [blockDisplay, setBlockDisplay] = useState(false);
+  const [email, setEmail] = useState(null);
+  const [blockDate, setBlockDate] = useState('');
+  const [id, setId] = useState('');
+
+  const { handleSubmit, setValue } = useForm();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(
+          `https://localhost:44389/api/User?page=${currentPage}&limit=5`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setUsers(data.users);
+        setPageCount(data.count);
+      } catch (error) {}
+    };
+    fetchData();
+  }, [currentPage, id]);
+  const onChangePage = (e) => {
+    setCurrentPage(e.selected + 1);
+  };
+
+  const changeRoleHandler = async (user) => {
+    {
+      setValue('UserId', user.id);
+    }
+    setEmail(user.email);
+    setChangeRoleDisplay(!changeRoleDisplay);
+  };
+  const submitForm = async (data) => {
+    try {
+      const res = await axios.put('https://localhost:44389/api/User/change-role', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Role changed successfully `,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      setChangeRoleDisplay(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const blockHandler = (user) => {
+    setEmail(user.email);
+    setId(user.id);
+    setBlockDisplay(!blockDisplay);
+  };
+  const unblockHandle = async (id) => {
+    try {
+      await axios.put(
+        `https://localhost:44389/api/user/unblock?userId=${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      alert('User has been unblocked successfully');
+      setId(1)
+    } catch (error) {
+      alert('Error occurred while unblocking user');
+    }
+  };
+  const submitBlock = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.put(
+        `https://localhost:44389/api/user/block?id=${id}&blockDate=${blockDate}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      alert('User has been blocked successfully');
+      setId('')
+    } catch (error) {
+      alert('Error occurred while blocking user');
+    }
+  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -8,9 +113,9 @@ const index = () => {
           <h1 className="h3 mb-4 text-gray-800">User Page</h1>
         </div>
         <div className="col-lg-2">
-          <a className="btn btn-primary mb-4" href="/manage/user/create">
+          <Link className="btn btn-primary mb-4" to="create">
             Create
-          </a>
+          </Link>
         </div>
       </div>
       <div className="row">
@@ -29,131 +134,105 @@ const index = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Admin</td>
-                <td>Admin</td>
-                <td>Admin@gmail.com</td>
-                <td>Admin-Test</td>
-                <td>Admin</td>
-                <td></td>
+              {users &&
+                users.map((obj, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{obj.name}</td>
+                      <td>{obj.surName}</td>
+                      <td>{obj.email}</td>
+                      <td>{obj.userName}</td>
+                      <td>{obj.roleName}</td>
+                      <td>{obj.lockoutEnd}</td>
 
-                <td className='d-flex justify-content-around'>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/ChangeRole/610af6e6-de10-4432-982b-d998383b12c3">
-                    ChangeRole
-                  </a>
-                  <a
-                    className="btn btn-danger"
-                    href="/manage/user/block/610af6e6-de10-4432-982b-d998383b12c3">
-                    Block
-                  </a>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/Unblock?userId=610af6e6-de10-4432-982b-d998383b12c3">
-                    Unblock
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Ugur</td>
-                <td>Nazarov</td>
-                <td>Ugur@gmail.com</td>
-                <td>Ugur</td>
-                <td>Admin</td>
-                <td></td>
-
-                <td>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/ChangeRole/6223a69a-9e7e-431e-a9ba-63a2bb7a21a8">
-                    ChangeRole
-                  </a>
-                  <a
-                    className="btn btn-danger"
-                    href="/manage/user/block/6223a69a-9e7e-431e-a9ba-63a2bb7a21a8">
-                    Block
-                  </a>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/Unblock?userId=6223a69a-9e7e-431e-a9ba-63a2bb7a21a8">
-                    Unblock
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Elnur</td>
-                <td>Aliyev</td>
-                <td>Elnur@gmail.com</td>
-                <td>Elnur</td>
-                <td>Menber</td>
-                <td></td>
-
-                <td>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/ChangeRole/a3c5b319-d9ec-4c18-8024-6e125e704bfa">
-                    ChangeRole
-                  </a>
-                  <a
-                    className="btn btn-danger"
-                    href="/manage/user/block/a3c5b319-d9ec-4c18-8024-6e125e704bfa">
-                    Block
-                  </a>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/Unblock?userId=a3c5b319-d9ec-4c18-8024-6e125e704bfa">
-                    Unblock
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test-2@gmail.com</td>
-                <td>test22</td>
-                <td>Menber</td>
-                <td></td>
-
-                <td>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/ChangeRole/c6306999-1b45-4cd7-9e23-b9881b0bbb58">
-                    ChangeRole
-                  </a>
-                  <a
-                    className="btn btn-danger"
-                    href="/manage/user/block/c6306999-1b45-4cd7-9e23-b9881b0bbb58">
-                    Block
-                  </a>
-                  <a
-                    className="btn btn-warning"
-                    href="/manage/user/Unblock?userId=c6306999-1b45-4cd7-9e23-b9881b0bbb58">
-                    Unblock
-                  </a>
-                </td>
-              </tr>
+                      <td className="d-flex justify-content-around">
+                        <button className="btn btn-warning" onClick={() => changeRoleHandler(obj)}>
+                          ChangeRole
+                        </button>
+                        <button onClick={() => blockHandler(obj)} className="btn btn-danger">
+                          Block
+                        </button>
+                        <button onClick={() => unblockHandle(obj.id)} className="btn btn-warning">
+                          Unblock
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
         <div className="col-lg-12">
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
-              <li className="page-item active">
-                <a className="page-link" href="/manage/user?pageIndex=1">
-                  1
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <Pagination count={Math.ceil(pageCount / 5)} onChangePage={onChangePage} />
         </div>
+      </div>
+      <div
+        style={
+          changeRoleDisplay
+            ? { top: '20%', transition: 'ease-in-out 0.5s' }
+            : { transition: 'ease-in-out 0.5s' }
+        }
+        className={styles.modal_change_role}>
+        <div className="position-relative">
+          <button
+            onClick={() => setChangeRoleDisplay(false)}
+            style={{ right: '5px' }}
+            className="btn btn-danger position-absolute ">
+            X
+          </button>
+        </div>
+        <h5>Change Role</h5>
+        <p>User Email : {email}</p>
+        <select
+          onChange={(e) => setValue('RoleName', e.target.value)}
+          required={true}
+          className="form-control bx-selection ">
+          <option value="---">---</option>
+          <option value="Admin">Admin</option>
+          <option value="Member">Member</option>
+        </select>
+        <button onClick={handleSubmit(submitForm)} className="btn btn-primary mt-2">
+          Save
+        </button>
+      </div>
+      <div
+        style={
+          blockDisplay
+            ? { top: '20%', transition: 'ease-in-out 0.5s' }
+            : { transition: 'ease-in-out 0.5s' }
+        }
+        className={styles.block_modal}>
+        <div className="position-relative">
+          <button
+            onClick={() => setBlockDisplay(false)}
+            style={{ right: '5px' }}
+            className="btn btn-danger position-absolute ">
+            X
+          </button>
+        </div>
+        <h5>Block User</h5>
+        <p>User Email: {email}</p>
+        <form onSubmit={submitBlock}>
+          <div className="mb-3">
+            <label htmlFor="blockDate" className="form-label">
+              Block Date
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              id="blockDate"
+              value={blockDate}
+              onChange={(e) => setBlockDate(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Block User
+          </button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default index;
+export default Users;

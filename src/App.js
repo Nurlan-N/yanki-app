@@ -8,7 +8,6 @@ import Home from './layout/client/pages/Home';
 import axios from 'axios';
 import { useGetUserDetailsQuery } from './redux/function/authService';
 import MasterLayout from './layout/admin/MasterLayout';
-import Home2 from './layout/client/Home2';
 import Dashboard from './components/admin/Dashboard';
 import ClientLayout from './layout/client/ClientLayout';
 import ProductsBlock from './components/admin/ProductsBlock';
@@ -20,7 +19,9 @@ import CategoriesUpdate from './components/admin/CategoriesBlock/Update';
 import CategoriesDetail from './components/admin/CategoriesBlock/Detail';
 import CategoriesBlock from './components/admin/CategoriesBlock';
 import OrdersBlock from './components/admin/OrdersBlock';
+import OrdersDetail from './components/admin/OrdersBlock/Detail';
 import UsersBlock from './components/admin/UsersBlock';
+import UsersCreate from './components/admin/UsersBlock/Create';
 import SettingsBlock from './components/admin/SettingsBlock';
 import routes from './routes/routes';
 import Cookies from 'js-cookie';
@@ -69,9 +70,10 @@ function App() {
             <Route path="categories/detail" element={<CategoriesDetail />} />
             <Route path="categories" element={<CategoriesBlock />} />
             <Route path="orders" element={<OrdersBlock />} />
+            <Route path="orders/detail" element={<OrdersDetail />} />
             <Route path="users" element={<UsersBlock />} />
+            <Route path="users/create" element={<UsersCreate />} />
             <Route path="settings" element={<SettingsBlock />} />
-            <Route path="online" element={<Home2 />} />
           </Route>
         ) : (
           ''

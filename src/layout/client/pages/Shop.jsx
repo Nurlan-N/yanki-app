@@ -12,40 +12,6 @@ import { useRef } from 'react';
 import { fetchWishlist, fetchProducts } from '../../../redux/slices/productSlice';
 import Cookies from 'js-cookie';
 
-const sizeOptions = [
-  { value: 'xl', label: 'XL' },
-  { value: 'xxl', label: 'XXL' },
-  { value: 'ms', label: 'MS' },
-];
-const SizeSelect = () => (
-  <Select className="size-select" options={sizeOptions} placeholder="Size.." />
-);
-const colorOptions = [
-  { value: 'xl', label: 'XL' },
-  { value: 'xxl', label: 'XXL' },
-  { value: 'ms', label: 'MS' },
-];
-const ColorSelect = () => (
-  <Select className="color-select" options={colorOptions} placeholder="Color.." />
-);
-const priceOptions = [
-  { value: 'xl', label: 'XL' },
-  { value: 'xxl', label: 'XXL' },
-  { value: 'ms', label: 'MS' },
-];
-const PriceSelect = () => (
-  <Select className="price-select" options={priceOptions} placeholder="Price.." />
-);
-const sortOptions = [
-  { value: '0', label: 'Relevance' },
-  { value: '1', label: 'Name (A - Z)' },
-  { value: '2', label: 'Name (Z - A)' },
-  { value: '3', label: 'Price (Low &gt; High)' },
-  { value: '4', label: 'Rating (Lowest)' },
-];
-const SortSelect = () => (
-  <Select className="color-select" options={sortOptions} placeholder="Sort By.." />
-);
 const categoryOptions = [
   { value: '0', label: 'Parks' },
   { value: '1', label: 'Fur coats' },
@@ -82,7 +48,6 @@ const Shop = () => {
   const fetchCategories = async () => {
     try {
       const { data } = await axios.get('https://localhost:44389/api/category');
-      //console.log(data);
       setCategoryData(data);
     } catch (error) {
       alert('Category Datada sehv');
@@ -156,7 +121,6 @@ const Shop = () => {
             },
           },
         );
-        //Cookies.set('wishlist', JSON.stringify(favorites))
         setFavorites((prev) => [...prev, data]);
       }
     } catch (error) {
@@ -191,11 +155,16 @@ const Shop = () => {
               </div>
               <div className="gallary">
                 <div className="filter ">
-                  <div className="size d-flex">
-                    {SizeSelect()}
-                    {ColorSelect()}
-                    {PriceSelect()}
-                    {SortSelect()}
+                  <div >
+                    {/* <select className="sort_select"  id="Sort">
+                      <option  selected="selected" defaultValue="0">
+                        Relevance
+                      </option>
+                      <option value="1">Name (A - Z)</option>
+                      <option value="2">Name (Z - A)</option>
+                      <option value="3">Price (Low &amp;gt; High)</option>
+                      <option value="4">Rating (Lowest)</option>
+                    </select> */}
                   </div>
                 </div>
                 <div className="shop-block">
@@ -220,12 +189,7 @@ const Shop = () => {
         <div className="mobile-version">
           <PageMap title={'Shop'} />
           <div className="mob-category">{CategorySelect()}</div>
-          <div className="mob-filter mt-5 d-flex">
-            {SizeSelect()}
-            {ColorSelect()}
-            {PriceSelect()}
-            {SortSelect()}
-          </div>
+          <div className="mob-filter mt-5 d-flex"></div>
 
           {(status == 'loading' ? [...Array(12)] : products).map((item, index) => (
             <ShopItemBlock

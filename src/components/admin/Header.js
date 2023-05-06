@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useGetUserDetailsQuery } from '../../redux/function/authService';
 
 const Header = () => {
+  const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
+  console.log("🚀 ~ file: Header.js:7 ~ Header ~ data:", data)
+
   return (
     <header id="header" className="header fixed-top d-flex align-items-center">
       <div className="d-flex align-items-center justify-content-between">
         <Link to="" className="logo d-flex align-items-center">
           <img src="assets/img/logo.png" alt="" />
-          <span className="d-none d-lg-block">NiceAdmin</span>
+          <span className="d-none d-lg-block">Yanki Admin Panel</span>
         </Link>
         <i className="bi bi-list toggle-sidebar-btn"></i>
       </div>
@@ -172,8 +176,7 @@ const Header = () => {
               className="nav-link nav-profile d-flex align-items-center pe-0"
               href="#"
               data-bs-toggle="dropdown">
-              <img src="assets/img/profile-img.jpg" alt="Profile" className="rounded-circle" />
-              <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+              <span className="d-none d-md-block dropdown-toggle ps-2">{data.name + " " + data.surname}</span>
             </Link>
 
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">

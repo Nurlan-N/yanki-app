@@ -11,9 +11,14 @@ const Categories = () => {
   const [category, setCategory] = useState(JSON.parse(Cookies.get('category') || '[]'));
 
   useEffect(() => {
+    const token = window.localStorage.getItem('userToken');
     async function fetchData() {
       try {
-        const { data } = await axios.get('https://localhost:44389/api/category');
+        const { data } = await axios.get(`https://localhost:44389/api/category`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setCategory(data);
         Cookies.set('category', JSON.stringify(data));
       } catch (error) {
@@ -21,13 +26,12 @@ const Categories = () => {
       }
     }
     fetchData();
-    setDltCategory(false)
+    setDltCategory(false);
   }, [dltCategory]);
   const categoryIdHandler = (e) => {
     window.localStorage.setItem('categoryId', e);
   };
   const productDltHandler = (id) => {
-    
     return Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -97,8 +101,12 @@ const Categories = () => {
                           onClick={() => categoryIdHandler(item.id)}>
                           Update
                         </Link>
-                        <Link className="btn btn-danger " to="#"
-                        onClick={() => productDltHandler(item.id)}>Delete</Link>
+                        <Link
+                          className="btn btn-danger "
+                          to="#"
+                          onClick={() => productDltHandler(item.id)}>
+                          Delete
+                        </Link>
                       </td>
                     </tr>
                   );

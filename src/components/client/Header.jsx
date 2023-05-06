@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGetUserDetailsQuery } from '../../redux/function/authService';
 
 const Header = ({ onClickCart, onClickSignIn }) => {
-  const { userInfo, userToken } = useSelector((state) => state.auth);
+  const { userToken } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
 
   const dispatch = useDispatch();
@@ -29,14 +29,23 @@ const Header = ({ onClickCart, onClickSignIn }) => {
   return (
     <header>
       <div className="test">
-        <Toast className="toaster" onClose={() => setShow(false)} show={show} delay={3000} autohide>
-          <Toast.Header>
-            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-            <strong className="me-auto">YANKI</strong>
-            <small>11 mins ago</small>
-          </Toast.Header>
-          <Toast.Body>Hello, {data !== undefined ? data.name + "  " + data.surname : ''}</Toast.Body>
-        </Toast>
+        {data && (
+          <Toast
+            className="toaster"
+            onClose={() => setShow(false)}
+            show={show}
+            delay={3000}
+            autohide>
+            <Toast.Header>
+              <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+              <strong className="me-auto">YANKI</strong>
+              <small>11 mins ago</small>
+            </Toast.Header>
+            <Toast.Body>
+              Hello, {data !== undefined ? data.name + '  ' + data.surname : ''}
+            </Toast.Body>
+          </Toast>
+        )}
       </div>
       <div className="nav_bar col-lg-12 col-md-12">
         <div className="container">
@@ -81,7 +90,6 @@ const Header = ({ onClickCart, onClickSignIn }) => {
               <Link to="/cart">
                 <img src={basket} alt="basket" />
               </Link>
-              
             </div>
           </div>
         </div>

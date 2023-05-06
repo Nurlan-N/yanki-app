@@ -1,0 +1,20 @@
+.modal_change_role ,.block_modal {
+  background-color: #F2F2F2;
+  border: 1px solid #E6E7EA;
+  width: 23%;
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 12px;
+  transition: 'ease-in-out 0.5s'
+}
+.block_modal{
+    input{
+        border: 1px solid #252525;
+        border-radius: 10px;
+        padding: 5px 10px;
+    }
+}

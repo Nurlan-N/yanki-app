@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PageMap from '../../../components/client/PageMap';
 import Submit from '../../../components/client/ButtonSubmit';
 import row from '../../../assets/img/icon/down.png';
-import { logout, setCredentials } from '../../../redux/slices/authSlice ';
+import { logout } from '../../../redux/slices/authSlice ';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useGetUserDetailsQuery } from '../../../redux/function/authService';
 import { userData } from '../../../redux/function/authAction';
@@ -12,7 +12,8 @@ import { fetchOrders } from '../../../redux/slices/orderSlice';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
-  const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
+  const token = window.localStorage.getItem('userToken');
+  const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: token });
   const { orders } = useSelector((state) => state.orders);
   const { register, handleSubmit, setValue } = useForm();
   const [buttonColor, setButtonColor] = useState('');
@@ -39,10 +40,10 @@ const MyAccount = () => {
 
       dispatch(fetchOrders());
     }
-  }, [data]);
+  }, [data,token]);
 
   const showOrderItems = (id) => {
-    if (showItems == id) {
+    if (showItems === id) {
       setShowItems();
     } else {
       setShowItems(id);
@@ -55,7 +56,7 @@ const MyAccount = () => {
   };
 
   return (
-    <div className="account_wrapper" style={data ? {} : { display: 'none' }}>
+    <div className="account_wrapper" style={data && token ? {} : { display: 'none' }}>
       <div className="container">
         <div className="lg-version">
           <PageMap title={'My Account'} />
@@ -80,7 +81,7 @@ const MyAccount = () => {
               className="menu_item"
               style={selectButton === 3 ? { backgroundColor: buttonColor } : null}
               onClick={() => handleButtonClick(3)}>
-              <Link to="/" onClick={() => dispatch(logout())}>
+              <Link to="/" style={{ zIndex: '1' }} onClick={() => dispatch(logout())}>
                 Exit
               </Link>
             </div>
@@ -108,20 +109,20 @@ const MyAccount = () => {
                     <img
                       src={row}
                       alt=""
-                      style={showItems == item.id ? { rotate: '360deg' } : { rotate: '180deg' }}
+                      style={showItems === item.id ? { rotate: '360deg' } : { rotate: '180deg' }}
                     />
                   </div>
                 </div>
                 <div
                   className="bottom"
                   style={
-                    showItems == item.id ? { height: 250 * item.orderItems.length } : { height: 0 }
+                    showItems === item.id ? { height: 250 * item.orderItems.length } : { height: 0 }
                   }>
                   {item.orderItems &&
                     item.orderItems.map((pr) => (
                       <div key={pr.id} className="product">
                         <div className="box_img">
-                          <img src={pr.product.image} alt="" />
+                          <img style={{ width: '100px' }} src={pr.product.image} alt="" />
                           <div className="box_title">
                             <p>{pr.product.title}t</p>
                           </div>

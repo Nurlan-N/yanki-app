@@ -53,10 +53,10 @@ export const userLogin = createAsyncThunk(
       localStorage.setItem('userData', response.data)
       return data
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message('test'))
+      if (error.response &&  error.response.data) {
+        return rejectWithValue(error.response.data)
       } else {
-        return rejectWithValue(error.message('test2'))
+        return rejectWithValue(error)
       }
     }
   }

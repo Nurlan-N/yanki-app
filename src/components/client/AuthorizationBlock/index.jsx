@@ -11,7 +11,7 @@ import { userLogin } from '../../../redux/function/authAction';
 import { useForm } from 'react-hook-form';
 
 const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => {
-  const [showPasswod, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { loading, error, login } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -31,8 +31,8 @@ const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => 
         </div>
         <h3>Authorization</h3>
         <form onSubmit={handleSubmit(submitForm)}>
-          <span style={{ color: 'red' }}></span>
-
+          <span style={{ color: 'red' }}>{error && error}</span>
+          
           <div className="form-group">
             <label htmlFor="email"></label>
             <input
@@ -43,18 +43,19 @@ const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => 
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group position-relative">
             <label htmlFor="password"></label>
             <input
-              type="password"
-              className="form-input"
+              
+              type={showPassword?"text" : "password"}
+              className="form-input "
               {...register('password')}
               placeholder="Password..."
               required
             />
             <img
               className={styles.eye}
-              onClick={() => setShowPassword(!showPasswod)}
+              onClick={() => setShowPassword(!showPassword)}
               src={eye}
               alt="Show"
             />

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <div className="footer">
+    <div className="footer" style={{marginTop: '20%'}}>
       <div className="container">
         <div className="row">
           <div className="col-lg-3 col-sm-3 col-xs-12">
