@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetUserDetailsQuery } from '../../redux/function/authService';
 
-const Header = ({ onClickCart, onClickSignIn }) => {
+const Header = ({ onClickCart, onClickSignIn,cartDisplay }) => {
   const { userToken } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
 
@@ -27,7 +27,7 @@ const Header = ({ onClickCart, onClickSignIn }) => {
   });
 
   return (
-    <header>
+    <header className={cartDisplay ? 'd-none' : ''}>
       <div className="test">
         {data && (
           <Toast

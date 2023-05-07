@@ -1,5 +1,9 @@
 $primary-color: #e0bea2;
 $font-size: 18px;
+header{
+  align-items: center;
+  padding: 0;
+}
 .toaster{
   position: absolute;
   z-index: 11;
@@ -16,7 +20,7 @@ $font-size: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 5rem;
+  padding: 0 ;
 
   .pages {
     width: 33.33%;
@@ -99,6 +103,7 @@ $font-size: 18px;
   }
 }
 @media (max-width: 650px) {
+  
   .logo {
     width: 100px !important;
     img {

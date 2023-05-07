@@ -25,7 +25,7 @@ const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => 
     <>
       <div
         className={styles.root}
-        style={display === true && login === false ? { display: 'inline' } : { display: 'none' }}>
+        style={display === true && login === false ? { top: '20%', transition: 'ease-in-out 0.5s' } : { }}>
         <div className={styles.close}>
           <img onClick={onClose} src={close} alt="Close" />
         </div>

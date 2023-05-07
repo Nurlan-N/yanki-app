@@ -27,9 +27,10 @@ const ClientLayout = () => {
   };
   return (
     <>
-    <DrawerBlock cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />
+    <DrawerBlock onClickSignIn={() => setAuthorizationDisplay(!authorizationDisplay)} cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />
       <div className={cartDisplay ? 'd-none' : ''}></div>
       <Header
+        cartDisplay = {cartDisplay}
         onClickCart={() => setCartDisplay(!cartDisplay)}
         onClickSignIn={() => setAuthorizationDisplay(!authorizationDisplay)}
       />

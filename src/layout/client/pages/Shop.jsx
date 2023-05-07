@@ -26,6 +26,7 @@ const categoryOptions = [
 
 const Shop = () => {
   const [favorites, setFavorites] = useState([]);
+  const [sort,setSort] = useState(0)
   const isSearch = useRef(false);
   const isMounted = useRef(false);
   const navigate = useNavigate();
@@ -75,24 +76,26 @@ const Shop = () => {
     }
     isSearch.current = false;
     dispatch(fetchWishlist());
-  }, [categoryId, currentPage]);
+  }, [categoryId, currentPage,sort]);
 
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         categoryId,
         currentPage,
+        sort
       });
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [categoryId, currentPage]);
+  }, [categoryId, currentPage,sort]);
 
   const getProducts = () => {
     dispatch(
       fetchProducts({
         currentPage,
         categoryId,
+        sort
       }),
     );
   };
@@ -156,15 +159,15 @@ const Shop = () => {
               <div className="gallary">
                 <div className="filter ">
                   <div >
-                    {/* <select className="sort_select"  id="Sort">
-                      <option  selected="selected" defaultValue="0">
+                     <select onChange={(e) => setSort(e.target.value)} className="sort_select"  id="Sort">
+                      <option  selected="selected" value="0">
                         Relevance
                       </option>
                       <option value="1">Name (A - Z)</option>
                       <option value="2">Name (Z - A)</option>
                       <option value="3">Price (Low &amp;gt; High)</option>
                       <option value="4">Rating (Lowest)</option>
-                    </select> */}
+                    </select> 
                   </div>
                 </div>
                 <div className="shop-block">

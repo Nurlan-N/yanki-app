@@ -5,9 +5,9 @@ import Cookies from 'js-cookie'
 const token = localStorage.getItem('userToken');
 
 export const fetchProducts = createAsyncThunk('products/fetchProductStatus', async (params) => {
-  const { currentPage, categoryId } = params;
+  const { currentPage, categoryId,sort } = params;
   const { data } = await axios.get(
-    `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}`,
+    `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}&sort=${sort}`,
   );
   return data;
 });

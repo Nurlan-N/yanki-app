@@ -21,7 +21,7 @@ const MyAccount = () => {
   const [showItems, setShowItems] = useState();
 
   const submitForm = (data) => {
-    if (data.NewPassword.length > 0 && data.NewPassword !== data.confirmPassword) {
+    if (data.NewPassword !== data.confirmPassword) {
       alert('Password mismatch');
     }
     console.log(data);

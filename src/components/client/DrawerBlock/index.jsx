@@ -6,8 +6,11 @@ import close_2 from '../../../assets/img/icon/c-2.png';
 import logo from '../../../assets/img/icon/logo_white.png';
 import wishlist from '../../../assets/img/icon/wishlist.png';
 import basket from '../../../assets/img/icon/basket.png';
+import { useState } from 'react';
 
-const index = ({ onClose, cartDisplay }) => {
+const DrawerBlock = ({ onClose, cartDisplay,onClickSignIn }) => {
+  const [token, setToken] = useState(null);
+  //setToken(window.localStorage.getItem('userToken'));
   return (
     <div
       className={styles.drawer}
@@ -28,30 +31,50 @@ const index = ({ onClose, cartDisplay }) => {
             <img height={20} width={70} src={logo} alt="Logo" />
           </div>
           <div className={styles.wishlist}>
-            <Link onClick={onClose}><img width={20} height={20} src={wishlist} alt="Wishlist" /></Link>
+            <Link onClick={onClose}>
+              <img src={wishlist} alt="Wishlist" />
+            </Link>
           </div>
           <div className={styles.basket}>
-            <Link onClick={onClose}><img width={20} height={20} src={basket} alt="Cart" /></Link>
+            <Link onClick={onClose}>
+              <img src={basket} alt="Cart" />
+            </Link>
           </div>
-
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/" onClick={onClose}>Home</Link>
+          <Link to="/" onClick={onClose}>
+            Home
+          </Link>
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/my-account" onClick={onClose}>My Acoount</Link>
-        </div>
-        <div className={styles.menu_Item} >
-          <Link to="/new" onClick={onClose}>New</Link>
-        </div>
-        <div className={styles.menu_Item}>
-          <Link to="/shop" onClick={onClose}>Shop</Link>
-        </div>
-        <div className={styles.menu_Item}>
-          <Link to="/about" onClick={onClose}>About</Link>
+          {
+            token ? <Link to="/my-account" onClick={onClose}>
+            My Account
+          </Link> : <Link to="#" onClick={onClickSignIn}>
+            My Account
+          </Link>
+          }
+          
         </div>
         <div className={styles.menu_Item}>
-          <Link to="/contact" onClick={onClose}>Contact</Link>
+          <Link to="/new" onClick={onClose}>
+            New
+          </Link>
+        </div>
+        <div className={styles.menu_Item}>
+          <Link to="/shop" onClick={onClose}>
+            Shop
+          </Link>
+        </div>
+        <div className={styles.menu_Item}>
+          <Link to="/about" onClick={onClose}>
+            About
+          </Link>
+        </div>
+        <div className={styles.menu_Item}>
+          <Link to="/contact" onClick={onClose}>
+            Contact
+          </Link>
         </div>
         <div className={styles.footer}>
           <p>+(994) 055 582 86 99</p>
@@ -62,4 +85,4 @@ const index = ({ onClose, cartDisplay }) => {
   );
 };
 
-export default index;
+export default DrawerBlock;

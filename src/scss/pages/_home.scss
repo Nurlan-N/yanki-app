@@ -74,7 +74,13 @@
       left: 3% !important;
     }
     @media (max-width: 600px) {
-      left: 5% !important;
+      left: 2% !important;
+      height: 20px;
+      width: 20px;
+      img{
+        height: 10px;
+        margin: 0 0px 5px -2px;
+      }
     }
   }
   .right_arrow {
@@ -86,7 +92,13 @@
       left: 90% !important;
     }
     @media (max-width: 600px) {
-      left: 85% !important;
+      left: 88% !important;
+      height: 20px;
+      width: 20px;
+      img {
+        height: 10px;
+        margin: 0 0px 5px -2px;
+      }
     }
   }
 
@@ -150,7 +162,7 @@
 .subscribe {
   overflow: hidden !important;
 
-  form {
+  .sub_form {
     width: 600px;
     text-align: center;
     margin-left: 50%;
@@ -159,7 +171,6 @@
   margin-top: 100px;
   text-align: center;
   input {
-    width: 100%;
     margin-top: 50px;
     box-sizing: border-box;
     height: 50px;
@@ -168,9 +179,7 @@
     border: 0.5px solid #252525;
     margin-bottom: 20px;
     margin-left: 50%;
-    @media (max-width: 600px) {
-      width: 50%;
-    }
+    
   }
 
   .text {
