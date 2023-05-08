@@ -15,10 +15,11 @@ const Products = () => {
   const navigate = useNavigate();
   const [deletePr, setDeletePr] = useState(false);
   const { products, status, pageCount, wishlist } = useSelector((state) => state.product);
-  const { categoryId, currentPage } = useSelector((state) => state.filter);
+  const { categoryId, currentPage ,sort} = useSelector((state) => state.filter);
   const params = {
     currentPage: currentPage,
     categoryId: 0,
+    sort: 0,
   };
   useEffect(() => {
     dispatch(fetchProducts(params));
@@ -31,6 +32,7 @@ const Products = () => {
       const queryString = qs.stringify({
         categoryId,
         currentPage,
+        sort,
       });
       navigate(`?${queryString}`);
     }

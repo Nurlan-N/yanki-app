@@ -13,19 +13,27 @@ import { fetchOrders } from '../../../redux/slices/orderSlice';
 const MyAccount = () => {
   const dispatch = useDispatch();
   const token = window.localStorage.getItem('userToken');
+  const {error} = useSelector((state) => state.auth)
   const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: token });
   const { orders } = useSelector((state) => state.orders);
   const { register, handleSubmit, setValue } = useForm();
   const [buttonColor, setButtonColor] = useState('');
   const [selectButton, setSelectButton] = useState(2);
   const [showItems, setShowItems] = useState();
+  const [errorNewPassword, setErrorNewPassword] = useState('');
 
-  const submitForm = (data) => {
-    if (data.NewPassword !== data.confirmPassword) {
-      alert('Password mismatch');
+  const submitForm =  (data) => {
+    if (data.NewPassword !== data.ConfirimPassword) {
+      setErrorNewPassword('Current password does not match');
+      return
     }
-    console.log(data);
-    dispatch(userData(data));
+    dispatch(userData(data))
+    .then(() => {
+      console.log('userData dispatched successfully');
+    })
+    .catch((error) => {
+      console.log('Error dispatching userData:', error);
+    });
   };
 
   useEffect(() => {
@@ -40,7 +48,7 @@ const MyAccount = () => {
 
       dispatch(fetchOrders());
     }
-  }, [data,token]);
+  }, [data, token]);
 
   const showOrderItems = (id) => {
     if (showItems === id) {
@@ -174,33 +182,43 @@ const MyAccount = () => {
               <input type="text" id="username" {...register('Username')} placeholder={'Username'} />
               <input type="tel" id="phone" {...register('Phone')} placeholder={'Phone'} />
             </div>
-            <h5>Password:</h5>
-            <div className="addres_data d-flex justify-content-between">
-              <input
-                style={{ width: '20%' }}
-                type="password"
-                id="password"
-                required={true}
-                {...register('Password')}
-                placeholder={'Password'}
-              />
 
-              <input
-                type="password"
-                style={{ width: '30%' }}
-                id="newPassword"
-                required={false}
-                {...register('NewPassword')}
-                placeholder={'New Password'}
-              />
-              <input
-                type="password"
-                style={{ width: '30%' }}
-                id="currentPassword"
-                required={false}
-                {...register('ConfirimPassword')}
-                placeholder={'Confirim Password'}
-              />
+            <div className="addres_data col-lg-12  d-flex flex-wrap justify-content-between">
+              <div className="col-lg-3">
+                <h5>Password:</h5>
+                <input
+                  style={{ width: '100%' }}
+                  type="password"
+                  id="password"
+                  required={true}
+                  {...register('Password')}
+                  placeholder={'Password'}
+                />
+                <span className='text text-danger'>{error && error}</span>
+              </div>
+              <div className="col-lg-3">
+                <h5>New Password:</h5>
+                <input
+                  style={{ width: '100%' }}
+                  type="password"
+                  id="newPassword"
+                  required={false}
+                  {...register('NewPassword')}
+                  placeholder={'New Password'}
+                />
+              </div>
+              <div className="col-lg-3">
+                <h5>Current Password:</h5>
+                <input
+                  style={{ width: '100%' }}
+                  type="password"
+                  id="currentPassword"
+                  required={false}
+                  {...register('ConfirimPassword')}
+                  placeholder={'Confirim Password'}
+                />
+                <span className="text text-danger">{errorNewPassword}</span>
+              </div>
             </div>
             <h5>Delivery Address:</h5>
             <div className="addres_data d-flex justify-content-between mb-3">

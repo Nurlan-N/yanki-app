@@ -3,7 +3,7 @@ import Header from '../../components/admin/Header';
 import Sidebar from '../../components/admin/Sidebar';
 import Footer from '../../components/admin/Footer';
 import '../../assets/admin/assets/css/style.css';
-import '../../assets/admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
+//import '../../assets/admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
 import '../../assets/admin/assets/vendor/chart.js/chart.umd.js';
 import '../../assets/admin/assets/vendor/echarts/echarts.min.js';
 import '../../assets/admin/assets/vendor/quill/quill.min.js';
