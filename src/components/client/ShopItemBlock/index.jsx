@@ -3,13 +3,11 @@ import styles from './ShopItem.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { useGetUserWishlistQuery } from '../../../redux/function/authService';
 import { fetchWishlist } from '../../../redux/slices/productSlice';
 
 const ShopItem = ({ id, title, price, image, onFavorite, categoryId }) => {
   const dispatch = useDispatch();
   const [addToFavorite, setAddFavorite] = useState(false);
-  console.log('🚀 ~ file: index.jsx:12 ~ ShopItem ~ addToFavorite:', addToFavorite);
   const { wishlist } = useSelector((state) => state.product);
 
   useEffect(() => {

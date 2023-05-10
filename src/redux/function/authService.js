@@ -21,15 +21,4 @@ export const authApi = createApi({
   }),
 });
 
-export const wishlistApi = createApi({
-  reducerPath: 'wishlistApi',
-  baseQuery: fetchBaseQuery({ baseUrl: apiBaseUrl, prepareHeaders: baseQueryFn }),
-  endpoints: (builder) => ({
-    getUserWishlist: builder.query({
-      query: () => ({ url: 'api/wishlist', method: 'GET' }),
-    }),
-  }),
-});
-
 export const { useGetUserDetailsQuery } = authApi;
-export const { useGetUserWishlistQuery } = wishlistApi;

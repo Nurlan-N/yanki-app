@@ -22,15 +22,12 @@ const SizeSelect = () => (
 );
 const Detail = () => {
   const { wishlist } = useSelector((state) => state.product);
-  const dispatch = useDispatch();
 
   const [product, setProduct] = useState({});
+  const [images, setImages] = useState(null);
   const [similarProducts, setSimilarProducts] = useState([]);
   const token = localStorage.getItem('userToken');
-  const [productId, setProductId] = useState(() => {
-    const storedProductId = localStorage.getItem('productId');
-    return storedProductId ? parseInt(storedProductId) : 0;
-  });
+  const storedProductId = localStorage.getItem('productId');
 
   const [categoryId, setCategoryId] = useState(() => {
     const storedProductId = localStorage.getItem('categoryId');
@@ -44,14 +41,15 @@ const Detail = () => {
     fetchSimilarProducts();
     window.scrollTo(0, 0);
     const queryString = qs.stringify({
-      productId,
+      storedProductId,
     });
     navigate(`?${queryString}`);
-  }, [productId]);
+  }, [storedProductId]);
   const fetchProduct = async () => {
     try {
-      const { data } = await axios.get(`https://localhost:44389/api/Product/${productId}`);
+      const { data } = await axios.get(`https://localhost:44389/api/Product/${storedProductId}`);
       setProduct(data);
+      setImages(data.productImages)
     } catch (error) {
       alert('Datada Sehv');
     }
@@ -109,11 +107,9 @@ const Detail = () => {
           <div className="detail_content">
             <div className="pr_image_block d-flex ">
               <div className="pr_images d-flex">
-                <img src={m1} alt="Image" />
-                <img src={m1} alt="Image" />
-                <img src={m1} alt="Image" />
-                <img src={m1} alt="Image" />
-                <img src={m1} alt="Image" />
+                {images && images.map((img, index) => {
+                  return <img style={{width: "100px"}} key={index} src={img.image} alt="Image" />;
+                })}
               </div>
               <div className="main_image">
                 <img src={product.image} alt="" />

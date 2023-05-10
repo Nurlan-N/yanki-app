@@ -152,18 +152,18 @@ const Shop = () => {
               <div className="gallary">
                 <div className="filter ">
                   <div>
-                    {/* <select
+                    <select
                       onChange={(e) => setSort(e.target.value)}
                       className="sort_select"
                       id="Sort">
-                      <option selected="selected" value="0">
+                      <option  value="0">
                         Relevance
                       </option>
                       <option value="1">Name (A - Z)</option>
                       <option value="2">Name (Z - A)</option>
                       <option value="3">Price (Low &amp;gt; High)</option>
                       <option value="4">Rating (Lowest)</option>
-                    </select> */}
+                    </select>
                   </div>
                 </div>
                 <div className="shop-block">

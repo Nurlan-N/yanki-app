@@ -3,7 +3,6 @@ import PageMap from '../../../components/client/PageMap';
 import ShopItemBlock from '../../../components/client/ShopItemBlock';
 import axios from 'axios';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { useGetUserWishlistQuery } from '../../../redux/function/authService';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWishlist } from '../../../redux/slices/productSlice';
 
