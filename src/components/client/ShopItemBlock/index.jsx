@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ShopItem.module.scss';
 import { Link } from 'react-router-dom';
-import { setProductId } from '../../../redux/slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { useEffect } from 'react';
+import { useGetUserWishlistQuery } from '../../../redux/function/authService';
+import { fetchWishlist } from '../../../redux/slices/productSlice';
 
-const ShopItem = ({ id, title, price, image, onFavorite,categoryId }) => {
+const ShopItem = ({ id, title, price, image, onFavorite, categoryId }) => {
   const dispatch = useDispatch();
   const [addToFavorite, setAddFavorite] = useState(false);
+  console.log('🚀 ~ file: index.jsx:12 ~ ShopItem ~ addToFavorite:', addToFavorite);
   const { wishlist } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    setAddFavorite(false);
+    dispatch(fetchWishlist());
+  }, [addToFavorite]);
+
   const addFavoriteHandler = () => {
-    setAddFavorite(!addToFavorite);
+    setAddFavorite(true);
     onFavorite({ id, title, price, image });
   };
-  const productIdHandler = async (id,categoryId) => {
+  const productIdHandler = async (id, categoryId) => {
     localStorage.setItem('productId', id);
     dispatch({
       type: 'SET_PRODUCT_ID',
       payload: id,
     });
-    localStorage.setItem("categoryId", categoryId);
+    localStorage.setItem('categoryId', categoryId);
     dispatch({
-      type: "SET_CATRGORY_ID",
+      type: 'SET_CATRGORY_ID',
       payload: id,
     });
   };
@@ -30,7 +37,7 @@ const ShopItem = ({ id, title, price, image, onFavorite,categoryId }) => {
     <>
       <div className={styles.wrapper} key={id}>
         <div className={styles.shop_block}>
-          <Link onClick={() => productIdHandler(id,categoryId)} to={`/detail`}>
+          <Link onClick={() => productIdHandler(id, categoryId)} to={`/detail`}>
             <img className="image" src={image} alt="Item" />
             <h4 className={styles.title}>{title}</h4>
             <h5 className={styles.price}>{price}$</h5>
@@ -39,11 +46,11 @@ const ShopItem = ({ id, title, price, image, onFavorite,categoryId }) => {
             onClick={addFavoriteHandler}
             className={styles.wishlist}
             style={
-              addToFavorite && wishlist.some((item) => item.id === id)
+              wishlist && wishlist.some((item) => item.id === id)
                 ? { background: '#CCA88A' }
                 : { background: '#e0bea2' }
             }>
-            {addToFavorite || wishlist.some((item) => item.id === id) ? (
+            {wishlist && wishlist.some((item) => item.id === id) ? (
               <AiFillHeart className={styles.heart} />
             ) : (
               <AiOutlineHeart className={styles.heart} />

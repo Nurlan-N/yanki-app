@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerUser, userLogin, userData} from '../function/authAction';
+import { registerUser, userLogin, userData, userSubscribe } from '../function/authAction';
 
 const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
 
@@ -11,6 +11,7 @@ const initialState = {
   error: null,
   login: false,
   success: false,
+  message: null,
 };
 
 const authSlice = createSlice({
@@ -48,12 +49,11 @@ const authSlice = createSlice({
     },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.success = true; 
+      state.success = true;
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-      
     },
     [userData.pending]: (state) => {
       state.loading = true;
@@ -61,12 +61,26 @@ const authSlice = createSlice({
     },
     [userData.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.success = true; 
+      state.success = true;
     },
     [userData.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-      
+    },
+    [userSubscribe.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    },
+    [userSubscribe.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.message = payload;
+    },
+    [userSubscribe.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+      state.success = false;
     },
   },
 });

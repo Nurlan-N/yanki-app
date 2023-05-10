@@ -72,22 +72,26 @@ export const userData = createAsyncThunk('auth/updateuser', async (data, { rejec
     }
   }
 });
-export const userSubscribe = createAsyncThunk('auth/userSubscribe', async (data, { rejectWithValue }) => {
-  const token = localStorage.getItem('userToken');
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-      },
-    };
-    const response = await axios.post(`${backendURL}/api/auth/updateuser`, data, config);
-    localStorage.setItem('userToken', response.data.token);
-  } catch (error) {
-    if (error.response && error.response.data) {
-      return rejectWithValue(error.response.data);
-    } else {
-      return rejectWithValue(error.message);
+export const userSubscribe = createAsyncThunk(
+  'auth/userSubscribe',
+  async (email, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const { data } = await axios.post(
+        `${backendURL}/api/Subscribe/create?email=${email}`,
+        config,
+      );
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue(error.message);
+      }
     }
-  }
-});
+  },
+);

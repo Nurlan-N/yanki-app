@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import Cookies from 'js-cookie'
-;
+
 const token = localStorage.getItem('userToken');
 
 export const fetchProducts = createAsyncThunk('products/fetchProductStatus', async (params) => {
-  const { currentPage, categoryId,sort } = params;
+  const { currentPage, categoryId, sort } = params;
   const { data } = await axios.get(
     `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}&sort=${sort}`,
   );
@@ -28,15 +27,13 @@ export const fetchBasket = createAsyncThunk('basket/fetchBasketStatus', async ()
   return data;
 });
 
-
-
 const initialState = {
   pageCount: 0,
   productId: 0,
   products: [],
   product: {},
   wishlist: [],
-  basket:[],
+  basket: [],
   favorites: false,
   wishlistStatus: 'loading',
   basketStatus: 'loading',
@@ -59,8 +56,8 @@ const productSlice = createSlice({
     setFavorites(state, action) {
       state.favorites = action.payload;
     },
-    setProduct(state,action){
-      state.product = action.payload
+    setProduct(state, action) {
+      state.product = action.payload;
     },
   },
   extraReducers: {
@@ -104,6 +101,7 @@ const productSlice = createSlice({
   },
 });
 
-export const { setItems, setProductId, setPageCount, setFavorites,setProduct } = productSlice.actions;
+export const { setItems, setProductId, setPageCount, setFavorites, setProduct } =
+  productSlice.actions;
 
 export default productSlice.reducer;

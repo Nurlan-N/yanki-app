@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ButtonSubmit from '../../../components/client/ButtonSubmit';
 import collection1 from '../../../assets/img/newcollection/1.png';
 import collection2 from '../../../assets/img/newcollection/2.png';
@@ -7,18 +7,21 @@ import arrow from '../../../assets/img/icon/arrow.png';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../../../redux/slices/filterSlice';
-import axios from 'axios';
+import { userSubscribe } from '../../../redux/function/authAction';
 
 const page_width = 26;
 
 const Home = ({ children, category }) => {
   const dispatch = useDispatch();
+  const { loading, error, message } = useSelector((state) => state.auth);
 
+  const submitSubscribe = async () => {
+    if (email === null) return;
+    dispatch(userSubscribe(email));
+  };
   const [offset, setOffset] = useState(0);
-  const [pages, setPages] = useState([]);
   const [email, setEmail] = useState(null);
-  const [subscribeRes, setSubscribeRes] = useState('');
-  const [subscribeError, setSubscribeError] = useState('');
+
   const CategoryClick = (e) => {
     dispatch(setCategoryId(e));
   };
@@ -36,31 +39,8 @@ const Home = ({ children, category }) => {
     });
   };
 
-  useEffect(() => {
-    setPages(
-      Children.map(children, (child) => {
-        return cloneElement(child, {
-          style: {
-            height: '100%',
-            minWidth: `${page_width}%`,
-            maxWidth: `${page_width}%`,
-          },
-        });
-      }),
-    );
-  }, []);
 
-  const submitSubscribe = async () => {
-    if (email === null) return;
-    try {
-      const { data } = await axios.post(
-        `https://localhost:44389/api/Subscribe/create?email=${email}`,
-      );
-      setSubscribeRes(data);
-    } catch (error) {
-      setSubscribeError(error.response.data);
-    }
-  };
+
   return (
     <main>
       <section className="new-collection">
@@ -103,20 +83,27 @@ const Home = ({ children, category }) => {
       <section className="subscribe  ">
         <h3>Be The First To Know About New Products</h3>
         <div className="sub_form d-flex flex-wrap text-center col-5">
-        <span className='text text-danger'>{subscribeError}</span>
-        <span className='text text-success'>{subscribeRes}</span>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          className="col-7 col-lg-12 mx-auto"
-          type="email"
-          placeholder="Email"
-        />
-        <div className='col-lg-12 col-7 text-center mx-auto' onClick={() => submitSubscribe()}>
-          <ButtonSubmit title={'Subscribe'} />
-        </div>
+          <span style={message ? { display: 'none' } : {}} className=" col-lg-12 text text-danger">
+            {error}
+          </span>
+          <span style={error ? { display: 'none' } : {}} className="text text-success col-lg-12">
+            {message}
+          </span>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className="col-7 col-lg-12 mx-auto"
+            type="email"
+            placeholder="Email"
+          />
+          <div
+            style={loading ? { cursor: 'none' } : {}}
+            className="col-lg-12 col-7 text-center mx-auto"
+            onClick={() => submitSubscribe()}>
+            <ButtonSubmit title={loading ? 'Loading' : 'Subscribe'} />
+          </div>
         </div>
         <div className="text col-12">
-          <p className='col-12'>
+          <p className="col-12">
             By clicking on the "Subscribe" button, I agree to the processing of my personal data and
             have read the terms of confidentiality.
           </p>

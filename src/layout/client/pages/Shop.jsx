@@ -9,8 +9,8 @@ import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../../../redux/slices/filterSlice';
 import { useRef } from 'react';
-import { fetchWishlist, fetchProducts } from '../../../redux/slices/productSlice';
-import Cookies from 'js-cookie';
+import { fetchProducts } from '../../../redux/slices/productSlice';
+import { useGetUserWishlistQuery } from '../../../redux/function/authService';
 
 const categoryOptions = [
   { value: '0', label: 'Parks' },
@@ -25,15 +25,15 @@ const categoryOptions = [
 ];
 
 const Shop = () => {
-  const [favorites, setFavorites] = useState([]);
-  const [sort,setSort] = useState(0)
+  const { wishlist } = useSelector((state) => state.product);
+  const [sort, setSort] = useState(0);
   const isSearch = useRef(false);
   const isMounted = useRef(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { categoryId, currentPage } = useSelector((state) => state.filter);
-  const { products, status, pageCount, wishlist } = useSelector((state) => state.product);
+  const { products, status, pageCount } = useSelector((state) => state.product);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -75,27 +75,26 @@ const Shop = () => {
       getProducts();
     }
     isSearch.current = false;
-    dispatch(fetchWishlist());
-  }, [categoryId, currentPage,sort]);
+  }, [categoryId, currentPage, sort]);
 
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         categoryId,
         currentPage,
-        sort
+        sort,
       });
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [categoryId, currentPage,sort]);
+  }, [categoryId, currentPage, sort]);
 
   const getProducts = () => {
     dispatch(
       fetchProducts({
         currentPage,
         categoryId,
-        sort
+        sort,
       }),
     );
   };
@@ -105,31 +104,25 @@ const Shop = () => {
   const AddToFavorite = async (item) => {
     try {
       const token = localStorage.getItem('userToken');
-      if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
+      if (wishlist && wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
         await axios.delete(`https://localhost:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(item.id)));
       } else {
         console.log('else');
-        const { data } = await axios.post(
-          `https://localhost:44389/api/wishlist/add?id=${item.id}`,
-          null,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        await axios.post(`https://localhost:44389/api/wishlist/add?id=${item.id}`, null, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
-        setFavorites((prev) => [...prev, data]);
+        });
       }
     } catch (error) {
       alert('Favoritler yuklenmedi');
     }
   };
+
   return (
     <div className="show-wrapper">
       <div className="container">
@@ -158,16 +151,19 @@ const Shop = () => {
               </div>
               <div className="gallary">
                 <div className="filter ">
-                  <div >
-                     <select onChange={(e) => setSort(e.target.value)} className="sort_select"  id="Sort">
-                      <option  selected="selected" value="0">
+                  <div>
+                    {/* <select
+                      onChange={(e) => setSort(e.target.value)}
+                      className="sort_select"
+                      id="Sort">
+                      <option selected="selected" value="0">
                         Relevance
                       </option>
                       <option value="1">Name (A - Z)</option>
                       <option value="2">Name (Z - A)</option>
                       <option value="3">Price (Low &amp;gt; High)</option>
                       <option value="4">Rating (Lowest)</option>
-                    </select> 
+                    </select> */}
                   </div>
                 </div>
                 <div className="shop-block">
@@ -181,7 +177,7 @@ const Shop = () => {
                         {...item}
                       />
                     ))}
-                    ;<div className="mob-content d-flex flex-wrap justify-content-between"></div>
+                    <div className="mob-content d-flex flex-wrap justify-content-between"></div>
                   </div>
                 </div>
                 <Pagination count={Math.ceil(pageCount / 8)} onChangePage={onChangePage} />

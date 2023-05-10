@@ -3,23 +3,17 @@ import PageMap from '../../../components/client/PageMap';
 import img from '../../../assets/img/about.jpg';
 import ButtonSubmit from '../../../components/client/ButtonSubmit';
 import { useState } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSubscribe } from '../../../redux/function/authAction';
 
 const About = () => {
+  const dispatch = useDispatch();
+  const { loading, error, message } = useSelector((state) => state.auth);
   const [email, setEmail] = useState(null);
-  const [subscribeRes, setSubscribeRes] = useState('');
-  const [subscribeError, setSubscribeError] = useState('');
 
   const submitSubscribe = async () => {
     if (email === null) return;
-    try {
-      const { data } = await axios.post(
-        `https://localhost:44389/api/Subscribe/create?email=${email}`,
-      );
-      setSubscribeRes(data);
-    } catch (error) {
-      setSubscribeError(error.response.data);
-    }
+    dispatch(userSubscribe(email));
   };
   return (
     <div className="about_wrapper">
@@ -28,7 +22,7 @@ const About = () => {
           <PageMap title={'About'} />
           <div className="content d-flex">
             <div className="main_img">
-              <img src={img} walt="" />
+              <img src={img} walt="" alt="Main Image" />
             </div>
             <div className="text mx-5">
               <h2>WELCOME TO YANKI</h2>
@@ -50,8 +44,16 @@ const About = () => {
           <section className="subscribe  mt-5">
             <h3>Be The First To Know About New Products</h3>
             <div className="sub_form d-flex flex-wrap text-center col-5">
-              <span className="text text-danger">{subscribeError}</span>
-              <span className="text text-success">{subscribeRes}</span>
+              <span
+                style={message ? { display: 'none' } : {}}
+                className=" col-lg-12 text text-danger">
+                {error}
+              </span>
+              <span
+                style={error ? { display: 'none' } : {}}
+                className="text text-success col-lg-12">
+                {message}
+              </span>
               <input
                 onChange={(e) => setEmail(e.target.value)}
                 className="col-7 col-lg-12 mx-auto"
@@ -59,6 +61,7 @@ const About = () => {
                 placeholder="Email"
               />
               <div
+                style={loading ? { cursor: 'none' } : {}}
                 className="col-lg-12 col-7 text-center mx-auto"
                 onClick={() => submitSubscribe()}>
                 <ButtonSubmit title={'Subscribe'} />
