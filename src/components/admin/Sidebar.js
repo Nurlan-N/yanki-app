@@ -41,12 +41,7 @@ const Sidebar = () => {
             <span>Settings</span>
           </Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link " to="online">
-            <i className="bi bi-person-check"></i>
-            <span>Online Users</span>
-          </Link>
-        </li>
+       
       </ul>
     </aside>
   );

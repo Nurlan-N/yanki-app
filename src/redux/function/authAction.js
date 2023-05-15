@@ -19,6 +19,26 @@ export const registerUser = createAsyncThunk('auth/register', async (data, { rej
     }
   }
 });
+export const confirmationUser = createAsyncThunk(
+  'auth/confirmation',
+  async (code, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const { data } = await axios.post(`${backendURL}/api/Auth/verify?code=${code}`, {}, config);
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {

@@ -40,7 +40,7 @@ const ForgotBlock = ({ display, onClose }) => {
         />
       </div>  
       <div onClick={() => forgotHandler()} className="">
-        <ButtonSubmit title={'LOGIN'} />
+        <ButtonSubmit title={'Send...'} />
       </div>
     </div>
   );

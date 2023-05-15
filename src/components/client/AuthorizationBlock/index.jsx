@@ -14,7 +14,6 @@ const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => 
   const [showPassword, setShowPassword] = useState(false);
   const { loading, error, login } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
 
   const { register, handleSubmit } = useForm();
 

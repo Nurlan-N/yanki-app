@@ -12,10 +12,19 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async () => {
   });
   return data;
 });
+export const fetchAllOrders = createAsyncThunk('order/fetchAllOrders', async () => {
+  const { data } = await axios.get(`https://localhost:44389/api/order`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+});
 
 const initialState = {
   orders: null,
   orderItems: [],
+  allOrders: [],
   status: 'loading',
 };
 const orderSlice = createSlice({
@@ -35,6 +44,18 @@ const orderSlice = createSlice({
     [fetchOrders.rejected]: (state, action) => {
       state.status = 'error';
       state.orders = [];
+    },
+    [fetchAllOrders.pending]: (state, action) => {
+      state.status = 'loading';
+      state.allOrders = [];
+    },
+    [fetchAllOrders.fulfilled]: (state, action) => {
+      state.allOrders = action.payload;
+      state.status = 'success';
+    },
+    [fetchAllOrders.rejected]: (state, action) => {
+      state.status = 'error';
+      state.allOrders = [];
     },
   },
 });

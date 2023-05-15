@@ -1,8 +1,40 @@
 .root {
+  .products{
+    position: absolute;
+    top: 80%;
+    height: 200px;
+    overflow: scroll;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    background-color: #ffff;
+    .item{
+      display: flex;
+      padding: 10px;
+      width: 300px;
+      align-items: center;
+      a{
+        transition: ease-in-out 0.2s;
+        &:hover{
+          color: #E0BEA2;
+        }
+      }
+      .text{
+        width: 150px;
+        text-align: center;
+        a{
+          width: 100%;
+          text-align: start;
+        }
+      }
+    }
+  }
   .searchTop {
     position: relative;
     .input {
-      width: 100%;
+      transition: ease-in-out 0.5s;
+      width: 0%;
+      opacity: 0;
       height: 40px;
       border: 0.5px solid #252525;
       border-radius: 20px;
@@ -11,15 +43,14 @@
     }
     .icon {
       position: absolute;
-      width: 15px;
-      height: 15px;
       right: 10px;
-      top: 50%;
+      top: 55%;
       transform: translateY(-50%);
       cursor: pointer;
+      
     }
   }
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     display: none;
   }
 }

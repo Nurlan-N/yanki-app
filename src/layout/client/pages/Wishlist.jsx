@@ -48,6 +48,9 @@ const Wishlist = () => {
                 </CSSTransition>
               ))}
           </TransitionGroup>
+          <div style={wishlist.length >0 ? { display: 'none' } : {}} className="mx-auto text-center mt-5">
+            <h2>Wish List Is Empty</h2>
+          </div>
         </div>
       </div>
     </div>

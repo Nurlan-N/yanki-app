@@ -1,27 +1,19 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchAllOrders } from '../../../redux/slices/orderSlice';
 
 const Orders = () => {
-  const [orders, setOrders] = useState(null);
   const token = window.localStorage.getItem('userToken');
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchAllOrders());
+  },[])
+  const { allOrders } = useSelector((state) => state.orders);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data } = await axios.get(`https://localhost:44389/api/Order`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setOrders(data);
-      } catch (error) {
-        alert('Datada sehv');
-      }
-    }
-    fetchData();
-  }, []);
+  
 
   const orderIdHandler = (e) => {
     window.localStorage.setItem('orderId', e);
@@ -48,8 +40,8 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders &&
-                orders.map((order, index) => {
+              {allOrders &&
+                allOrders.map((order, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>

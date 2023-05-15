@@ -87,6 +87,11 @@ const Cart = () => {
         <PageMap title={'Cart'} />
         <h4>Your order</h4>
         <div className="order_items mt-3 ">
+          <div
+            style={basket.length > 0 ? { display: 'none' } : {}}
+            className="mx-auto text-center mt-5">
+            <h2>Cart Is Empty</h2>
+          </div>
           <TransitionGroup className="items">
             {basket &&
               basket.map((item, index) => (
