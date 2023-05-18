@@ -10,7 +10,6 @@ import axios from 'axios';
 
 const RegisterBlock = ({ display, onClose }) => {
   const { loading, error, success, message } = useSelector((state) => state.auth);
-  console.log('🚀 ~ file: index.jsx:13 ~ RegisterBlock ~ message:', message);
   const dispatch = useDispatch();
   const [errorNewPassword, setErrorNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
