@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetUserDetailsQuery } from '../../redux/function/authService';
 
-const Header = ({ onClickCart, onClickSignIn,cartDisplay }) => {
+const Header = ({ onClickCart, onClickSignIn, cartDisplay }) => {
   const { userToken } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
 
@@ -75,6 +75,9 @@ const Header = ({ onClickCart, onClickSignIn,cartDisplay }) => {
                   <Link to="/wishlist">
                     <img src={wishlist} alt="wishlist" />
                   </Link>
+                  <Link to="/cart">
+                    <img src={basket} alt="basket" />
+                  </Link>
                 </>
               ) : (
                 <>
@@ -84,12 +87,11 @@ const Header = ({ onClickCart, onClickSignIn,cartDisplay }) => {
                   <Link to="/#">
                     <img onClick={onClickSignIn} src={wishlist} alt="wishlist" />
                   </Link>
+                  <Link to="#">
+                    <img onClick={onClickSignIn} src={basket} alt="basket" />
+                  </Link>
                 </>
               )}
-
-              <Link to="/cart">
-                <img src={basket} alt="basket" />
-              </Link>
             </div>
           </div>
         </div>

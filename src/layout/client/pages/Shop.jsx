@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../../../redux/slices/filterSlice';
 import { useRef } from 'react';
 import { fetchProducts } from '../../../redux/slices/productSlice';
-import { useGetUserWishlistQuery } from '../../../redux/function/authService';
 
 const categoryOptions = [
   { value: '0', label: 'Parks' },
@@ -73,6 +72,7 @@ const Shop = () => {
     if (!isSearch.current) {
       fetchCategories();
       getProducts();
+      
     }
     isSearch.current = false;
   }, [categoryId, currentPage, sort]);
@@ -168,7 +168,7 @@ const Shop = () => {
                 </div>
                 <div className="shop-block">
                   <div className="items d-flex ">
-                    {(status == 'loading' ? [...Array(12)] : products).map((item, index) => (
+                    {(status == 'loading' ? [...Array(8)] : products).map((item, index) => (
                       <ShopItemBlock
                         key={item ? item.id : index}
                         onFavorite={(item) => AddToFavorite(item)}

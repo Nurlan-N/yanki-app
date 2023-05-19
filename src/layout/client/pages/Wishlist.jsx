@@ -8,11 +8,14 @@ import { fetchWishlist } from '../../../redux/slices/productSlice';
 
 const Wishlist = () => {
   const [dltWishlist, setDltWishlist] = useState(false);
+  const token = localStorage.getItem('userToken');
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state) => state.product);
   useEffect(() => {
-    dispatch(fetchWishlist());
-  }, [dltWishlist]);
+    if (token != null) {
+      dispatch(fetchWishlist());
+    }
+  }, [dltWishlist, token]);
 
   const AddToFavorite = async (item) => {
     try {
@@ -48,7 +51,9 @@ const Wishlist = () => {
                 </CSSTransition>
               ))}
           </TransitionGroup>
-          <div style={wishlist.length >0 ? { display: 'none' } : {}} className="mx-auto text-center mt-5">
+          <div
+            style={wishlist.length > 0 ? { display: 'none' } : {}}
+            className="mx-auto text-center mt-5">
             <h2>Wish List Is Empty</h2>
           </div>
         </div>

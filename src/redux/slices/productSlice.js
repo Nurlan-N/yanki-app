@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const token = localStorage.getItem('userToken');
-
 export const fetchProducts = createAsyncThunk('products/fetchProductStatus', async (params) => {
   const { currentPage, categoryId, sort } = params;
   const { data } = await axios.get(
@@ -13,7 +11,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProductStatus', asy
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', async () => {
   const { data } = await axios.get(`https://localhost:44389/api/wishlist`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
     },
   });
   return data;
@@ -21,7 +19,7 @@ export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', as
 export const fetchBasket = createAsyncThunk('basket/fetchBasketStatus', async () => {
   const { data } = await axios.get(`https://localhost:44389/api/Basket`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
     },
   });
   return data;

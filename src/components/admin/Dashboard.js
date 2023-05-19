@@ -10,7 +10,7 @@ const Dashboard = () => {
   const { allOrders } = useSelector((state) => state.orders);
   const [orders, setOrders] = useState(null);
   console.log('🚀 ~ file: Dashboard.js:12 ~ Dashboard ~ orders:', allOrders);
-  const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 30000);
 
   useEffect(() => {
     setOrders(
@@ -252,7 +252,7 @@ const Dashboard = () => {
 
                   <div className="card-body">
                     <h5 className="card-title">
-                      Recent Sales <span>| Today</span>
+                      Recent Sales <span>| Month</span>
                     </h5>
 
                     <table className="table table-borderless datatable">
