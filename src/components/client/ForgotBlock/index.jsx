@@ -6,14 +6,16 @@ import axios from 'axios';
 
 const ForgotBlock = ({ display, onClose }) => {
   const [email, setEmail] = useState('');
-  const [message ,setMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const forgotHandler = async () => {
     try {
-      const {data} = await axios.post(`https://localhost:44389/api/Auth/resetpassword?email=${email}`);
-      setMessage(data)
+      const { data } = await axios.post(
+        `https://217.76.63.20:44389/api/Auth/resetpassword?email=${email}`,
+      );
+      setMessage(data);
     } catch (error) {
-      setErrorMessage(error.response.data)
+      setErrorMessage(error.response.data);
     }
   };
 
@@ -29,8 +31,8 @@ const ForgotBlock = ({ display, onClose }) => {
           Enter your email and we will send you a code to reset your password and recover your
           account:
         </label>
-        <span className='text text-danger mt-3'>{errorMessage}</span>
-        <span className='text text-success mt-3'>{message}</span>
+        <span className="text text-danger mt-3">{errorMessage}</span>
+        <span className="text text-success mt-3">{message}</span>
         <input
           onChange={(e) => setEmail(e.target.value)}
           type="email"
@@ -38,7 +40,7 @@ const ForgotBlock = ({ display, onClose }) => {
           placeholder="Email..."
           required
         />
-      </div>  
+      </div>
       <div onClick={() => forgotHandler()} className="">
         <ButtonSubmit title={'Send...'} />
       </div>

@@ -29,7 +29,7 @@ const Create = () => {
     formData.append('ImageFile', selectedFile);
 
     try {
-      const res = await axios.post(`https://localhost:44389/api/Category/create`, formData, {
+      const res = await axios.post(`https://217.76.63.20:44389/api/Category/create`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,8 +39,8 @@ const Create = () => {
         icon: 'success',
         title: `A new Category (${name}) has been created`,
         showConfirmButton: false,
-        timer: 2000
-      })
+        timer: 2000,
+      });
     } catch (error) {
       alert('There was an error fetching the data');
     }
@@ -63,11 +63,13 @@ const Create = () => {
             />
             <span className="text text-danger"></span>
           </div>
-          {
-            imageError ? <div className="col-lg-6  bi-image-fill p-2" >
-            <span className="text text-danger p-2">Image is required</span>
-          </div> : ''
-          }
+          {imageError ? (
+            <div className="col-lg-6  bi-image-fill p-2">
+              <span className="text text-danger p-2">Image is required</span>
+            </div>
+          ) : (
+            ''
+          )}
           <div className="form-group my-3 col-lg-6 align-items-center">
             <button onClick={handlePick} className="btn btn-outline-primary  mx-2">
               Image..

@@ -10,7 +10,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const { data } = await axios.get(`https://localhost:44389/api/Category/${categoryId}`);
+        const { data } = await axios.get(`https://217.76.63.20:44389/api/Category/${categoryId}`);
         setCategory(data);
         setProducts(data.Products.$values);
       } catch (error) {
@@ -28,8 +28,13 @@ const Detail = () => {
               <h1 className="h3 mb-4 text-gray-400">Category Detail Page</h1>
             </div>
             <div className=" col-lg-4">
-              <div className='text-center btn shadow'>
-                <h5 className="">Category Name : <span style={{fontWeight: 'bold'}} className=' text-lg-center'>{category.Name}</span> </h5>
+              <div className="text-center btn shadow">
+                <h5 className="">
+                  Category Name :{' '}
+                  <span style={{ fontWeight: 'bold' }} className=" text-lg-center">
+                    {category.Name}
+                  </span>{' '}
+                </h5>
               </div>
             </div>
           </div>

@@ -32,7 +32,7 @@ const Cart = () => {
 
   const submitForm = async (data) => {
     try {
-      await axios.post(`https://localhost:44389/api/Order/checkout`, data, {
+      await axios.post(`https://217.76.63.20:44389/api/Order/checkout`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,7 +71,7 @@ const Cart = () => {
 
   const DeleteToBasket = async (id) => {
     try {
-      await axios.delete(`https://localhost:44389/api/basket/delete/${id}`, {
+      await axios.delete(`https://217.76.63.20:44389/api/basket/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -12,7 +12,7 @@ const Detail = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`https://localhost:44389/api/Order?id=${id}`, {
+        const { data } = await axios.get(`https://217.76.63.20:44389/api/Order?id=${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -49,7 +49,9 @@ const Detail = () => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td><img style={{width: "100px"}} src={item.product.image} alt="" /></td>
+                      <td>
+                        <img style={{ width: '100px' }} src={item.product.image} alt="" />
+                      </td>
                       <td>{item.product.title}</td>
                       <td className="text-success">${item.product.price}</td>
                       <td>{new Date(item.createdAt).toLocaleDateString('en-US')}</td>

@@ -15,12 +15,10 @@ const Create = () => {
   const [exTax, setExTax] = useState(null);
   const [count, setCount] = useState(null);
   const [category, setCategory] = useState(null);
-  console.log("🚀 ~ file: Create.jsx:18 ~ Create ~ category:", category)
+  console.log('🚀 ~ file: Create.jsx:18 ~ Create ~ category:', category);
   const [description, setDescription] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
-
-
 
   const handleChange = (e) => {
     if (e.target.files.length > 0) {
@@ -55,7 +53,7 @@ const Create = () => {
     }
 
     try {
-      const res = await axios.post(`https://localhost:44389/api/Product/create`, formData, {
+      const res = await axios.post(`https://217.76.63.20:44389/api/Product/create`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -186,9 +184,7 @@ const Create = () => {
               id="Files"
               accept="image/*,.png,.jpg,.web"
             />
-            <div className="images col-lg-12 d-flex flex-wrap justify-content-between">
-            
-            </div>
+            <div className="images col-lg-12 d-flex flex-wrap justify-content-between"></div>
             <span className="text text-danger field-validation-valid"></span>
           </div>
           <div className="row productImage"></div>

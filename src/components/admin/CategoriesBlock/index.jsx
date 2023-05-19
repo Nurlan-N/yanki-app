@@ -14,7 +14,7 @@ const Categories = () => {
     const token = window.localStorage.getItem('userToken');
     async function fetchData() {
       try {
-        const { data } = await axios.get(`https://localhost:44389/api/category`, {
+        const { data } = await axios.get(`https://217.76.63.20:44389/api/category`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +42,7 @@ const Categories = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://localhost:44389/api/category?id=${id}`);
+        axios.delete(`https://217.76.63.20:44389/api/category?id=${id}`);
         setDltCategory(true);
         Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
       }

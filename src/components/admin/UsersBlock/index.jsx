@@ -23,7 +23,7 @@ const Users = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          `https://localhost:44389/api/User?page=${currentPage}&limit=5`,
+          `https://217.76.63.20:44389/api/User?page=${currentPage}&limit=5`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const Users = () => {
   };
   const submitForm = async (data) => {
     try {
-      const res = await axios.put('https://localhost:44389/api/User/change-role', data, {
+      const res = await axios.put('https://217.76.63.20:44389/api/User/change-role', data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ const Users = () => {
   const unblockHandle = async (id) => {
     try {
       await axios.put(
-        `https://localhost:44389/api/user/unblock?userId=${id}`,
+        `https://217.76.63.20:44389/api/user/unblock?userId=${id}`,
         {},
         {
           headers: {
@@ -83,7 +83,7 @@ const Users = () => {
         },
       );
       alert('User has been unblocked successfully');
-      setId(1)
+      setId(1);
     } catch (error) {
       alert('Error occurred while unblocking user');
     }
@@ -92,7 +92,7 @@ const Users = () => {
     event.preventDefault();
     try {
       await axios.put(
-        `https://localhost:44389/api/user/block?id=${id}&blockDate=${blockDate}`,
+        `https://217.76.63.20:44389/api/user/block?id=${id}&blockDate=${blockDate}`,
         {},
         {
           headers: {
@@ -101,7 +101,7 @@ const Users = () => {
         },
       );
       alert('User has been blocked successfully');
-      setId('')
+      setId('');
     } catch (error) {
       alert('Error occurred while blocking user');
     }

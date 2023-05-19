@@ -15,7 +15,7 @@ const Products = () => {
   const navigate = useNavigate();
   const [deletePr, setDeletePr] = useState(false);
   const { products, status, pageCount, wishlist } = useSelector((state) => state.product);
-  const { categoryId, currentPage ,sort} = useSelector((state) => state.filter);
+  const { categoryId, currentPage, sort } = useSelector((state) => state.filter);
   const params = {
     currentPage: currentPage,
     categoryId: 0,
@@ -56,7 +56,7 @@ const Products = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://localhost:44389/api/Product?id=${id}`);
+        axios.delete(`https://217.76.63.20:44389/api/Product?id=${id}`);
         setDeletePr(true);
         Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
       }

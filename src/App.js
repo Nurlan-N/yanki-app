@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get('https://localhost:44389/api/category');
+        const { data } = await axios.get('https://217.76.63.20:44389/api/category');
         setCategory(data);
         Cookies.set('category', JSON.stringify(data));
       } catch (error) {

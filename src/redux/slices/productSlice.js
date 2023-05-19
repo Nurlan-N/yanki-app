@@ -4,12 +4,12 @@ import axios from 'axios';
 export const fetchProducts = createAsyncThunk('products/fetchProductStatus', async (params) => {
   const { currentPage, categoryId, sort } = params;
   const { data } = await axios.get(
-    `https://localhost:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}&sort=${sort}`,
+    `https://217.76.63.20:44389/api/product?page=${currentPage}&limit=8&categoryId=${categoryId}&sort=${sort}`,
   );
   return data;
 });
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', async () => {
-  const { data } = await axios.get(`https://localhost:44389/api/wishlist`, {
+  const { data } = await axios.get(`https://217.76.63.20:44389/api/wishlist`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('userToken')}`,
     },
@@ -17,7 +17,7 @@ export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlistStatus', as
   return data;
 });
 export const fetchBasket = createAsyncThunk('basket/fetchBasketStatus', async () => {
-  const { data } = await axios.get(`https://localhost:44389/api/Basket`, {
+  const { data } = await axios.get(`https://217.76.63.20:44389/api/Basket`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('userToken')}`,
     },

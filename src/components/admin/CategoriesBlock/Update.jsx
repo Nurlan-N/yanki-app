@@ -35,18 +35,22 @@ const Update = () => {
     formData.append('ImageFile', selectedFile);
 
     try {
-      const res = await axios.put(`https://localhost:44389/api/Category/update-category`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.put(
+        `https://217.76.63.20:44389/api/Category/update-category`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       Swal.fire({
         position: 'top-end',
         icon: 'success',
         title: `Category (${name}) has been updated`,
         showConfirmButton: false,
-        timer: 2000
-      })
+        timer: 2000,
+      });
     } catch (error) {
       alert('There was an error fetching the data');
     }

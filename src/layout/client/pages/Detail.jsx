@@ -47,9 +47,9 @@ const Detail = () => {
   }, [storedProductId]);
   const fetchProduct = async () => {
     try {
-      const { data } = await axios.get(`https://localhost:44389/api/Product/${storedProductId}`);
+      const { data } = await axios.get(`https://217.76.63.20:44389/api/Product/${storedProductId}`);
       setProduct(data);
-      setImages(data.productImages)
+      setImages(data.productImages);
     } catch (error) {
       alert('Datada Sehv');
     }
@@ -57,7 +57,7 @@ const Detail = () => {
   const fetchSimilarProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://localhost:44389/api/product?page=1&limit=8&categoryId=${categoryId}`,
+        `https://217.76.63.20:44389/api/product?page=1&limit=8&categoryId=${categoryId}`,
       );
       setSimilarProducts(data.product);
     } catch (error) {
@@ -67,14 +67,14 @@ const Detail = () => {
   const AddToFavorite = async (item) => {
     try {
       if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
-        await axios.delete(`https://localhost:44389/api/wishlist/delete/${item.id}`, {
+        await axios.delete(`https://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
       } else {
         const { data } = await axios.post(
-          `https://localhost:44389/api/wishlist/add?id=${item.id}`,
+          `https://217.76.63.20:44389/api/wishlist/add?id=${item.id}`,
           null,
           {
             headers: {
@@ -89,7 +89,7 @@ const Detail = () => {
   };
   const AddToBasket = async (product) => {
     try {
-      await axios.post(`https://localhost:44389/api/basket/add?id=${product.id}`, null, {
+      await axios.post(`https://217.76.63.20:44389/api/basket/add?id=${product.id}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -107,9 +107,12 @@ const Detail = () => {
           <div className="detail_content">
             <div className="pr_image_block d-flex ">
               <div className="pr_images d-flex">
-                {images && images.map((img, index) => {
-                  return <img style={{width: "100px"}} key={index} src={img.image} alt="Image" />;
-                })}
+                {images &&
+                  images.map((img, index) => {
+                    return (
+                      <img style={{ width: '100px' }} key={index} src={img.image} alt="Image" />
+                    );
+                  })}
               </div>
               <div className="main_image">
                 <img src={product.image} alt="" />

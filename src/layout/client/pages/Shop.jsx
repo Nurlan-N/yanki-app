@@ -47,7 +47,7 @@ const Shop = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get('https://localhost:44389/api/category');
+      const { data } = await axios.get('https://217.76.63.20:44389/api/category');
       setCategoryData(data);
     } catch (error) {
       alert('Category Datada sehv');
@@ -72,7 +72,6 @@ const Shop = () => {
     if (!isSearch.current) {
       fetchCategories();
       getProducts();
-      
     }
     isSearch.current = false;
   }, [categoryId, currentPage, sort]);
@@ -105,14 +104,14 @@ const Shop = () => {
     try {
       const token = localStorage.getItem('userToken');
       if (wishlist && wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
-        await axios.delete(`https://localhost:44389/api/wishlist/delete/${item.id}`, {
+        await axios.delete(`https://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
       } else {
         console.log('else');
-        await axios.post(`https://localhost:44389/api/wishlist/add?id=${item.id}`, null, {
+        await axios.post(`https://217.76.63.20:44389/api/wishlist/add?id=${item.id}`, null, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -156,9 +155,7 @@ const Shop = () => {
                       onChange={(e) => setSort(e.target.value)}
                       className="sort_select"
                       id="Sort">
-                      <option  value="0">
-                        Relevance
-                      </option>
+                      <option value="0">Relevance</option>
                       <option value="1">Name (A - Z)</option>
                       <option value="2">Name (Z - A)</option>
                       <option value="3">Price (Low &amp;gt; High)</option>

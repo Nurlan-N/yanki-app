@@ -55,7 +55,7 @@ const Update = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`https://localhost:44389/api/Product/${id}`);
+        const { data } = await axios.get(`https://217.76.63.20:44389/api/Product/${id}`);
         setProduct(data);
       } catch (error) {
         alert('There was an error fetching the data');
@@ -82,11 +82,15 @@ const Update = () => {
     }
 
     try {
-      const res = await axios.put(`https://localhost:44389/api/Product/update-product`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.put(
+        `https://217.76.63.20:44389/api/Product/update-product`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -101,11 +105,15 @@ const Update = () => {
   };
   const deleteImageHandler = async (e) => {
     try {
-      const res = await axios.put(`https://localhost:44389/api/product?id=${product.id}&imageId=${e}`,{}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.put(
+        `https://217.76.63.20:44389/api/product?id=${product.id}&imageId=${e}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -114,7 +122,7 @@ const Update = () => {
         timer: 2000,
       });
     } catch (error) {
-      alert("Error")
+      alert('Error');
     }
   };
 
