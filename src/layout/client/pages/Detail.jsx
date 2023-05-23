@@ -47,7 +47,7 @@ const Detail = () => {
   }, [storedProductId]);
   const fetchProduct = async () => {
     try {
-      const { data } = await axios.get(`https://217.76.63.20:44389/api/Product/${storedProductId}`);
+      const { data } = await axios.get(`http://217.76.63.20:44389/api/Product/${storedProductId}`);
       setProduct(data);
       setImages(data.productImages);
     } catch (error) {
@@ -57,7 +57,7 @@ const Detail = () => {
   const fetchSimilarProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://217.76.63.20:44389/api/product?page=1&limit=8&categoryId=${categoryId}`,
+        `http://217.76.63.20:44389/api/product?page=1&limit=8&categoryId=${categoryId}`,
       );
       setSimilarProducts(data.product);
     } catch (error) {
@@ -67,14 +67,14 @@ const Detail = () => {
   const AddToFavorite = async (item) => {
     try {
       if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
-        await axios.delete(`https://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
+        await axios.delete(`http://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
       } else {
         const { data } = await axios.post(
-          `https://217.76.63.20:44389/api/wishlist/add?id=${item.id}`,
+          `http://217.76.63.20:44389/api/wishlist/add?id=${item.id}`,
           null,
           {
             headers: {
@@ -89,7 +89,7 @@ const Detail = () => {
   };
   const AddToBasket = async (product) => {
     try {
-      await axios.post(`https://217.76.63.20:44389/api/basket/add?id=${product.id}`, null, {
+      await axios.post(`http://217.76.63.20:44389/api/basket/add?id=${product.id}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

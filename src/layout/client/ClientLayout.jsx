@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/client/Header';
 import Footer from '../../components/client/Footer';
 import { Outlet } from 'react-router-dom';
 import DrawerBlock from '../../components/client/DrawerBlock/index';
 import ForgotBlock from '../../components/client/ForgotBlock';
 import RegisterBlock from '../../components/client/RegisterBlock';
-import { useGetUserDetailsQuery } from '../../redux/function/authService';
 import Authorization from '../../components/client/AuthorizationBlock';
 
 
 const ClientLayout = () => {
-  const { data } = useGetUserDetailsQuery('userDetails', { pollingInterval: 900000 });
   const [cartDisplay, setCartDisplay] = useState(false);
   const [authorizationDisplay, setAuthorizationDisplay] = useState(false);
+  console.log("🚀 ~ file: ClientLayout.jsx:16 ~ ClientLayout ~ authorizationDisplay:", authorizationDisplay)
   const [forgotDisplay, setForgotDisplay] = useState(false);
   const [registerDisplay, setRegisterDisplay] = useState(false);
 
@@ -25,6 +24,21 @@ const ClientLayout = () => {
     setForgotDisplay(!registerDisplay);
     setAuthorizationDisplay(false);
   };
+  useEffect(() => {
+    if (authorizationDisplay) {
+      const handleOutsideClick = (event) => {
+        if (authorizationDisplay && !event.target.closest('.modal-auth')) {
+          setAuthorizationDisplay(false);
+        }
+      };
+  
+      window.addEventListener('click', handleOutsideClick);
+  
+      return () => {
+        window.removeEventListener('click', handleOutsideClick);
+      };
+    }
+  }, [authorizationDisplay]);
   return (
     <>
     <DrawerBlock onClickSignIn={() => setAuthorizationDisplay(!authorizationDisplay)} cartDisplay={cartDisplay} onClose={() => setCartDisplay(false)} />

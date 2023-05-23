@@ -36,7 +36,7 @@ const Update = () => {
 
     try {
       const res = await axios.put(
-        `https://217.76.63.20:44389/api/Category/update-category`,
+        `http://217.76.63.20:44389/api/Category/update-category`,
         formData,
         {
           headers: {

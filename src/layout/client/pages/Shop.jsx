@@ -47,7 +47,7 @@ const Shop = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get('https://217.76.63.20:44389/api/category');
+      const { data } = await axios.get('http://217.76.63.20:44389/api/category');
       setCategoryData(data);
     } catch (error) {
       alert('Category Datada sehv');
@@ -104,14 +104,14 @@ const Shop = () => {
     try {
       const token = localStorage.getItem('userToken');
       if (wishlist && wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
-        await axios.delete(`https://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
+        await axios.delete(`http://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
       } else {
         console.log('else');
-        await axios.post(`https://217.76.63.20:44389/api/wishlist/add?id=${item.id}`, null, {
+        await axios.post(`http://217.76.63.20:44389/api/wishlist/add?id=${item.id}`, null, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -29,7 +29,7 @@ const Create = () => {
     formData.append('ImageFile', selectedFile);
 
     try {
-      const res = await axios.post(`https://217.76.63.20:44389/api/Category/create`, formData, {
+      const res = await axios.post(`http://217.76.63.20:44389/api/Category/create`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

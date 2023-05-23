@@ -22,7 +22,7 @@ const Wishlist = () => {
       const token = localStorage.getItem('userToken');
       if (wishlist.find((pr) => Number(pr.id) === Number(item.id))) {
         setDltWishlist(true);
-        await axios.delete(`https://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
+        await axios.delete(`http://217.76.63.20:44389/api/wishlist/delete/${item.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -11,7 +11,7 @@ const ForgotBlock = ({ display, onClose }) => {
   const forgotHandler = async () => {
     try {
       const { data } = await axios.post(
-        `https://217.76.63.20:44389/api/Auth/resetpassword?email=${email}`,
+        `http://217.76.63.20:44389/api/Auth/resetpassword?email=${email}`,
       );
       setMessage(data);
     } catch (error) {

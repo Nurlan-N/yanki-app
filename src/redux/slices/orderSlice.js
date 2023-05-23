@@ -5,7 +5,7 @@ import axios from 'axios';
 const token = localStorage.getItem('userToken');
 
 export const fetchOrders = createAsyncThunk('order/fetchOrders', async () => {
-  const { data } = await axios.get(`https://217.76.63.20:44389/api/order/user`, {
+  const { data } = await axios.get(`http://217.76.63.20:44389/api/order/user`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -13,7 +13,7 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async () => {
   return data;
 });
 export const fetchAllOrders = createAsyncThunk('order/fetchAllOrders', async () => {
-  const { data } = await axios.get(`https://217.76.63.20:44389/api/order`, {
+  const { data } = await axios.get(`http://217.76.63.20:44389/api/order`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

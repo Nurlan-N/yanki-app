@@ -21,7 +21,7 @@ const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => 
     dispatch(userLogin(data));
   };
   return (
-    <>
+    <div className='modal-auth'>
       <div
         className={styles.root}
         style={display === true && login === false ? { top: '20%', transition: 'ease-in-out 0.5s' } : { }}>
@@ -66,7 +66,7 @@ const Authorization = ({ display, onClose, onClickRegister, onClickForgot }) => 
           <ButtonSubmit title={loading ? 'loading' : 'LOGIN'} />
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

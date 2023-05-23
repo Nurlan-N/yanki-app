@@ -55,7 +55,7 @@ const Update = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`https://217.76.63.20:44389/api/Product/${id}`);
+        const { data } = await axios.get(`http://217.76.63.20:44389/api/Product/${id}`);
         setProduct(data);
       } catch (error) {
         alert('There was an error fetching the data');
@@ -83,7 +83,7 @@ const Update = () => {
 
     try {
       const res = await axios.put(
-        `https://217.76.63.20:44389/api/Product/update-product`,
+        `http://217.76.63.20:44389/api/Product/update-product`,
         formData,
         {
           headers: {
@@ -106,7 +106,7 @@ const Update = () => {
   const deleteImageHandler = async (e) => {
     try {
       const res = await axios.put(
-        `https://217.76.63.20:44389/api/product?id=${product.id}&imageId=${e}`,
+        `http://217.76.63.20:44389/api/product?id=${product.id}&imageId=${e}`,
         {},
         {
           headers: {

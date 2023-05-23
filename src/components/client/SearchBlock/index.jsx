@@ -19,7 +19,7 @@ const SearchBlock = () => {
     try {
       if (e.length > 0) {
         const { data } = await axios.get(
-          `https://217.76.63.20:44389/api/Product/search?search=${e}`,
+          `http://217.76.63.20:44389/api/Product/search?search=${e}`,
         );
         setProducts(data);
       } else {

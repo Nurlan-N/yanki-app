@@ -56,7 +56,7 @@ const Products = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://217.76.63.20:44389/api/Product?id=${id}`);
+        axios.delete(`http://217.76.63.20:44389/api/Product?id=${id}`);
         setDeletePr(true);
         Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
       }

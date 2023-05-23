@@ -23,7 +23,7 @@ const Users = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          `https://217.76.63.20:44389/api/User?page=${currentPage}&limit=5`,
+          `http://217.76.63.20:44389/api/User?page=${currentPage}&limit=5`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const Users = () => {
   };
   const submitForm = async (data) => {
     try {
-      const res = await axios.put('https://217.76.63.20:44389/api/User/change-role', data, {
+      const res = await axios.put('http://217.76.63.20:44389/api/User/change-role', data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ const Users = () => {
   const unblockHandle = async (id) => {
     try {
       await axios.put(
-        `https://217.76.63.20:44389/api/user/unblock?userId=${id}`,
+        `http://217.76.63.20:44389/api/user/unblock?userId=${id}`,
         {},
         {
           headers: {
@@ -92,7 +92,7 @@ const Users = () => {
     event.preventDefault();
     try {
       await axios.put(
-        `https://217.76.63.20:44389/api/user/block?id=${id}&blockDate=${blockDate}`,
+        `http://217.76.63.20:44389/api/user/block?id=${id}&blockDate=${blockDate}`,
         {},
         {
           headers: {

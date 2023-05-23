@@ -9,7 +9,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const { data } = await axios.get(`https://217.76.63.20:44389/api/product/${productId}`);
+        const { data } = await axios.get(`http://217.76.63.20:44389/api/product/${productId}`);
         setProduct(data);
       } catch (error) {
         alert('Datada sehv');

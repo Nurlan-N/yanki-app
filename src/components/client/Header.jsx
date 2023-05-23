@@ -65,7 +65,7 @@ const Header = ({ onClickCart, onClickSignIn, cartDisplay }) => {
                 <img src={logo_gold} alt="logo" />
               </Link>
             </div>
-            <div className="menu col-lg-4 col-md-10">
+            <div className="menu col-lg-4 col-md-10 modal-auth">
               <SearchBlock />
               {userToken !== null ? (
                 <>

@@ -12,7 +12,7 @@ const Detail = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`https://217.76.63.20:44389/api/Order?id=${id}`, {
+        const { data } = await axios.get(`http://217.76.63.20:44389/api/Order?id=${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
